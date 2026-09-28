@@ -1,1639 +1,2089 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
-
-<title>NEXORA AI</title>
-
-
-<style>
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-:root {
-
-  --bg: #070b16;
-  --panel: #0d1324;
-  --border: rgba(255,255,255,0.08);
-
-  --text: #f3f5ff;
-  --muted: #8993aa;
-
-  --user:
-    linear-gradient(
-      135deg,
-      #7c3aed,
-      #2563eb
-    );
-
-}
-
-body {
-
-  min-height: 100vh;
-
-  background:
-
-    radial-gradient(
-      circle at 20% 10%,
-      rgba(124,58,237,0.12),
-      transparent 30%
-    ),
-
-    radial-gradient(
-      circle at 80% 20%,
-      rgba(37,99,235,0.10),
-      transparent 30%
-    ),
-
-    var(--bg);
-
-  color: var(--text);
-
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-
-  overflow: hidden;
-
-}
-
-
-button {
-
-  border: none;
-  outline: none;
-
-  cursor: pointer;
-
-  color: var(--text);
-
-  font-family: inherit;
-
-}
-
-
-/* =========================
-   APP
-========================= */
-
-.app {
-
-  height: 100vh;
-
-  display: flex;
-
-  flex-direction: column;
-
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-header {
-
-  height: 72px;
-
-  flex-shrink: 0;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  padding: 0 22px;
-
-  border-bottom:
-    1px solid var(--border);
-
-  background:
-    rgba(7,11,22,0.85);
-
-  backdrop-filter:
-    blur(18px);
-
-  z-index: 20;
-
-}
-
-
-.brand {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 12px;
-
-}
-
-
-.logo {
-
-  width: 42px;
-  height: 42px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  border-radius: 13px;
-
-  font-size: 20px;
-
-  font-weight: 800;
-
-  background:
-    linear-gradient(
-      135deg,
-      #7c3aed,
-      #2563eb
-    );
-
-}
-
-
-.brand-text h1 {
-
-  font-size: 17px;
-
-}
-
-
-.brand-text p {
-
-  margin-top: 2px;
-
-  color: var(--muted);
-
-  font-size: 11px;
-
-}
-
-
-.header-actions {
-
-  display: flex;
-
-  gap: 8px;
-
-}
-
-
-.top-btn {
-
-  height: 38px;
-
-  padding: 0 13px;
-
-  border:
-    1px solid var(--border);
-
-  border-radius: 10px;
-
-  background:
-    rgba(255,255,255,0.04);
-
-  font-size: 12px;
-
-  font-weight: 600;
-
-}
-
-
-.top-btn:hover {
-
-  background:
-    rgba(255,255,255,0.08);
-
-}
-
-
-.voice-active {
-
-  border-color:
-    rgba(124,58,237,0.5);
-
-  background:
-    rgba(124,58,237,0.14);
-
-}
-
-
-.stop-active {
-
-  border-color:
-    rgba(239,68,68,0.4);
-
-  background:
-    rgba(239,68,68,0.12);
-
-}
-
-
-/* =========================
-   CHAT
-========================= */
-
-#chat {
-
-  flex: 1;
-
-  overflow-y: auto;
-
-  padding:
-    28px
-    20px
-    145px;
-
-  scroll-behavior: smooth;
-
-}
-
-
-#chat::-webkit-scrollbar {
-
-  width: 7px;
-
-}
-
-
-#chat::-webkit-scrollbar-thumb {
-
-  background:
-    rgba(255,255,255,0.10);
-
-  border-radius: 10px;
-
-}
-
-
-/* =========================
-   WELCOME
-========================= */
-
-.welcome {
-
-  max-width: 760px;
-
-  margin: 60px auto;
-
-  text-align: center;
-
-}
-
-
-.welcome-icon {
-
-  width: 72px;
-  height: 72px;
-
-  margin:
-    auto auto 20px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  border-radius: 22px;
-
-  font-size: 28px;
-
-  font-weight: 800;
-
-  background:
-    linear-gradient(
-      135deg,
-      #7c3aed,
-      #2563eb
-    );
-
-}
-
-
-.welcome h2 {
-
-  font-size: 30px;
-
-  margin-bottom: 10px;
-
-}
-
-
-.welcome p {
-
-  color: var(--muted);
-
-  font-size: 14px;
-
-  line-height: 1.7;
-
-}
-
-
-/* =========================
-   MESSAGE
-========================= */
-
-.message-row {
-
-  width: 100%;
-
-  max-width: 920px;
-
-  margin:
-    0 auto 20px;
-
-  display: flex;
-
-}
-
-
-.message-row.user {
-
-  justify-content:
-    flex-end;
-
-}
-
-
-.message-row.ai {
-
-  justify-content:
-    flex-start;
-
-}
-
-
-.message {
-
-  max-width:
-    min(78%, 760px);
-
-  padding:
-    13px 15px;
-
-  border-radius: 17px;
-
-  line-height: 1.65;
-
-  font-size: 14px;
-
-  word-break: break-word;
-
-}
-
-
-.user .message {
-
-  background:
-    var(--user);
-
-  border-bottom-right-radius:
-    5px;
-
-}
-
-
-.ai .message {
-
-  background:
-    var(--panel);
-
-  border:
-    1px solid var(--border);
-
-  border-bottom-left-radius:
-    5px;
-
-}
-
-
-.message-content {
-
-  white-space:
-    normal;
-
-}
-
-
-/* =========================
-   ACTIONS
-========================= */
-
-.message-actions {
-
-  display: flex;
-
-  gap: 6px;
-
-  margin-top: 10px;
-
-}
-
-
-.action-btn {
-
-  min-width: 30px;
-
-  height: 29px;
-
-  padding: 0 8px;
-
-  border:
-    1px solid var(--border);
-
-  border-radius: 8px;
-
-  background:
-    rgba(255,255,255,0.04);
-
-  color: #aab3c8;
-
-  font-size: 12px;
-
-}
-
-
-/* =========================
-   MARKDOWN
-========================= */
-
-.message-content strong {
-
-  font-weight: 700;
-
-}
-
-
-.message-content ul,
-.message-content ol {
-
-  padding-left: 22px;
-
-  margin: 8px 0;
-
-}
-
-
-.message-content li {
-
-  margin: 4px 0;
-
-}
-
-
-.inline-code {
-
-  padding:
-    2px 6px;
-
-  border-radius: 6px;
-
-  background:
-    rgba(255,255,255,0.08);
-
-  font-family:
-    Consolas,
-    Monaco,
-    monospace;
-
-}
-
-
-.code-wrapper {
-
-  margin: 12px 0;
-
-  overflow: hidden;
-
-  border:
-    1px solid
-    rgba(255,255,255,0.09);
-
-  border-radius: 10px;
-
-  background:
-    #070b13;
-
-}
-
-
-.code-header {
-
-  height: 36px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  padding: 0 10px;
-
-  border-bottom:
-    1px solid
-    rgba(255,255,255,0.08);
-
-  color: #8f99ad;
-
-  font-size: 11px;
-
-}
-
-
-.copy-code {
-
-  padding:
-    5px 8px;
-
-  border:
-    1px solid
-    rgba(255,255,255,0.08);
-
-  border-radius: 6px;
-
-  background:
-    rgba(255,255,255,0.04);
-
-  color: #b7c0d4;
-
-  font-size: 10px;
-
-}
-
-
-pre {
-
-  margin: 0;
-
-  padding: 14px;
-
-  overflow-x: auto;
-
-  font-family:
-    Consolas,
-    Monaco,
-    monospace;
-
-  font-size: 12px;
-
-  line-height: 1.6;
-
-}
-
-
-/* =========================
-   THINKING
-========================= */
-
-.thinking {
-
-  display: flex;
-
-  gap: 5px;
-
-}
-
-
-.thinking span {
-
-  width: 6px;
-
-  height: 6px;
-
-  border-radius: 50%;
-
-  background:
-    #a78bfa;
-
-  animation:
-    thinking 1.2s infinite;
-
-}
-
-
-.thinking span:nth-child(2) {
-
-  animation-delay:
-    .15s;
-
-}
-
-
-.thinking span:nth-child(3) {
-
-  animation-delay:
-    .30s;
-
-}
-
-
-@keyframes thinking {
-
-  0%,80%,100% {
-
-    opacity: .3;
-
-    transform:
-      translateY(0);
-
-  }
-
-  40% {
-
-    opacity: 1;
-
-    transform:
-      translateY(-4px);
-
-  }
-
-}
-
-
-/* =========================
-   STREAM CURSOR
-========================= */
-
-.stream-cursor {
-
-  display: inline-block;
-
-  width: 7px;
-
-  height: 17px;
-
-  margin-left: 3px;
-
-  vertical-align: -3px;
-
-  background:
-    #a78bfa;
-
-  animation:
-    blink .8s infinite;
-
-}
-
-
-@keyframes blink {
-
-  50% {
-
-    opacity: 0;
-
-  }
-
-}
-
-
-/* =========================
-   INPUT
-========================= */
-
-.input-area {
-
-  position: fixed;
-
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  padding:
-    15px
-    18px
-    20px;
-
-  background:
-    linear-gradient(
-      to top,
-      rgba(7,11,22,1) 55%,
-      rgba(7,11,22,0)
-    );
-
-  z-index: 30;
-
-}
-
-
-.input-box {
-
-  max-width: 920px;
-
-  margin: auto;
-
-  min-height: 58px;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 8px;
-
-  padding: 8px;
-
-  border:
-    1px solid
-    rgba(255,255,255,0.10);
-
-  border-radius: 17px;
-
-  background:
-    rgba(13,19,36,0.95);
-
-}
-
-
-#messageInput {
-
-  flex: 1;
-
-  min-width: 0;
-
-  height: 42px;
-
-  padding: 0 10px;
-
-  border: none;
-
-  outline: none;
-
-  background:
-    transparent;
-
-  color: white;
-
-  font-family: inherit;
-
-  font-size: 14px;
-
-}
-
-
-#messageInput::placeholder {
-
-  color:
-    #68738b;
-
-}
-
-
-.input-btn {
-
-  width: 42px;
-
-  height: 42px;
-
-  flex-shrink: 0;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  border-radius: 12px;
-
-  background:
-    rgba(255,255,255,0.05);
-
-  color:
-    #b8c1d5;
-
-  font-size: 17px;
-
-}
-
-
-.send-btn {
-
-  background:
-    linear-gradient(
-      135deg,
-      #7c3aed,
-      #2563eb
-    );
-
-  color: white;
-
-}
-
-
-.stop-btn {
-
-  background:
-    linear-gradient(
-      135deg,
-      #dc2626,
-      #ef4444
-    );
-
-  color: white;
-
-}
-
-
-.listening {
-
-  background:
-    rgba(239,68,68,0.16);
-
-  color:
-    #f87171;
-
-}
-
-
-@media(max-width:650px) {
-
-  header {
-
-    height: 64px;
-
-    padding:
-      0 12px;
-
-  }
-
-  .logo {
-
-    width: 38px;
-    height: 38px;
-
-  }
-
-  .brand-text p {
-
-    display: none;
-
-  }
-
-  .top-btn {
-
-    padding:
-      0 9px;
-
-    font-size: 11px;
-
-  }
-
-  #chat {
-
-    padding:
-      20px
-      10px
-      135px;
-
-  }
-
-  .message {
-
-    max-width: 88%;
-
-    font-size: 13px;
-
-  }
-
-  .welcome {
-
-    margin:
-      50px 15px;
-
-  }
-
-  .welcome h2 {
-
-    font-size: 25px;
-
-  }
-
-  .input-area {
-
-    padding:
-      10px
-      9px
-      12px;
-
-  }
-
-}
-
-</style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>NEXORA AI</title>
+
+  <!-- Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- HTML Sanitizer -->
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(103, 58, 183, 0.12), transparent 28%),
+        radial-gradient(circle at 85% 80%, rgba(37, 99, 235, 0.10), transparent 30%),
+        #070b16;
+      color: #f8fafc;
+      overflow: hidden;
+    }
+
+    button,
+    textarea {
+      font-family: inherit;
+    }
+
+    /* =========================
+       HEADER
+    ========================== */
+
+    .header {
+      height: 70px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 22px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(7, 11, 22, 0.90);
+      backdrop-filter: blur(18px);
+      position: relative;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 43px;
+      height: 43px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #7c3aed, #2563eb);
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.25);
+    }
+
+    .brand-text h1 {
+      font-size: 18px;
+      line-height: 20px;
+      font-weight: 700;
+    }
+
+    .brand-text p {
+      color: #8791a5;
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-btn {
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.035);
+      color: #e5e7eb;
+      padding: 9px 13px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .header-btn:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .voice-btn.active {
+      border-color: rgba(124, 58, 237, 0.65);
+      background: rgba(124, 58, 237, 0.12);
+      color: #ddd6fe;
+    }
+
+    /* =========================
+       APP
+    ========================== */
+
+    .app {
+      height: calc(100vh - 70px);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .chat-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px 18px 150px;
+      scroll-behavior: smooth;
+    }
+
+    .chat-container {
+      width: min(920px, 100%);
+      margin: 0 auto;
+    }
+
+    /* =========================
+       WELCOME
+    ========================== */
+
+    .welcome {
+      min-height: 65vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .welcome-inner {
+      max-width: 620px;
+    }
+
+    .welcome-logo {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 20px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #7c3aed, #2563eb);
+      box-shadow: 0 20px 55px rgba(79, 70, 229, 0.30);
+    }
+
+    .welcome h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .welcome p {
+      color: #8d98ab;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    /* =========================
+       MESSAGES
+    ========================== */
+
+    .message-row {
+      display: flex;
+      margin-bottom: 22px;
+      width: 100%;
+    }
+
+    .message-row.user {
+      justify-content: flex-end;
+    }
+
+    .message-row.assistant {
+      justify-content: flex-start;
+    }
+
+    .message {
+      max-width: min(78%, 720px);
+      position: relative;
+    }
+
+    .user-bubble {
+      background: linear-gradient(135deg, #7c3aed, #2563eb);
+      color: white;
+      padding: 13px 16px;
+      border-radius: 18px 18px 5px 18px;
+      font-size: 14px;
+      line-height: 1.55;
+      box-shadow: 0 8px 30px rgba(37, 99, 235, 0.12);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .assistant-bubble {
+      background: rgba(10, 16, 30, 0.88);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px 16px 16px 5px;
+      padding: 16px;
+      font-size: 14px;
+      line-height: 1.65;
+      color: #edf2f7;
+      overflow: hidden;
+      width: 100%;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.14);
+    }
+
+    /* =========================
+       MARKDOWN
+    ========================== */
+
+    .assistant-bubble h1,
+    .assistant-bubble h2,
+    .assistant-bubble h3,
+    .assistant-bubble h4 {
+      margin: 18px 0 9px;
+      line-height: 1.35;
+    }
+
+    .assistant-bubble h1 {
+      font-size: 23px;
+    }
+
+    .assistant-bubble h2 {
+      font-size: 20px;
+    }
+
+    .assistant-bubble h3 {
+      font-size: 17px;
+    }
+
+    .assistant-bubble h4 {
+      font-size: 15px;
+    }
+
+    .assistant-bubble h1:first-child,
+    .assistant-bubble h2:first-child,
+    .assistant-bubble h3:first-child {
+      margin-top: 0;
+    }
+
+    .assistant-bubble p {
+      margin: 9px 0;
+    }
+
+    .assistant-bubble strong {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .assistant-bubble em {
+      color: #cbd5e1;
+    }
+
+    .assistant-bubble ul,
+    .assistant-bubble ol {
+      margin: 10px 0 10px 22px;
+    }
+
+    .assistant-bubble li {
+      margin: 5px 0;
+    }
+
+    .assistant-bubble blockquote {
+      border-left: 3px solid #7c3aed;
+      padding: 8px 13px;
+      margin: 12px 0;
+      color: #b8c2d4;
+      background: rgba(124,58,237,0.06);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .assistant-bubble a {
+      color: #93c5fd;
+      text-decoration: underline;
+    }
+
+    .assistant-bubble hr {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      margin: 18px 0;
+    }
+
+    .assistant-bubble img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    /* =========================
+       TABLE
+    ========================== */
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 14px 0;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.015);
+    }
+
+    .assistant-bubble table {
+      width: 100%;
+      min-width: 560px;
+      border-collapse: collapse;
+      font-size: 13px;
+      overflow: hidden;
+    }
+
+    .assistant-bubble th,
+    .assistant-bubble td {
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,0.09);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .assistant-bubble th {
+      background: rgba(124,58,237,0.14);
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .assistant-bubble td {
+      color: #d7deea;
+    }
+
+    .assistant-bubble tr:nth-child(even) td {
+      background: rgba(255,255,255,0.018);
+    }
+
+    /* =========================
+       INLINE CODE
+    ========================== */
+
+    .assistant-bubble code:not(pre code) {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 2px 6px;
+      border-radius: 5px;
+      color: #ddd6fe;
+      font-size: 0.9em;
+    }
+
+    /* =========================
+       CODE BLOCK
+    ========================== */
+
+    .code-wrapper {
+      position: relative;
+      margin: 14px 0;
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 11px;
+      overflow: hidden;
+      background: #050812;
+    }
+
+    .code-header {
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px 0 13px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.025);
+      color: #8e99ad;
+      font-size: 11px;
+    }
+
+    .copy-code-btn {
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      color: #cbd5e1;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 10px;
+      cursor: pointer;
+    }
+
+    .copy-code-btn:hover {
+      background: rgba(255,255,255,0.10);
+    }
+
+    .code-wrapper pre {
+      margin: 0 !important;
+      padding: 14px !important;
+      overflow-x: auto;
+      background: transparent !important;
+    }
+
+    .code-wrapper pre code {
+      font-family: Consolas, Monaco, "Courier New", monospace;
+      font-size: 12px;
+      line-height: 1.65;
+      color: #dbeafe;
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+
+    /* =========================
+       AI ACTIONS
+    ========================== */
+
+    .message-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      padding-left: 2px;
+    }
+
+    .action-btn {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.025);
+      color: #8e99ad;
+      padding: 5px 8px;
+      border-radius: 7px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .action-btn:hover {
+      color: #e2e8f0;
+      background: rgba(255,255,255,0.07);
+    }
+
+    /* =========================
+       THINKING
+    ========================== */
+
+    .thinking {
+      display: inline-flex;
+      gap: 5px;
+      align-items: center;
+      min-height: 20px;
+    }
+
+    .thinking span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #94a3b8;
+      animation: thinking 1.2s infinite ease-in-out;
+    }
+
+    .thinking span:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    .thinking span:nth-child(3) {
+      animation-delay: 0.30s;
+    }
+
+    @keyframes thinking {
+      0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: .4;
+      }
+
+      30% {
+        transform: translateY(-5px);
+        opacity: 1;
+      }
+    }
+
+    .stream-cursor {
+      display: inline-block;
+      width: 6px;
+      height: 15px;
+      background: #8b5cf6;
+      margin-left: 3px;
+      vertical-align: middle;
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    /* =========================
+       INPUT
+    ========================== */
+
+    .input-area {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 15px 18px 18px;
+      background:
+        linear-gradient(
+          to top,
+          #070b16 70%,
+          rgba(7,11,22,0.88) 100%
+        );
+      z-index: 5;
+    }
+
+    .input-container {
+      width: min(920px, 100%);
+      margin: 0 auto;
+    }
+
+    .input-box {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      padding: 8px;
+      background: rgba(12, 18, 33, 0.95);
+      border: 1px solid rgba(255,255,255,0.11);
+      border-radius: 16px;
+      box-shadow: 0 15px 50px rgba(0,0,0,0.30);
+    }
+
+    .input-box:focus-within {
+      border-color: rgba(124,58,237,0.48);
+      box-shadow:
+        0 15px 50px rgba(0,0,0,0.30),
+        0 0 0 3px rgba(124,58,237,0.06);
+    }
+
+    #messageInput {
+      flex: 1;
+      resize: none;
+      min-height: 42px;
+      max-height: 160px;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: #f8fafc;
+      padding: 10px 8px;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    #messageInput::placeholder {
+      color: #687388;
+    }
+
+    .input-btn {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255,255,255,0.09);
+      background: rgba(255,255,255,0.045);
+      color: #dbeafe;
+      border-radius: 11px;
+      cursor: pointer;
+      transition: .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .input-btn:hover {
+      background: rgba(255,255,255,0.10);
+    }
+
+    .send-btn {
+      background: linear-gradient(135deg, #7c3aed, #2563eb);
+      border: none;
+    }
+
+    .send-btn:hover {
+      filter: brightness(1.1);
+    }
+
+    .stop-btn {
+      background: rgba(239,68,68,0.10);
+      border-color: rgba(239,68,68,0.30);
+      color: #fca5a5;
+      display: none;
+    }
+
+    .stop-btn.visible {
+      display: flex;
+    }
+
+    .input-hint {
+      text-align: center;
+      color: #566174;
+      font-size: 10px;
+      margin-top: 7px;
+    }
+
+    /* =========================
+       SCROLLBAR
+    ========================== */
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.12);
+      border-radius: 20px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255,255,255,0.20);
+    }
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media (max-width: 700px) {
+      .header {
+        height: 62px;
+        padding: 0 12px;
+      }
+
+      .app {
+        height: calc(100vh - 62px);
+      }
+
+      .logo {
+        width: 37px;
+        height: 37px;
+        font-size: 18px;
+        border-radius: 10px;
+      }
+
+      .brand-text h1 {
+        font-size: 15px;
+      }
+
+      .brand-text p {
+        display: none;
+      }
+
+      .header-btn {
+        padding: 8px 9px;
+        font-size: 11px;
+      }
+
+      .chat-area {
+        padding: 20px 10px 145px;
+      }
+
+      .message {
+        max-width: 90%;
+      }
+
+      .assistant-bubble,
+      .user-bubble {
+        font-size: 13px;
+      }
+
+      .welcome h2 {
+        font-size: 25px;
+      }
+
+      .welcome p {
+        font-size: 13px;
+        padding: 0 15px;
+      }
+
+      .input-area {
+        padding: 10px 10px 12px;
+      }
+
+      .input-hint {
+        display: none;
+      }
+
+      .assistant-bubble table {
+        min-width: 500px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .voice-btn span {
+        display: none;
+      }
+
+      .clear-text {
+        display: none;
+      }
+
+      .message {
+        max-width: 94%;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
+  <!-- =========================
+       HEADER
+  ========================== -->
 
-<div class="app">
+  <header class="header">
 
+    <div class="brand">
+      <div class="logo">N</div>
 
-<header>
-
-  <div class="brand">
-
-    <div class="logo">
-      N
+      <div class="brand-text">
+        <h1>NEXORA AI</h1>
+        <p>Your custom AI assistant</p>
+      </div>
     </div>
 
-    <div class="brand-text">
+    <div class="header-actions">
 
-      <h1>
-        NEXORA AI
-      </h1>
+      <button
+        class="header-btn voice-btn active"
+        id="voiceToggle"
+        onclick="toggleVoice()"
+      >
+        🔊 <span>Voice ON</span>
+      </button>
 
-      <p>
-        Your custom AI assistant
-      </p>
+      <button
+        class="header-btn"
+        onclick="clearChat()"
+      >
+        🗑️ <span class="clear-text">Clear Chat</span>
+      </button>
 
     </div>
 
-  </div>
+  </header>
 
 
-  <div class="header-actions">
+  <!-- =========================
+       APP
+  ========================== -->
 
-    <button
-      id="voiceToggle"
-      class="top-btn voice-active"
-      onclick="toggleVoice()"
+  <main class="app">
+
+    <section
+      class="chat-area"
+      id="chatArea"
     >
-      🔊 Voice ON
-    </button>
+
+      <div
+        class="chat-container"
+        id="chatContainer"
+      >
+
+        <!-- Welcome -->
+        <div
+          class="welcome"
+          id="welcome"
+        >
+
+          <div class="welcome-inner">
+
+            <div class="welcome-logo">
+              N
+            </div>
+
+            <h2>
+              Welcome to NEXORA AI
+            </h2>
+
+            <p>
+              Your custom AI assistant for questions,
+              ideas, coding, creativity, research and more.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
 
 
-    <button
-      id="stopButton"
-      class="top-btn"
-      onclick="stopGenerating()"
-      style="display:none"
-    >
-      🛑 Stop
-    </button>
+    <!-- =========================
+         INPUT
+    ========================== -->
 
+    <div class="input-area">
 
-    <button
-      class="top-btn"
-      onclick="clearChat()"
-    >
-      Clear Chat
-    </button>
+      <div class="input-container">
 
-  </div>
+        <div class="input-box">
 
-</header>
+          <button
+            class="input-btn"
+            id="micButton"
+            onclick="startVoiceInput()"
+            title="Voice input"
+          >
+            🎤
+          </button>
 
+          <textarea
+            id="messageInput"
+            placeholder="Message NEXORA AI..."
+            rows="1"
+          ></textarea>
 
+          <button
+            class="input-btn stop-btn"
+            id="stopButton"
+            onclick="stopGenerating()"
+            title="Stop generating"
+          >
+            ⏹
+          </button>
 
-<main id="chat">
+          <button
+            class="input-btn send-btn"
+            id="sendButton"
+            onclick="sendMessage()"
+            title="Send"
+          >
+            ➤
+          </button>
 
+        </div>
 
-  <div
-    id="welcome"
-    class="welcome"
-  >
+        <div class="input-hint">
+          Press Enter to send • Shift + Enter for new line
+        </div>
 
-    <div class="welcome-icon">
-      N
+      </div>
+
     </div>
 
-    <h2>
-      Hello, I'm NEXORA AI
-    </h2>
+  </main>
 
-    <p>
-      Your custom AI assistant.
-      Ask me anything, write something,
-      solve a problem, or build something together.
-    </p>
 
-  </div>
+  <script>
 
+    /* =========================================================
+       CONFIG
+    ========================================================= */
 
-</main>
+    const API_URL =
+      "https://nexora-ai-api.md-shadow777y.workers.dev/";
 
+    const STORAGE_KEY =
+      "nexora_chat_history_v1";
 
 
-<div class="input-area">
+    /* =========================================================
+       STATE
+    ========================================================= */
 
-  <div class="input-box">
+    let messages = [];
 
+    let voiceEnabled = true;
 
-    <button
-      id="micButton"
-      class="input-btn"
-      onclick="toggleListening()"
-    >
-      🎙️
-    </button>
+    let isGenerating = false;
 
+    let abortController = null;
 
-    <input
-      id="messageInput"
-      type="text"
-      autocomplete="off"
-      placeholder="Message NEXORA AI..."
-    >
+    let recognition = null;
 
 
-    <button
-      id="sendButton"
-      class="input-btn send-btn"
-      onclick="sendMessage()"
-    >
-      ➤
-    </button>
+    /* =========================================================
+       DOM
+    ========================================================= */
 
+    const chatArea =
+      document.getElementById("chatArea");
 
-  </div>
+    const chatContainer =
+      document.getElementById("chatContainer");
 
-</div>
+    const messageInput =
+      document.getElementById("messageInput");
 
+    const sendButton =
+      document.getElementById("sendButton");
 
-</div>
+    const stopButton =
+      document.getElementById("stopButton");
 
+    const voiceToggle =
+      document.getElementById("voiceToggle");
 
+    const micButton =
+      document.getElementById("micButton");
 
-<script>
 
+    /* =========================================================
+       MARKED CONFIG
+    ========================================================= */
 
-/* =========================================================
-   API
-========================================================= */
+    marked.setOptions({
 
-const API_URL =
-  "https://nexora-ai-api.md-shadow777y.workers.dev/";
+      gfm: true,
 
+      breaks: true,
 
-/* =========================================================
-   DOM
-========================================================= */
+      headerIds: false,
 
-const chat =
-  document.getElementById("chat");
+      mangle: false
 
-const input =
-  document.getElementById("messageInput");
+    });
 
-const sendButton =
-  document.getElementById("sendButton");
 
-const micButton =
-  document.getElementById("micButton");
+    /* =========================================================
+       INIT
+    ========================================================= */
 
-const voiceToggle =
-  document.getElementById("voiceToggle");
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => {
 
-const stopButton =
-  document.getElementById("stopButton");
+        loadChat();
 
+        setupTextarea();
 
-/* =========================================================
-   STATE
-========================================================= */
-
-let conversation = [];
-
-let isBusy = false;
-
-let voiceEnabled = true;
-
-let recognition = null;
-
-let isListening = false;
-
-let shouldSendAfterVoice = false;
-
-let abortController = null;
-
-
-/* =========================================================
-   MEMORY
-========================================================= */
-
-try {
-
-  const saved =
-    localStorage.getItem(
-      "nexora_conversation"
-    );
-
-  if (saved) {
-
-    const parsed =
-      JSON.parse(saved);
-
-    if (Array.isArray(parsed)) {
-
-      conversation =
-        parsed
-          .filter(
-            item =>
-              item &&
-              (
-                item.role === "user" ||
-                item.role === "assistant"
-              ) &&
-              typeof item.content === "string"
-          )
-          .slice(-50);
-
-    }
-
-  }
-
-} catch {
-
-  conversation = [];
-
-}
-
-
-/* =========================================================
-   SAVE
-========================================================= */
-
-function saveConversation() {
-
-  localStorage.setItem(
-    "nexora_conversation",
-    JSON.stringify(
-      conversation.slice(-50)
-    )
-  );
-
-}
-
-
-/* =========================================================
-   WELCOME
-========================================================= */
-
-function removeWelcome() {
-
-  const welcome =
-    document.getElementById(
-      "welcome"
-    );
-
-  if (welcome) {
-
-    welcome.remove();
-
-  }
-
-}
-
-
-/* =========================================================
-   SCROLL
-========================================================= */
-
-function scrollToBottom() {
-
-  requestAnimationFrame(
-    () => {
-
-      chat.scrollTop =
-        chat.scrollHeight;
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHTML(text) {
-
-  return text
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
-
-
-/* =========================================================
-   MARKDOWN
-========================================================= */
-
-function renderMarkdown(text) {
-
-  if (!text) {
-
-    return "";
-
-  }
-
-
-  let safe =
-    escapeHTML(text);
-
-
-  const codeBlocks = [];
-
-
-  safe =
-    safe.replace(
-      /```([\w+-]*)\n?([\s\S]*?)```/g,
-      (match, language, code) => {
-
-        const id =
-          codeBlocks.length;
-
-        codeBlocks.push({
-
-          language:
-            language || "code",
-
-          code:
-            code.trim()
-
-        });
-
-        return (
-          "___CODE_" +
-          id +
-          "___"
-        );
+        setupSpeechRecognition();
 
       }
     );
 
 
-  safe =
-    safe.replace(
-      /`([^`]+)`/g,
-      '<span class="inline-code">$1</span>'
-    );
+    /* =========================================================
+       TEXTAREA
+    ========================================================= */
 
+    function setupTextarea() {
 
-  safe =
-    safe.replace(
-      /\*\*(.*?)\*\*/g,
-      "<strong>$1</strong>"
-    );
+      messageInput.addEventListener(
+        "input",
+        autoResize
+      );
 
+      messageInput.addEventListener(
+        "keydown",
+        event => {
 
-  safe =
-    safe.replace(
-      /^### (.*)$/gm,
-      "<strong>$1</strong>"
-    );
+          if (
+            event.key === "Enter" &&
+            !event.shiftKey
+          ) {
 
+            event.preventDefault();
 
-  safe =
-    safe.replace(
-      /^## (.*)$/gm,
-      "<strong>$1</strong>"
-    );
+            sendMessage();
 
+          }
 
-  safe =
-    safe.replace(
-      /^# (.*)$/gm,
-      "<strong>$1</strong>"
-    );
-
-
-  safe =
-    safe.replace(
-      /^\s*[-*] (.*)$/gm,
-      "• $1"
-    );
-
-
-  safe =
-    safe.replace(
-      /\n/g,
-      "<br>"
-    );
-
-
-  codeBlocks.forEach(
-    (block, index) => {
-
-      const html = `
-
-        <div class="code-wrapper">
-
-          <div class="code-header">
-
-            <span>
-              ${escapeHTML(
-                block.language
-              )}
-            </span>
-
-            <button
-              class="copy-code"
-              onclick="copyCode(this)"
-            >
-              Copy
-            </button>
-
-          </div>
-
-          <pre data-code="${encodeURIComponent(
-            block.code
-          )}">${escapeHTML(
-            block.code
-          )}</pre>
-
-        </div>
-
-      `;
-
-
-      safe =
-        safe.replace(
-          "___CODE_" +
-          index +
-          "___",
-          html
-        );
+        }
+      );
 
     }
-  );
 
 
-  return safe;
+    function autoResize() {
 
-}
+      messageInput.style.height = "auto";
 
+      messageInput.style.height =
+        Math.min(
+          messageInput.scrollHeight,
+          160
+        ) + "px";
 
-/* =========================================================
-   COPY CODE
-========================================================= */
+    }
 
-async function copyCode(button) {
 
-  const wrapper =
-    button.closest(
-      ".code-wrapper"
-    );
+    /* =========================================================
+       LOAD CHAT
+    ========================================================= */
 
-  if (!wrapper) return;
+    function loadChat() {
 
-  const pre =
-    wrapper.querySelector(
-      "pre"
-    );
+      try {
 
-  const code =
-    decodeURIComponent(
-      pre.dataset.code || ""
-    );
+        const saved =
+          localStorage.getItem(STORAGE_KEY);
 
-  try {
+        if (!saved) {
+          return;
+        }
 
-    await navigator.clipboard.writeText(
-      code
-    );
+        messages =
+          JSON.parse(saved);
 
-    button.textContent =
-      "Copied!";
+        if (
+          !Array.isArray(messages) ||
+          messages.length === 0
+        ) {
 
-    setTimeout(
-      () => {
+          messages = [];
 
-        button.textContent =
-          "Copy";
+          return;
 
-      },
-      1200
-    );
+        }
 
-  } catch {
+        const welcome =
+          document.getElementById("welcome");
 
-    button.textContent =
-      "Failed";
+        if (welcome) {
+          welcome.remove();
+        }
 
-  }
+        messages.forEach(
+          message => {
 
-}
+            renderMessage(
+              message.role,
+              message.content,
+              false
+            );
 
+          }
+        );
 
-/* =========================================================
-   ADD USER MESSAGE
-========================================================= */
+        scrollToBottom();
 
-function addUserMessage(text) {
+      } catch (error) {
 
-  removeWelcome();
+        console.error(
+          "Load chat error:",
+          error
+        );
 
+        messages = [];
 
-  const row =
-    document.createElement(
-      "div"
-    );
+      }
 
-  row.className =
-    "message-row user";
+    }
 
 
-  const message =
-    document.createElement(
-      "div"
-    );
+    /* =========================================================
+       SAVE CHAT
+    ========================================================= */
 
-  message.className =
-    "message";
+    function saveChat() {
 
+      try {
 
-  message.textContent =
-    text;
+        localStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify(messages)
+        );
 
+      } catch (error) {
 
-  row.appendChild(
-    message
-  );
+        console.error(
+          "Save chat error:",
+          error
+        );
 
+      }
 
-  chat.appendChild(
-    row
-  );
+    }
 
 
-  scrollToBottom();
+    /* =========================================================
+       CLEAR CHAT
+    ========================================================= */
 
-}
+    function clearChat() {
 
+      if (isGenerating) {
+        stopGenerating();
+      }
 
-/* =========================================================
-   CREATE STREAMING AI MESSAGE
-========================================================= */
+      const confirmed =
+        confirm(
+          "Clear all NEXORA AI conversation history?"
+        );
 
-function createStreamingMessage() {
+      if (!confirmed) {
+        return;
+      }
 
-  removeWelcome();
+      messages = [];
 
+      localStorage.removeItem(
+        STORAGE_KEY
+      );
 
-  const row =
-    document.createElement(
-      "div"
-    );
+      chatContainer.innerHTML = "";
 
-  row.className =
-    "message-row ai";
+      const welcome =
+        document.createElement("div");
 
+      welcome.className =
+        "welcome";
 
-  const message =
-    document.createElement(
-      "div"
-    );
+      welcome.id =
+        "welcome";
 
-  message.className =
-    "message";
+      welcome.innerHTML = `
+        <div class="welcome-inner">
+          <div class="welcome-logo">N</div>
 
+          <h2>
+            Welcome to NEXORA AI
+          </h2>
 
-  const content =
-    document.createElement(
-      "div"
-    );
+          <p>
+            Your custom AI assistant for questions,
+            ideas, coding, creativity, research and more.
+          </p>
+        </div>
+      `;
 
-  content.className =
-    "message-content";
+      chatContainer.appendChild(
+        welcome
+      );
 
+    }
 
-  content.innerHTML =
-    `<div class="thinking">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>`;
 
+    /* =========================================================
+       RENDER MESSAGE
+    ========================================================= */
 
-  message.appendChild(
-    content
-  );
+    function renderMessage(
+      role,
+      content,
+      scroll = true
+    ) {
 
+      const welcome =
+        document.getElementById("welcome");
 
-  row.appendChild(
-    message
-  );
+      if (welcome) {
+        welcome.remove();
+      }
 
+      const row =
+        document.createElement("div");
 
-  chat.appendChild(
-    row
-  );
+      row.className =
+        `message-row ${role}`;
 
+      const message =
+        document.createElement("div");
 
-  scrollToBottom();
+      message.className =
+        "message";
 
+      if (role === "user") {
 
-  return {
+        const bubble =
+          document.createElement("div");
 
-    row,
-    message,
-    content
+        bubble.className =
+          "user-bubble";
 
-  };
+        bubble.textContent =
+          content;
 
-}
+        message.appendChild(
+          bubble
+        );
 
+      } else {
 
-/* =========================================================
-   ADD AI ACTIONS
-========================================================= */
+        const bubble =
+          document.createElement("div");
 
-function addAIActions(
-  message,
-  text
-) {
+        bubble.className =
+          "assistant-bubble";
 
+        bubble.innerHTML =
+          renderMarkdown(content);
 
-  const actions =
-    document.createElement(
-      "div"
-    );
+        message.appendChild(
+          bubble
+        );
 
-  actions.className =
-    "message-actions";
+        const actions =
+          document.createElement("div");
 
+        actions.className =
+          "message-actions";
 
-  const speakButton =
-    document.createElement(
-      "button"
-    );
+        actions.innerHTML = `
+          <button
+            class="action-btn speak-btn"
+            title="Read aloud"
+          >
+            🔊 Speak
+          </button>
 
-  speakButton.className =
-    "action-btn";
+          <button
+            class="action-btn copy-btn"
+            title="Copy response"
+          >
+            📋 Copy
+          </button>
+        `;
 
-  speakButton.textContent =
-    "🔊";
+        const speakBtn =
+          actions.querySelector(
+            ".speak-btn"
+          );
 
-  speakButton.onclick =
-    () => {
+        const copyBtn =
+          actions.querySelector(
+            ".copy-btn"
+          );
 
-      speak(text);
+        speakBtn.onclick =
+          () => speakText(content);
 
-    };
+        copyBtn.onclick =
+          () => copyText(
+            content,
+            copyBtn
+          );
 
+        message.appendChild(
+          actions
+        );
 
-  const copyButton =
-    document.createElement(
-      "button"
-    );
+        setupCodeCopyButtons(
+          bubble
+        );
 
-  copyButton.className =
-    "action-btn";
+      }
 
-  copyButton.textContent =
-    "Copy";
+      row.appendChild(
+        message
+      );
 
-  copyButton.onclick =
-    async () => {
+      chatContainer.appendChild(
+        row
+      );
+
+      if (scroll) {
+        scrollToBottom();
+      }
+
+      return {
+        row,
+        message
+      };
+
+    }
+
+
+    /* =========================================================
+       MARKDOWN RENDERER
+    ========================================================= */
+
+    function renderMarkdown(
+      markdown
+    ) {
+
+      if (!markdown) {
+        return "";
+      }
+
+      try {
+
+        let html =
+          marked.parse(
+            markdown
+          );
+
+        /*
+          Wrap tables so mobile devices
+          can horizontally scroll.
+        */
+
+        html =
+          html.replace(
+            /<table>/g,
+            '<div class="table-wrapper"><table>'
+          );
+
+        html =
+          html.replace(
+            /<\/table>/g,
+            '</table></div>'
+          );
+
+        /*
+          Add target blank to links.
+        */
+
+        html =
+          html.replace(
+            /<a href=/g,
+            '<a target="_blank" rel="noopener noreferrer" href='
+          );
+
+        /*
+          Add code wrapper.
+        */
+
+        html =
+          html.replace(
+            /<pre><code(?: class="language-([^"]+)")?>([\s\S]*?)<\/code><\/pre>/g,
+            (match, language, code) => {
+
+              const lang =
+                language || "code";
+
+              return `
+                <div class="code-wrapper">
+
+                  <div class="code-header">
+
+                    <span>
+                      ${escapeHtml(lang)}
+                    </span>
+
+                    <button
+                      class="copy-code-btn"
+                      type="button"
+                    >
+                      Copy
+                    </button>
+
+                  </div>
+
+                  <pre><code>${code}</code></pre>
+
+                </div>
+              `;
+
+            }
+          );
+
+        /*
+          Sanitize final HTML.
+        */
+
+        return DOMPurify.sanitize(
+          html,
+          {
+            ADD_ATTR: [
+              "target",
+              "rel"
+            ]
+          }
+        );
+
+      } catch (error) {
+
+        console.error(
+          "Markdown error:",
+          error
+        );
+
+        return escapeHtml(
+          markdown
+        ).replace(
+          /\n/g,
+          "<br>"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================================
+       CODE COPY
+    ========================================================= */
+
+    function setupCodeCopyButtons(
+      container
+    ) {
+
+      const buttons =
+        container.querySelectorAll(
+          ".copy-code-btn"
+        );
+
+      buttons.forEach(
+        button => {
+
+          button.addEventListener(
+            "click",
+            async () => {
+
+              const wrapper =
+                button.closest(
+                  ".code-wrapper"
+                );
+
+              const code =
+                wrapper.querySelector(
+                  "code"
+                );
+
+              if (!code) {
+                return;
+              }
+
+              try {
+
+                await navigator.clipboard.writeText(
+                  code.textContent
+                );
+
+                button.textContent =
+                  "Copied!";
+
+                setTimeout(
+                  () => {
+                    button.textContent =
+                      "Copy";
+                  },
+                  1500
+                );
+
+              } catch (error) {
+
+                console.error(
+                  "Code copy error:",
+                  error
+                );
+
+              }
+
+            }
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================================================
+       SEND MESSAGE
+    ========================================================= */
+
+    async function sendMessage() {
+
+      if (isGenerating) {
+        return;
+      }
+
+      const message =
+        messageInput.value.trim();
+
+      if (!message) {
+        return;
+      }
+
+      /*
+        Save only previous history
+        before current user message.
+      */
+
+      const previousMessages =
+        messages.slice(-20);
+
+      /*
+        Add user message locally.
+      */
+
+      messages.push({
+        role: "user",
+        content: message
+      });
+
+      saveChat();
+
+      renderMessage(
+        "user",
+        message
+      );
+
+      messageInput.value = "";
+
+      autoResize();
+
+      setGeneratingState(true);
+
+      /*
+        Create temporary AI message.
+      */
+
+      const aiUI =
+        createStreamingMessage();
+
+      let fullReply = "";
+
+      abortController =
+        new AbortController();
+
+      try {
+
+        const response =
+          await fetch(
+            API_URL,
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
+
+              body: JSON.stringify({
+
+                message: message,
+
+                messages:
+                  previousMessages
+
+              }),
+
+              signal:
+                abortController.signal
+
+            }
+          );
+
+        if (!response.ok) {
+
+          const errorText =
+            await response.text();
+
+          throw new Error(
+            `Server error ${response.status}: ${errorText}`
+          );
+
+        }
+
+        if (!response.body) {
+
+          throw new Error(
+            "Streaming response body is not available."
+          );
+
+        }
+
+        const reader =
+          response.body.getReader();
+
+        const decoder =
+          new TextDecoder(
+            "utf-8"
+          );
+
+        let buffer = "";
+
+        while (true) {
+
+          const {
+            value,
+            done
+          } =
+            await reader.read();
+
+          if (done) {
+            break;
+          }
+
+          buffer +=
+            decoder.decode(
+              value,
+              {
+                stream: true
+              }
+            );
+
+          const events =
+            buffer.split(
+              /\r?\n\r?\n/
+            );
+
+          buffer =
+            events.pop() || "";
+
+          for (
+            const event of events
+          ) {
+
+            const lines =
+              event.split(
+                /\r?\n/
+              );
+
+            for (
+              const line of lines
+            ) {
+
+              const trimmed =
+                line.trim();
+
+              if (
+                !trimmed.startsWith(
+                  "data:"
+                )
+              ) {
+                continue;
+              }
+
+              const data =
+                trimmed
+                  .slice(5)
+                  .trim();
+
+              if (
+                !data ||
+                data === "[DONE]"
+              ) {
+                continue;
+              }
+
+              try {
+
+                const parsed =
+                  JSON.parse(
+                    data
+                  );
+
+                const delta =
+                  parsed
+                    ?.choices?.[0]
+                    ?.delta?.content;
+
+                if (
+                  typeof delta ===
+                  "string"
+                ) {
+
+                  fullReply +=
+                    delta;
+
+                  updateStreamingMessage(
+                    aiUI,
+                    fullReply
+                  );
+
+                }
+
+              } catch (parseError) {
+
+                /*
+                  Ignore incomplete SSE
+                  chunks.
+                */
+
+              }
+
+            }
+
+          }
+
+        }
+
+        /*
+          If stream finished but buffer
+          still contains a final event.
+        */
+
+        if (buffer.trim()) {
+
+          const lines =
+            buffer.split(
+              /\r?\n/
+            );
+
+          for (
+            const line of lines
+          ) {
+
+            const trimmed =
+              line.trim();
+
+            if (
+              !trimmed.startsWith(
+                "data:"
+              )
+            ) {
+              continue;
+            }
+
+            const data =
+              trimmed
+                .slice(5)
+                .trim();
+
+            if (
+              !data ||
+              data === "[DONE]"
+            ) {
+              continue;
+            }
+
+            try {
+
+              const parsed =
+                JSON.parse(
+                  data
+                );
+
+              const delta =
+                parsed
+                  ?.choices?.[0]
+                  ?.delta?.content;
+
+              if (
+                typeof delta ===
+                "string"
+              ) {
+
+                fullReply +=
+                  delta;
+
+              }
+
+            } catch {}
+
+          }
+
+        }
+
+        /*
+          Remove cursor.
+        */
+
+        finishStreamingMessage(
+          aiUI,
+          fullReply
+        );
+
+        /*
+          Save AI response.
+        */
+
+        if (fullReply.trim()) {
+
+          messages.push({
+            role: "assistant",
+            content: fullReply
+          });
+
+          saveChat();
+
+          /*
+            Voice output.
+          */
+
+          if (voiceEnabled) {
+
+            speakText(
+              fullReply
+            );
+
+          }
+
+        } else {
+
+          finishStreamingMessage(
+            aiUI,
+            "I didn't receive a response from the AI."
+          );
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          "NEXORA error:",
+          error
+        );
+
+        if (
+          error.name ===
+          "AbortError"
+        ) {
+
+          /*
+            User manually stopped
+            generation.
+          */
+
+          if (
+            fullReply.trim()
+          ) {
+
+            const stoppedText =
+              fullReply +
+              "\n\n*Generation stopped.*";
+
+            finishStreamingMessage(
+              aiUI,
+              stoppedText
+            );
+
+            messages.push({
+              role: "assistant",
+              content: stoppedText
+            });
+
+            saveChat();
+
+          } else {
+
+            finishStreamingMessage(
+              aiUI,
+              "*Generation stopped.*"
+            );
+
+          }
+
+        } else {
+
+          const errorMessage =
+            `⚠️ **NEXORA connection error**\n\n\`${error.message}\``;
+
+          finishStreamingMessage(
+            aiUI,
+            errorMessage
+          );
+
+        }
+
+      } finally {
+
+        abortController =
+          null;
+
+        setGeneratingState(
+          false
+        );
+
+      }
+
+    }
+
+
+    /* =========================================================
+       CREATE STREAMING MESSAGE
+    ========================================================= */
+
+    function createStreamingMessage() {
+
+      const row =
+        document.createElement(
+          "div"
+        );
+
+      row.className =
+        "message-row assistant";
+
+      const message =
+        document.createElement(
+          "div"
+        );
+
+      message.className =
+        "message";
+
+      const bubble =
+        document.createElement(
+          "div"
+        );
+
+      bubble.className =
+        "assistant-bubble";
+
+      bubble.innerHTML = `
+        <div class="thinking">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      `;
+
+      message.appendChild(
+        bubble
+      );
+
+      row.appendChild(
+        message
+      );
+
+      chatContainer.appendChild(
+        row
+      );
+
+      scrollToBottom();
+
+      return {
+        row,
+        message,
+        bubble
+      };
+
+    }
+
+
+    /* =========================================================
+       UPDATE STREAMING MESSAGE
+    ========================================================= */
+
+    function updateStreamingMessage(
+      ui,
+      content
+    ) {
+
+      ui.bubble.innerHTML =
+        renderMarkdown(
+          content
+        ) +
+        '<span class="stream-cursor"></span>';
+
+      setupCodeCopyButtons(
+        ui.bubble
+      );
+
+      scrollToBottom();
+
+    }
+
+
+    /* =========================================================
+       FINISH STREAMING MESSAGE
+    ========================================================= */
+
+    function finishStreamingMessage(
+      ui,
+      content
+    ) {
+
+      ui.bubble.innerHTML =
+        renderMarkdown(
+          content
+        );
+
+      setupCodeCopyButtons(
+        ui.bubble
+      );
+
+      /*
+        Add action buttons.
+      */
+
+      const actions =
+        document.createElement(
+          "div"
+        );
+
+      actions.className =
+        "message-actions";
+
+      actions.innerHTML = `
+        <button
+          class="action-btn speak-btn"
+        >
+          🔊 Speak
+        </button>
+
+        <button
+          class="action-btn copy-btn"
+        >
+          📋 Copy
+        </button>
+      `;
+
+      const speakBtn =
+        actions.querySelector(
+          ".speak-btn"
+        );
+
+      const copyBtn =
+        actions.querySelector(
+          ".copy-btn"
+        );
+
+      speakBtn.onclick =
+        () => speakText(content);
+
+      copyBtn.onclick =
+        () => copyText(
+          content,
+          copyBtn
+        );
+
+      ui.message.appendChild(
+        actions
+      );
+
+      scrollToBottom();
+
+    }
+
+
+    /* =========================================================
+       STOP GENERATING
+    ========================================================= */
+
+    function stopGenerating() {
+
+      if (
+        abortController
+      ) {
+
+        abortController.abort();
+
+      }
+
+    }
+
+
+    /* =========================================================
+       GENERATING STATE
+    ========================================================= */
+
+    function setGeneratingState(
+      state
+    ) {
+
+      isGenerating =
+        state;
+
+      if (state) {
+
+        sendButton.style.display =
+          "none";
+
+        stopButton.classList.add(
+          "visible"
+        );
+
+        messageInput.disabled =
+          true;
+
+      } else {
+
+        sendButton.style.display =
+          "flex";
+
+        stopButton.classList.remove(
+          "visible"
+        );
+
+        messageInput.disabled =
+          false;
+
+        messageInput.focus();
+
+      }
+
+    }
+
+
+    /* =========================================================
+       COPY TEXT
+    ========================================================= */
+
+    async function copyText(
+      text,
+      button
+    ) {
 
       try {
 
@@ -1641,1213 +2091,320 @@ function addAIActions(
           text
         );
 
-        copyButton.textContent =
-          "Copied!";
+        const oldText =
+          button.textContent;
+
+        button.textContent =
+          "✓ Copied";
 
         setTimeout(
           () => {
 
-            copyButton.textContent =
-              "Copy";
+            button.textContent =
+              oldText;
 
           },
-          1200
+          1500
         );
 
-      } catch {
-
-        copyButton.textContent =
-          "Failed";
-
-      }
-
-    };
-
-
-  actions.appendChild(
-    speakButton
-  );
-
-  actions.appendChild(
-    copyButton
-  );
-
-
-  message.appendChild(
-    actions
-  );
-
-}
-
-
-/* =========================================================
-   SEND MESSAGE — STREAMING
-========================================================= */
-
-async function sendMessage() {
-
-
-  const message =
-    input.value.trim();
-
-
-  if (
-    !message ||
-    isBusy
-  ) {
-
-    return;
-
-  }
-
-
-  stopListening();
-
-  stopSpeaking();
-
-
-  isBusy =
-    true;
-
-
-  sendButton.disabled =
-    true;
-
-  micButton.disabled =
-    true;
-
-
-  stopButton.style.display =
-    "block";
-
-
-  stopButton.classList.add(
-    "stop-active"
-  );
-
-
-  addUserMessage(
-    message
-  );
-
-
-  /*
-    IMPORTANT:
-
-    Do not include current message
-    inside messages.
-
-    Worker adds it.
-  */
-
-  const previousMessages =
-    conversation
-      .filter(
-        item =>
-          item &&
-          (
-            item.role === "user" ||
-            item.role === "assistant"
-          )
-      )
-      .slice(-20);
-
-
-  conversation.push({
-
-    role:
-      "user",
-
-    content:
-      message
-
-  });
-
-
-  saveConversation();
-
-
-  input.value =
-    "";
-
-
-  const aiUI =
-    createStreamingMessage();
-
-
-  let fullReply =
-    "";
-
-
-  abortController =
-    new AbortController();
-
-
-  try {
-
-
-    const response =
-      await fetch(
-        API_URL,
-        {
-
-          method:
-            "POST",
-
-          headers: {
-
-            "Content-Type":
-              "application/json"
-
-          },
-
-          body:
-            JSON.stringify({
-
-              message:
-                message,
-
-              messages:
-                previousMessages
-
-            }),
-
-          signal:
-            abortController.signal
-
-        }
-      );
-
-
-    if (!response.ok) {
-
-      const errorText =
-        await response.text();
-
-      throw new Error(
-        `Server error ${response.status}: ${errorText.slice(0,300)}`
-      );
-
-    }
-
-
-    if (!response.body) {
-
-      throw new Error(
-        "Streaming is not supported by this response."
-      );
-
-    }
-
-
-    const reader =
-      response.body.getReader();
-
-
-    const decoder =
-      new TextDecoder(
-        "utf-8"
-      );
-
-
-    let buffer =
-      "";
-
-
-    while (true) {
-
-
-      const {
-        value,
-        done
-      } =
-        await reader.read();
-
-
-      if (done) {
-
-        break;
-
-      }
-
-
-      buffer +=
-        decoder.decode(
-          value,
-          {
-            stream: true
-          }
+      } catch (error) {
+
+        console.error(
+          "Copy error:",
+          error
         );
-
-
-      const events =
-        buffer.split(
-          "\n\n"
-        );
-
-
-      buffer =
-        events.pop() || "";
-
-
-      for (
-        const event of events
-      ) {
-
-
-        const lines =
-          event.split(
-            /\r?\n/
-          );
-
-
-        for (
-          const line of lines
-        ) {
-
-
-          const trimmed =
-            line.trim();
-
-
-          if (
-            !trimmed.startsWith(
-              "data:"
-            )
-          ) {
-
-            continue;
-
-          }
-
-
-          const data =
-            trimmed
-              .slice(5)
-              .trim();
-
-
-          if (
-            !data ||
-            data === "[DONE]"
-          ) {
-
-            continue;
-
-          }
-
-
-          try {
-
-
-            const parsed =
-              JSON.parse(
-                data
-              );
-
-
-            const delta =
-              parsed
-                ?.choices?.[0]
-                ?.delta
-                ?.content;
-
-
-            if (
-              typeof delta ===
-              "string"
-            ) {
-
-              fullReply +=
-                delta;
-
-            }
-
-
-          } catch {
-
-            /*
-              Ignore malformed
-              SSE chunks.
-            */
-
-          }
-
-
-          if (fullReply) {
-
-
-            aiUI.content.innerHTML =
-              renderMarkdown(
-                fullReply
-              ) +
-              `<span class="stream-cursor"></span>`;
-
-
-            scrollToBottom();
-
-          }
-
-        }
 
       }
 
     }
 
 
-    /*
-      Remove cursor.
-    */
+    /* =========================================================
+       VOICE TOGGLE
+    ========================================================= */
 
-    aiUI.content.innerHTML =
-      renderMarkdown(
-        fullReply
-      );
+    function toggleVoice() {
 
+      voiceEnabled =
+        !voiceEnabled;
 
-    if (!fullReply.trim()) {
+      updateVoiceButton();
 
-      throw new Error(
-        "NEXORA returned an empty response."
-      );
+      if (!voiceEnabled) {
 
-    }
+        window.speechSynthesis.cancel();
 
-
-    addAIActions(
-      aiUI.message,
-      fullReply
-    );
-
-
-    conversation.push({
-
-      role:
-        "assistant",
-
-      content:
-        fullReply
-
-    });
-
-
-    saveConversation();
-
-
-    if (voiceEnabled) {
-
-      speak(
-        fullReply
-      );
+      }
 
     }
 
 
-  } catch (error) {
+    function updateVoiceButton() {
+
+      if (voiceEnabled) {
+
+        voiceToggle.classList.add(
+          "active"
+        );
+
+        voiceToggle.innerHTML =
+          "🔊 <span>Voice ON</span>";
+
+      } else {
+
+        voiceToggle.classList.remove(
+          "active"
+        );
+
+        voiceToggle.innerHTML =
+          "🔇 <span>Voice OFF</span>";
+
+      }
+
+    }
 
 
-    if (
-      error.name ===
-      "AbortError"
+    /* =========================================================
+       TEXT TO SPEECH
+    ========================================================= */
+
+    function speakText(
+      text
     ) {
 
+      if (!voiceEnabled) {
+        return;
+      }
+
+      if (
+        !("speechSynthesis" in window)
+      ) {
+
+        alert(
+          "Voice output is not supported in this browser."
+        );
+
+        return;
+
+      }
+
+      window.speechSynthesis.cancel();
 
       /*
-        User clicked STOP.
-
-        Keep whatever response
-        was already generated.
+        Remove Markdown before speaking.
       */
 
-
-      if (
-        fullReply.trim()
-      ) {
-
-
-        aiUI.content.innerHTML =
-          renderMarkdown(
-            fullReply
-          );
-
-
-        addAIActions(
-          aiUI.message,
-          fullReply
+      const temp =
+        document.createElement(
+          "div"
         );
 
+      temp.innerHTML =
+        renderMarkdown(
+          text
+        );
 
-        conversation.push({
+      const cleanText =
+        temp.innerText ||
+        temp.textContent ||
+        text;
 
-          role:
-            "assistant",
+      const utterance =
+        new SpeechSynthesisUtterance(
+          cleanText
+        );
 
-          content:
-            fullReply
+      utterance.rate =
+        1.0;
 
-        });
+      utterance.pitch =
+        1.0;
+
+      utterance.volume =
+        1.0;
+
+      window.speechSynthesis.speak(
+        utterance
+      );
+
+    }
 
 
-        saveConversation();
+    /* =========================================================
+       SPEECH RECOGNITION
+    ========================================================= */
 
+    function setupSpeechRecognition() {
 
-      } else {
+      const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
 
+      if (!SpeechRecognition) {
 
-        aiUI.content.innerHTML =
-          "Generation stopped.";
+        micButton.title =
+          "Speech recognition is not supported.";
+
+        return;
 
       }
 
+      recognition =
+        new SpeechRecognition();
 
-    } else {
+      recognition.continuous =
+        false;
+
+      recognition.interimResults =
+        false;
+
+      recognition.lang =
+        "en-US";
+
+      recognition.onstart =
+        () => {
+
+          micButton.textContent =
+            "🔴";
+
+        };
+
+      recognition.onend =
+        () => {
+
+          micButton.textContent =
+            "🎤";
+
+        };
+
+      recognition.onerror =
+        event => {
+
+          console.error(
+            "Speech recognition error:",
+            event.error
+          );
+
+          micButton.textContent =
+            "🎤";
+
+        };
+
+      recognition.onresult =
+        event => {
+
+          const transcript =
+            event.results[0][0].transcript;
+
+          messageInput.value =
+            transcript;
+
+          autoResize();
+
+          /*
+            Automatically send.
+          */
+
+          setTimeout(
+            () => {
+
+              sendMessage();
+
+            },
+            250
+          );
+
+        };
+
+    }
 
 
-      console.error(
-        "NEXORA ERROR:",
-        error
-      );
+    /* =========================================================
+       START VOICE INPUT
+    ========================================================= */
 
+    function startVoiceInput() {
 
-      aiUI.content.innerHTML =
-        "⚠️ NEXORA request failed.<br><br>" +
-        escapeHTML(
-          error.message
+      if (!recognition) {
+
+        alert(
+          "Speech recognition is not supported in this browser."
         );
 
-    }
+        return;
 
-  }
+      }
 
+      if (isGenerating) {
+        return;
+      }
 
-  abortController =
-    null;
+      try {
 
+        recognition.start();
 
-  isBusy =
-    false;
+      } catch (error) {
 
+        console.log(
+          "Recognition already running."
+        );
 
-  sendButton.disabled =
-    false;
-
-  micButton.disabled =
-    false;
-
-
-  stopButton.style.display =
-    "none";
-
-
-  stopButton.classList.remove(
-    "stop-active"
-  );
-
-
-  input.focus();
-
-}
-
-
-/* =========================================================
-   STOP GENERATING
-========================================================= */
-
-function stopGenerating() {
-
-
-  if (
-    abortController
-  ) {
-
-    abortController.abort();
-
-  }
-
-}
-
-
-/* =========================================================
-   ENTER
-========================================================= */
-
-input.addEventListener(
-  "keydown",
-  event => {
-
-    if (
-      event.key === "Enter" &&
-      !event.shiftKey
-    ) {
-
-      event.preventDefault();
-
-      sendMessage();
+      }
 
     }
 
-  }
-);
 
+    /* =========================================================
+       SCROLL
+    ========================================================= */
 
-/* =========================================================
-   VOICE OUTPUT
-========================================================= */
+    function scrollToBottom() {
 
-function speak(text) {
+      requestAnimationFrame(
+        () => {
 
-
-  if (
-    !voiceEnabled ||
-    !("speechSynthesis" in window)
-  ) {
-
-    return;
-
-  }
-
-
-  stopSpeaking();
-
-
-  const cleanText =
-    text
-
-      .replace(
-        /```[\s\S]*?```/g,
-        ""
-      )
-
-      .replace(
-        /[#*_>`]/g,
-        ""
-      )
-
-      .replace(
-        /\[(.*?)\]\(.*?\)/g,
-        "$1"
-      )
-
-      .trim();
-
-
-  if (!cleanText) {
-
-    return;
-
-  }
-
-
-  const utterance =
-    new SpeechSynthesisUtterance(
-      cleanText
-    );
-
-
-  const voices =
-    speechSynthesis.getVoices();
-
-
-  const isBangla =
-    /[\u0980-\u09FF]/.test(
-      cleanText
-    );
-
-
-  const voice =
-    voices.find(
-      v =>
-        isBangla
-          ? v.lang
-              .toLowerCase()
-              .startsWith("bn")
-          : v.lang
-              .toLowerCase()
-              .startsWith("en")
-    );
-
-
-  if (voice) {
-
-    utterance.voice =
-      voice;
-
-  }
-
-
-  utterance.rate =
-    1;
-
-  utterance.pitch =
-    1;
-
-  utterance.volume =
-    1;
-
-
-  speechSynthesis.speak(
-    utterance
-  );
-
-}
-
-
-/* =========================================================
-   STOP SPEAKING
-========================================================= */
-
-function stopSpeaking() {
-
-  if (
-    "speechSynthesis" in window
-  ) {
-
-    speechSynthesis.cancel();
-
-  }
-
-}
-
-
-/* =========================================================
-   VOICE TOGGLE
-========================================================= */
-
-function toggleVoice() {
-
-
-  voiceEnabled =
-    !voiceEnabled;
-
-
-  if (!voiceEnabled) {
-
-
-    stopSpeaking();
-
-
-    voiceToggle.textContent =
-      "🔇 Voice OFF";
-
-
-    voiceToggle.classList.remove(
-      "voice-active"
-    );
-
-
-  } else {
-
-
-    voiceToggle.textContent =
-      "🔊 Voice ON";
-
-
-    voiceToggle.classList.add(
-      "voice-active"
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   SPEECH RECOGNITION
-========================================================= */
-
-function setupRecognition() {
-
-
-  const SpeechRecognition =
-    window.SpeechRecognition ||
-    window.webkitSpeechRecognition;
-
-
-  if (!SpeechRecognition) {
-
-    return null;
-
-  }
-
-
-  const rec =
-    new SpeechRecognition();
-
-
-  rec.continuous =
-    false;
-
-  rec.interimResults =
-    true;
-
-  rec.maxAlternatives =
-    1;
-
-
-  rec.onstart =
-    () => {
-
-
-      isListening =
-        true;
-
-
-      micButton.classList.add(
-        "listening"
-      );
-
-
-      micButton.textContent =
-        "⏹️";
-
-
-      stopSpeaking();
-
-    };
-
-
-  rec.onresult =
-    event => {
-
-
-      let finalText =
-        "";
-
-      let interimText =
-        "";
-
-
-      for (
-        let i =
-          event.resultIndex;
-
-        i <
-          event.results.length;
-
-        i++
-      ) {
-
-
-        const transcript =
-          event.results[i][0]
-            .transcript;
-
-
-        if (
-          event.results[i]
-            .isFinal
-        ) {
-
-          finalText +=
-            transcript;
-
-        } else {
-
-          interimText +=
-            transcript;
+          chatArea.scrollTop =
+            chatArea.scrollHeight;
 
         }
-
-      }
-
-
-      const text =
-        (
-          finalText ||
-          interimText
-        ).trim();
-
-
-      if (text) {
-
-        input.value =
-          text;
-
-      }
-
-
-      if (
-        finalText.trim()
-      ) {
-
-        shouldSendAfterVoice =
-          true;
-
-      }
-
-    };
-
-
-  rec.onerror =
-    error => {
-
-      console.log(
-        "Speech error:",
-        error.error
       );
-
-      shouldSendAfterVoice =
-        false;
-
-    };
-
-
-  rec.onend =
-    () => {
-
-
-      isListening =
-        false;
-
-
-      micButton.classList.remove(
-        "listening"
-      );
-
-
-      micButton.textContent =
-        "🎙️";
-
-
-      if (
-        shouldSendAfterVoice &&
-        input.value.trim() &&
-        !isBusy
-      ) {
-
-
-        shouldSendAfterVoice =
-          false;
-
-
-        setTimeout(
-          () => {
-
-            sendMessage();
-
-          },
-          150
-        );
-
-
-      } else {
-
-        shouldSendAfterVoice =
-          false;
-
-      }
-
-    };
-
-
-  return rec;
-
-}
-
-
-recognition =
-  setupRecognition();
-
-
-/* =========================================================
-   LANGUAGE
-========================================================= */
-
-function detectSpeechLanguage() {
-
-
-  if (
-    /[\u0980-\u09FF]/.test(
-      input.value
-    )
-  ) {
-
-    return "bn-BD";
-
-  }
-
-
-  return "en-US";
-
-}
-
-
-/* =========================================================
-   LISTEN
-========================================================= */
-
-function toggleListening() {
-
-
-  if (!recognition) {
-
-
-    alert(
-      "Voice input is not supported. Please use Chrome or Edge."
-    );
-
-
-    return;
-
-  }
-
-
-  if (isListening) {
-
-
-    shouldSendAfterVoice =
-      false;
-
-
-    try {
-
-      recognition.stop();
-
-    } catch {}
-
-    return;
-
-  }
-
-
-  if (isBusy) {
-
-    return;
-
-  }
-
-
-  stopSpeaking();
-
-
-  recognition.lang =
-    detectSpeechLanguage();
-
-
-  shouldSendAfterVoice =
-    false;
-
-
-  try {
-
-    recognition.start();
-
-  } catch (error) {
-
-    console.log(
-      "Recognition error:",
-      error
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   STOP LISTENING
-========================================================= */
-
-function stopListening() {
-
-
-  if (
-    recognition &&
-    isListening
-  ) {
-
-
-    shouldSendAfterVoice =
-      false;
-
-
-    try {
-
-      recognition.stop();
-
-    } catch {}
-
-  }
-
-}
-
-
-/* =========================================================
-   CLEAR CHAT
-========================================================= */
-
-function clearChat() {
-
-
-  if (
-    !confirm(
-      "Clear all NEXORA conversation memory?"
-    )
-  ) {
-
-    return;
-
-  }
-
-
-  stopSpeaking();
-
-  stopListening();
-
-  stopGenerating();
-
-
-  conversation =
-    [];
-
-
-  localStorage.removeItem(
-    "nexora_conversation"
-  );
-
-
-  chat.innerHTML = `
-
-    <div
-      id="welcome"
-      class="welcome"
-    >
-
-      <div class="welcome-icon">
-        N
-      </div>
-
-      <h2>
-        Hello, I'm NEXORA AI
-      </h2>
-
-      <p>
-        Your custom AI assistant.
-        Ask me anything, write something,
-        solve a problem, or build something together.
-      </p>
-
-    </div>
-
-  `;
-
-
-  input.value =
-    "";
-
-  input.focus();
-
-}
-
-
-/* =========================================================
-   VOICES READY
-========================================================= */
-
-if (
-  "speechSynthesis" in window
-) {
-
-  speechSynthesis.onvoiceschanged =
-    () => {
-
-      speechSynthesis.getVoices();
-
-    };
-
-}
-
-
-/* =========================================================
-   RENDER SAVED CHAT
-========================================================= */
-
-function renderSavedConversation() {
-
-
-  if (!conversation.length) {
-
-    return;
-
-  }
-
-
-  removeWelcome();
-
-
-  conversation.forEach(
-    item => {
-
-
-      if (
-        item.role === "user"
-      ) {
-
-        addUserMessage(
-          item.content
-        );
-
-      }
-
-      else if (
-        item.role === "assistant"
-      ) {
-
-
-        const ui =
-          createStreamingMessage();
-
-
-        ui.content.innerHTML =
-          renderMarkdown(
-            item.content
-          );
-
-
-        addAIActions(
-          ui.message,
-          item.content
-        );
-
-      }
 
     }
-  );
 
 
-  scrollToBottom();
+    /* =========================================================
+       ESCAPE HTML
+    ========================================================= */
 
-}
+    function escapeHtml(
+      value
+    ) {
 
+      return String(value)
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
 
-window.addEventListener(
-  "DOMContentLoaded",
-  () => {
+    }
 
-    renderSavedConversation();
-
-    input.focus();
-
-  }
-);
-
-
-/* =========================================================
-   CLEANUP
-========================================================= */
-
-window.addEventListener(
-  "beforeunload",
-  () => {
-
-    stopSpeaking();
-
-  }
-);
-
-
-</script>
+  </script>
 
 </body>
-
 </html>
