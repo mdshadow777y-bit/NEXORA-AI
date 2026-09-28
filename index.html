@@ -1,886 +1,851 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>NEXORA AI</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #070b16;
+      --panel: #0d1324;
+      --panel2: #111a30;
+      --border: rgba(255,255,255,0.08);
+      --text: #f3f5ff;
+      --muted: #8993aa;
+      --purple: #7c3aed;
+      --blue: #2563eb;
+      --user: linear-gradient(135deg, #6d28d9, #2563eb);
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(
+          circle at 20% 10%,
+          rgba(124,58,237,0.12),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 80% 20%,
+          rgba(37,99,235,0.10),
+          transparent 30%
+        ),
+        var(--bg);
+      color: var(--text);
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      overflow: hidden;
+    }
+
+    /* =========================
+       APP
+    ========================= */
+
+    .app {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    header {
+      height: 72px;
+      flex-shrink: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 22px;
+
+      border-bottom: 1px solid var(--border);
+
+      background: rgba(7,11,22,0.82);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 13px;
+
+      font-size: 20px;
+      font-weight: 800;
+
+      background:
+        linear-gradient(
+          135deg,
+          #7c3aed,
+          #2563eb
+        );
+
+      box-shadow:
+        0 0 30px rgba(124,58,237,0.28);
+    }
+
+    .brand-text h1 {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .brand-text p {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    button {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      color: var(--text);
+      font-family: inherit;
+    }
+
+    .top-btn {
+      height: 38px;
+      padding: 0 13px;
+
+      border: 1px solid var(--border);
+      border-radius: 10px;
+
+      background: rgba(255,255,255,0.04);
+
+      font-size: 12px;
+      font-weight: 600;
+
+      transition: 0.2s ease;
+    }
+
+    .top-btn:hover {
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-1px);
+    }
+
+    .voice-active {
+      border-color: rgba(124,58,237,0.5);
+      background: rgba(124,58,237,0.14);
+    }
+
+    /* =========================
+       CHAT
+    ========================= */
+
+    #chat {
+      flex: 1;
+      overflow-y: auto;
 
-<meta charset="UTF-8">
+      padding:
+        28px
+        20px
+        145px;
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+      scroll-behavior: smooth;
+    }
 
-<title>NEXORA AI</title>
+    #chat::-webkit-scrollbar {
+      width: 7px;
+    }
 
-<style>
+    #chat::-webkit-scrollbar-track {
+      background: transparent;
+    }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
+    #chat::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.10);
+      border-radius: 10px;
+    }
 
-body {
-  background: #080d1a;
-  color: white;
-  min-height: 100vh;
+    .welcome {
+      max-width: 760px;
+      margin: 60px auto;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+      text-align: center;
+    }
 
-.app {
-  width: 96%;
-  max-width: 1100px;
-  height: 94vh;
+    .welcome-icon {
+      width: 72px;
+      height: 72px;
 
-  background: #11182b;
+      margin: auto auto 20px;
 
-  border: 1px solid #293451;
-  border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-  display: flex;
-  flex-direction: column;
+      border-radius: 22px;
 
-  overflow: hidden;
+      font-size: 28px;
+      font-weight: 800;
 
-  box-shadow:
-    0 20px 60px rgba(0,0,0,.45);
-}
+      background:
+        linear-gradient(
+          135deg,
+          #7c3aed,
+          #2563eb
+        );
 
+      box-shadow:
+        0 0 60px rgba(124,58,237,0.25);
+    }
 
-/* ==========================================
-   HEADER
-========================================== */
+    .welcome h2 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
 
-.header {
-  min-height: 70px;
+    .welcome p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
 
-  padding: 12px 20px;
+    /* =========================
+       MESSAGE
+    ========================= */
 
-  border-bottom:
-    1px solid #293451;
+    .message-row {
+      width: 100%;
+      max-width: 920px;
 
-  display: flex;
-  align-items: center;
+      margin: 0 auto 20px;
 
-  gap: 12px;
+      display: flex;
+    }
 
-  flex-shrink: 0;
-}
+    .message-row.user {
+      justify-content: flex-end;
+    }
 
-.logo {
-  width: 42px;
-  height: 42px;
+    .message-row.ai {
+      justify-content: flex-start;
+    }
 
-  border-radius: 12px;
+    .message {
+      max-width: min(78%, 760px);
 
-  background:
-    linear-gradient(
-      135deg,
-      #7c3aed,
-      #06b6d4
-    );
+      padding: 13px 15px;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+      border-radius: 17px;
 
-  font-size: 18px;
-  font-weight: bold;
-}
+      line-height: 1.65;
+      font-size: 14px;
 
-.header h1 {
-  font-size: 22px;
-}
+      word-break: break-word;
+    }
 
-.header p {
-  margin-top: 3px;
+    .user .message {
+      background: var(--user);
 
-  font-size: 12px;
+      border-bottom-right-radius: 5px;
 
-  color: #94a3b8;
-}
+      box-shadow:
+        0 10px 30px rgba(37,99,235,0.12);
+    }
 
-.header-actions {
-  margin-left: auto;
+    .ai .message {
+      background: var(--panel);
 
-  display: flex;
-  align-items: center;
+      border: 1px solid var(--border);
 
-  gap: 7px;
-}
+      border-bottom-left-radius: 5px;
+    }
 
-.top-btn {
-  padding: 9px 12px;
+    .message-content {
+      white-space: normal;
+    }
 
-  border-radius: 10px;
+    /* =========================
+       MESSAGE ACTIONS
+    ========================= */
 
-  border:
-    1px solid #33415f;
+    .message-actions {
+      display: flex;
+      gap: 6px;
 
-  background: #11182b;
+      margin-top: 10px;
+    }
 
-  color: white;
+    .action-btn {
+      min-width: 30px;
+      height: 29px;
 
-  cursor: pointer;
+      padding: 0 8px;
 
-  font-size: 13px;
-}
+      border: 1px solid var(--border);
+      border-radius: 8px;
 
-.top-btn:hover {
-  border-color: #7c3aed;
-}
+      background: rgba(255,255,255,0.04);
 
-.top-btn.active {
-  border-color: #7c3aed;
+      color: #aab3c8;
 
-  background: #1b1537;
-}
+      font-size: 12px;
 
+      transition: 0.2s ease;
+    }
 
-/* ==========================================
-   VOICE LANGUAGE
-========================================== */
+    .action-btn:hover {
+      color: white;
+      background: rgba(255,255,255,0.08);
+    }
 
-#voiceLanguage {
-  padding: 8px 9px;
+    /* =========================
+       MARKDOWN
+    ========================= */
 
-  border:
-    1px solid #33415f;
+    .message-content p {
+      margin-bottom: 10px;
+    }
 
-  border-radius: 9px;
+    .message-content p:last-child {
+      margin-bottom: 0;
+    }
 
-  background: #0c1325;
+    .message-content strong {
+      font-weight: 700;
+    }
 
-  color: white;
+    .message-content ul,
+    .message-content ol {
+      padding-left: 22px;
+      margin: 8px 0;
+    }
 
-  outline: none;
+    .message-content li {
+      margin: 4px 0;
+    }
 
-  cursor: pointer;
+    .inline-code {
+      padding: 2px 6px;
 
-  font-size: 12px;
-}
+      border-radius: 6px;
 
-#voiceLanguage:focus {
-  border-color: #7c3aed;
-}
+      background: rgba(255,255,255,0.08);
 
+      font-family: Consolas, monospace;
+      font-size: 0.9em;
+    }
 
-/* ==========================================
-   CHAT
-========================================== */
+    .code-wrapper {
+      margin: 12px 0;
 
-.chat {
-  flex: 1;
+      overflow: hidden;
 
-  padding: 25px;
+      border:
+        1px solid
+        rgba(255,255,255,0.09);
 
-  overflow-y: auto;
+      border-radius: 10px;
 
-  scroll-behavior: smooth;
+      background: #070b13;
+    }
 
-  min-height: 0;
-}
+    .code-header {
+      height: 36px;
 
-.message {
-  max-width: 75%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-  padding: 14px 17px;
+      padding: 0 10px;
 
-  margin-bottom: 9px;
+      border-bottom:
+        1px solid
+        rgba(255,255,255,0.08);
 
-  border-radius: 15px;
+      color: #8f99ad;
 
-  line-height: 1.55;
+      font-size: 11px;
+    }
 
-  word-wrap: break-word;
-}
+    .copy-code {
+      padding: 5px 8px;
 
-.ai {
-  background: #1b2540;
+      border:
+        1px solid
+        rgba(255,255,255,0.08);
 
-  border-top-left-radius: 4px;
-}
+      border-radius: 6px;
 
-.user {
-  background:
-    linear-gradient(
-      135deg,
-      #7c3aed,
-      #2563eb
-    );
+      background: rgba(255,255,255,0.04);
 
-  margin-left: auto;
+      color: #b7c0d4;
 
-  border-top-right-radius: 4px;
-}
+      font-size: 10px;
+    }
 
+    pre {
+      margin: 0;
 
-/* ==========================================
-   MARKDOWN
-========================================== */
+      padding: 14px;
 
-.message h1,
-.message h2,
-.message h3 {
-  margin:
-    8px 0 10px;
-}
+      overflow-x: auto;
 
-.message strong {
-  font-weight: 700;
-}
+      font-family:
+        Consolas,
+        Monaco,
+        monospace;
 
-.message em {
-  font-style: italic;
-}
+      font-size: 12px;
+      line-height: 1.6;
+    }
 
-.message ul,
-.message ol {
-  margin:
-    8px 0 8px 20px;
-}
+    /* =========================
+       THINKING
+    ========================= */
 
-.message li {
-  margin-bottom: 7px;
-}
+    .thinking {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 2px;
+    }
 
-.message p {
-  margin-bottom: 8px;
-}
+    .thinking span {
+      width: 6px;
+      height: 6px;
 
-.message p:last-child {
-  margin-bottom: 0;
-}
+      border-radius: 50%;
 
+      background: #a78bfa;
 
-/* ==========================================
-   CODE
-========================================== */
+      animation:
+        thinking 1.2s
+        infinite ease-in-out;
+    }
 
-.code-wrapper {
-  margin-top: 10px;
+    .thinking span:nth-child(2) {
+      animation-delay: 0.15s;
+    }
 
-  background: #080d18;
+    .thinking span:nth-child(3) {
+      animation-delay: 0.30s;
+    }
 
-  border:
-    1px solid #33415f;
+    @keyframes thinking {
+      0%, 80%, 100% {
+        opacity: 0.3;
+        transform: translateY(0);
+      }
 
-  border-radius: 10px;
+      40% {
+        opacity: 1;
+        transform: translateY(-4px);
+      }
+    }
 
-  overflow: hidden;
-}
+    /* =========================
+       INPUT AREA
+    ========================= */
 
-.code-header {
-  padding: 7px 10px;
+    .input-area {
+      position: fixed;
 
-  background: #151d31;
+      left: 0;
+      right: 0;
+      bottom: 0;
 
-  display: flex;
+      padding:
+        15px
+        18px
+        20px;
 
-  justify-content: space-between;
-  align-items: center;
+      background:
+        linear-gradient(
+          to top,
+          rgba(7,11,22,1) 55%,
+          rgba(7,11,22,0)
+        );
 
-  color: #94a3b8;
+      z-index: 20;
+    }
 
-  font-size: 12px;
-}
+    .input-box {
+      max-width: 920px;
+      margin: auto;
 
-.copy-code {
-  padding: 4px 8px;
+      min-height: 58px;
 
-  border:
-    1px solid #33415f;
+      display: flex;
+      align-items: center;
 
-  border-radius: 6px;
+      gap: 8px;
 
-  background: #0d1425;
+      padding: 8px;
 
-  color: white;
+      border:
+        1px solid
+        rgba(255,255,255,0.10);
 
-  cursor: pointer;
+      border-radius: 17px;
 
-  font-size: 11px;
-}
+      background:
+        rgba(13,19,36,0.95);
 
-.code-wrapper pre {
-  padding: 13px;
+      backdrop-filter: blur(20px);
 
-  overflow-x: auto;
+      box-shadow:
+        0 20px 50px
+        rgba(0,0,0,0.30);
+    }
 
-  font-family: Consolas, monospace;
+    #messageInput {
+      flex: 1;
 
-  font-size: 13px;
+      min-width: 0;
 
-  line-height: 1.5;
-}
+      height: 42px;
 
+      padding: 0 10px;
 
-/* ==========================================
-   ACTION BUTTONS
-========================================== */
+      resize: none;
 
-.actions {
-  display: flex;
+      border: none;
+      outline: none;
 
-  gap: 7px;
+      background: transparent;
 
-  margin-bottom: 14px;
-}
+      color: white;
 
-.action-btn {
-  width: 34px;
-  height: 34px;
+      font-family: inherit;
+      font-size: 14px;
+    }
 
-  border:
-    1px solid #33415f;
+    #messageInput::placeholder {
+      color: #68738b;
+    }
 
-  background: #10182b;
+    .input-btn {
+      width: 42px;
+      height: 42px;
 
-  color: white;
+      flex-shrink: 0;
 
-  border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-  cursor: pointer;
-}
+      border-radius: 12px;
 
-.action-btn:hover {
-  border-color: #7c3aed;
-}
+      background:
+        rgba(255,255,255,0.05);
 
+      color: #b8c1d5;
 
-/* ==========================================
-   THINKING
-========================================== */
+      font-size: 17px;
 
-.thinking {
-  display: flex;
+      transition: 0.2s ease;
+    }
 
-  gap: 5px;
+    .input-btn:hover {
+      background:
+        rgba(255,255,255,0.10);
+    }
 
-  padding: 4px 2px;
-}
+    .send-btn {
+      background:
+        linear-gradient(
+          135deg,
+          #7c3aed,
+          #2563eb
+        );
 
-.thinking span {
-  width: 7px;
-  height: 7px;
+      color: white;
+    }
 
-  border-radius: 50%;
+    .send-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
 
-  background: #94a3b8;
+    .send-btn:disabled,
+    .input-btn:disabled,
+    .top-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+    }
 
-  animation:
-    thinkingBounce 1.2s infinite
-    ease-in-out;
-}
+    .listening {
+      background:
+        rgba(239,68,68,0.16);
 
-.thinking span:nth-child(2) {
-  animation-delay: .15s;
-}
+      color: #f87171;
 
-.thinking span:nth-child(3) {
-  animation-delay: .3s;
-}
+      border:
+        1px solid
+        rgba(239,68,68,0.25);
+    }
 
-@keyframes thinkingBounce {
+    /* =========================
+       MOBILE
+    ========================= */
 
-  0%,
-  60%,
-  100% {
-    transform: translateY(0);
-  }
+    @media (max-width: 650px) {
 
-  30% {
-    transform: translateY(-5px);
-  }
+      header {
+        height: 64px;
+        padding: 0 12px;
+      }
 
-}
+      .logo {
+        width: 38px;
+        height: 38px;
+      }
 
+      .brand-text h1 {
+        font-size: 15px;
+      }
 
-/* ==========================================
-   LISTENING STATUS
-========================================== */
+      .brand-text p {
+        display: none;
+      }
 
-.listening-status {
-  display: none;
+      .top-btn {
+        padding: 0 9px;
+        font-size: 11px;
+      }
 
-  padding: 7px 14px;
+      #chat {
+        padding:
+          20px
+          10px
+          135px;
+      }
 
-  border-top:
-    1px solid #293451;
+      .message {
+        max-width: 88%;
+        font-size: 13px;
+      }
 
-  background: #11182b;
+      .welcome {
+        margin: 50px 15px;
+      }
 
-  color: #a78bfa;
+      .welcome h2 {
+        font-size: 25px;
+      }
 
-  font-size: 12px;
+      .input-area {
+        padding:
+          10px
+          9px
+          12px;
+      }
 
-  text-align: center;
-}
+      .input-box {
+        border-radius: 15px;
+      }
 
-.listening-status.show {
-  display: block;
-}
-
-
-/* ==========================================
-   INPUT
-========================================== */
-
-.input-area {
-  padding: 15px;
-
-  border-top:
-    1px solid #293451;
-
-  display: flex;
-
-  gap: 9px;
-
-  flex-shrink: 0;
-
-  background: #11182b;
-}
-
-#micBtn {
-  width: 50px;
-
-  flex-shrink: 0;
-
-  border:
-    1px solid #33415f;
-
-  border-radius: 12px;
-
-  background: #0c1325;
-
-  color: white;
-
-  cursor: pointer;
-
-  font-size: 18px;
-}
-
-#micBtn:hover {
-  border-color: #7c3aed;
-}
-
-#micBtn.listening {
-  border-color: #7c3aed;
-
-  background: #29174b;
-
-  animation:
-    micPulse 1.2s infinite;
-}
-
-@keyframes micPulse {
-
-  0% {
-    box-shadow:
-      0 0 0 0
-      rgba(124,58,237,.5);
-  }
-
-  70% {
-    box-shadow:
-      0 0 0 8px
-      rgba(124,58,237,0);
-  }
-
-  100% {
-    box-shadow:
-      0 0 0 0
-      rgba(124,58,237,0);
-  }
-
-}
-
-#userInput {
-  flex: 1;
-
-  min-width: 0;
-
-  padding: 14px;
-
-  border:
-    1px solid #33415f;
-
-  border-radius: 12px;
-
-  outline: none;
-
-  background: #0c1325;
-
-  color: white;
-
-  font-size: 15px;
-}
-
-#userInput:focus {
-  border-color: #7c3aed;
-}
-
-#sendBtn {
-  padding: 0 20px;
-
-  border: none;
-
-  border-radius: 12px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #7c3aed,
-      #2563eb
-    );
-
-  color: white;
-
-  font-weight: bold;
-
-  cursor: pointer;
-}
-
-#sendBtn:hover {
-  opacity: .9;
-}
-
-#sendBtn:disabled,
-#micBtn:disabled {
-  opacity: .5;
-
-  cursor: not-allowed;
-}
-
-
-/* ==========================================
-   ERROR
-========================================== */
-
-.error-message {
-  white-space: pre-wrap;
-
-  color: #ffd6d6;
-
-  font-family: Consolas, monospace;
-
-  font-size: 13px;
-}
-
-
-/* ==========================================
-   MOBILE
-========================================== */
-
-@media (max-width: 700px) {
-
-  .app {
-    width: 100%;
-    height: 100vh;
-
-    border-radius: 0;
-  }
-
-  .header {
-    padding: 10px 12px;
-  }
-
-  .header h1 {
-    font-size: 19px;
-  }
-
-  .header p {
-    display: none;
-  }
-
-  .header-actions {
-    gap: 4px;
-  }
-
-  .top-btn {
-    padding: 8px;
-  }
-
-  #voiceLanguage {
-    display: none;
-  }
-
-  .chat {
-    padding: 15px;
-  }
-
-  .message {
-    max-width: 90%;
-  }
-
-  .input-area {
-    padding: 10px;
-  }
-
-  #sendBtn {
-    padding: 0 15px;
-  }
-
-}
-
-</style>
-
+      .input-btn {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
-
 <div class="app">
 
+  <!-- HEADER -->
+  <header>
 
-  <!-- ======================================
-       HEADER
-  ======================================= -->
+    <div class="brand">
 
-  <div class="header">
+      <div class="logo">
+        N
+      </div>
 
-    <div class="logo">
-      N
-    </div>
-
-    <div>
-
-      <h1>
-        NEXORA AI
-      </h1>
-
-      <p>
-        Your intelligent AI assistant
-      </p>
+      <div class="brand-text">
+        <h1>NEXORA AI</h1>
+        <p>Your custom AI assistant</p>
+      </div>
 
     </div>
-
 
     <div class="header-actions">
 
-      <select
-        id="voiceLanguage"
-        title="Voice language"
-      >
-
-        <option value="en-US">
-          English
-        </option>
-
-        <option value="bn-BD">
-          বাংলা
-        </option>
-
-        <option value="en-US">
-          Banglish
-        </option>
-
-      </select>
-
-
       <button
-        class="top-btn active"
         id="voiceToggle"
+        class="top-btn voice-active"
+        onclick="toggleVoice()"
       >
         🔊 Voice ON
       </button>
 
-
       <button
         class="top-btn"
-        id="stopVoiceBtn"
-        style="display:none;"
-      >
-        ⏹ Stop
-      </button>
-
-
-      <button
-        class="top-btn"
-        id="clearBtn"
+        onclick="clearChat()"
       >
         Clear Chat
       </button>
 
     </div>
 
-  </div>
+  </header>
 
 
-  <!-- ======================================
-       CHAT
-  ======================================= -->
+  <!-- CHAT -->
+  <main id="chat">
 
-  <div
-    class="chat"
-    id="chat"
-  >
+    <div
+      id="welcome"
+      class="welcome"
+    >
 
-    <div class="message ai">
+      <div class="welcome-icon">
+        N
+      </div>
 
-      Hello! 👋 I'm NEXORA AI.
-      How can I help you today?
+      <h2>
+        Hello, I'm NEXORA AI
+      </h2>
+
+      <p>
+        Your custom AI assistant.
+        Ask me anything, write something,
+        solve a problem, or build something together.
+      </p>
+
+    </div>
+
+  </main>
+
+
+  <!-- INPUT -->
+  <div class="input-area">
+
+    <div class="input-box">
+
+      <button
+        id="micButton"
+        class="input-btn"
+        onclick="toggleListening()"
+        title="Voice input"
+      >
+        🎙️
+      </button>
+
+      <input
+        id="messageInput"
+        type="text"
+        autocomplete="off"
+        placeholder="Message NEXORA AI..."
+      />
+
+      <button
+        id="sendButton"
+        class="input-btn send-btn"
+        onclick="sendMessage()"
+        title="Send"
+      >
+        ➤
+      </button>
 
     </div>
 
   </div>
-
-
-  <!-- ======================================
-       LISTENING STATUS
-  ======================================= -->
-
-  <div
-    class="listening-status"
-    id="listeningStatus"
-  >
-    🎙️ Listening... Speak now
-  </div>
-
-
-  <!-- ======================================
-       INPUT
-  ======================================= -->
-
-  <div class="input-area">
-
-    <button
-      id="micBtn"
-      title="Voice input"
-    >
-      🎙️
-    </button>
-
-
-    <input
-      type="text"
-      id="userInput"
-      placeholder="Ask NEXORA anything..."
-      autocomplete="off"
-    >
-
-
-    <button
-      id="sendBtn"
-    >
-      Send
-    </button>
-
-  </div>
-
 
 </div>
 
 
 <script>
 
-
-// =====================================================
-// CONFIG
-// =====================================================
-
-const API_URL =
-  "https://nexora-ai-api.md-shadow777y-bit.workers.dev/";
-
-
-/*
- IMPORTANT:
-
- If your current Worker URL is:
-
- https://nexora-ai-api.md-shadow777y.workers.dev/
-
-then KEEP THIS URL instead:
+/* =========================================================
+   NEXORA AI CONFIG
+========================================================= */
 
 const API_URL =
   "https://nexora-ai-api.md-shadow777y.workers.dev/";
-*/
-
-const STORAGE_KEY =
-  "nexora_conversation_v1";
 
 
-// =====================================================
-// ELEMENTS
-// =====================================================
+/* =========================================================
+   DOM
+========================================================= */
 
 const chat =
-  document.getElementById(
-    "chat"
-  );
+  document.getElementById("chat");
 
 const input =
-  document.getElementById(
-    "userInput"
-  );
+  document.getElementById("messageInput");
 
-const sendBtn =
-  document.getElementById(
-    "sendBtn"
-  );
+const sendButton =
+  document.getElementById("sendButton");
 
-const micBtn =
-  document.getElementById(
-    "micBtn"
-  );
+const micButton =
+  document.getElementById("micButton");
 
 const voiceToggle =
-  document.getElementById(
-    "voiceToggle"
-  );
+  document.getElementById("voiceToggle");
 
-const stopVoiceBtn =
-  document.getElementById(
-    "stopVoiceBtn"
-  );
-
-const clearBtn =
-  document.getElementById(
-    "clearBtn"
-  );
-
-const voiceLanguage =
-  document.getElementById(
-    "voiceLanguage"
-  );
-
-const listeningStatus =
-  document.getElementById(
-    "listeningStatus"
-  );
+const welcome =
+  document.getElementById("welcome");
 
 
-// =====================================================
-// STATE
-// =====================================================
+/* =========================================================
+   STATE
+========================================================= */
 
 let conversation = [];
 
+let isBusy = false;
+
 let voiceEnabled = true;
-
-let isGenerating = false;
-
-let recognition = null;
 
 let isListening = false;
 
-let currentSpeakingText = "";
+let recognition = null;
+
+let shouldSendAfterVoice = false;
 
 
-// =====================================================
-// LOAD MEMORY
-// =====================================================
+/* =========================================================
+   LOAD MEMORY
+========================================================= */
 
 try {
 
   const saved =
     localStorage.getItem(
-      STORAGE_KEY
+      "nexora_conversation"
     );
 
   if (saved) {
@@ -888,13 +853,15 @@ try {
     conversation =
       JSON.parse(saved);
 
-    renderConversation();
+    if (!Array.isArray(conversation)) {
+      conversation = [];
+    }
 
   }
 
 } catch (error) {
 
-  console.error(
+  console.log(
     "Memory load error:",
     error
   );
@@ -904,24 +871,40 @@ try {
 }
 
 
-// =====================================================
-// SAVE MEMORY
-// =====================================================
+/* =========================================================
+   RENDER SAVED CHAT
+========================================================= */
+
+window.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    renderConversation();
+
+    input.focus();
+
+  }
+);
+
+
+/* =========================================================
+   SAVE MEMORY
+========================================================= */
 
 function saveConversation() {
 
   try {
 
     localStorage.setItem(
-      STORAGE_KEY,
+      "nexora_conversation",
       JSON.stringify(
-        conversation
+        conversation.slice(-50)
       )
     );
 
   } catch (error) {
 
-    console.error(
+    console.log(
       "Memory save error:",
       error
     );
@@ -931,1255 +914,302 @@ function saveConversation() {
 }
 
 
-// =====================================================
-// ESCAPE HTML
-// =====================================================
-
-function escapeHTML(text) {
-
-  return String(text)
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
-
-
-// =====================================================
-// MARKDOWN RENDERER
-// =====================================================
-
-function renderMarkdown(text) {
-
-  let codeBlocks = [];
-
-
-  text =
-    String(text).replace(
-      /```(\w*)\n?([\s\S]*?)```/g,
-
-      function(
-        _,
-        language,
-        code
-      ) {
-
-        const id =
-          codeBlocks.length;
-
-        codeBlocks.push({
-
-          language:
-            language ||
-            "code",
-
-          code:
-            code.trim()
-
-        });
-
-        return (
-          `___CODE_BLOCK_${id}___`
-        );
-
-      }
-    );
-
-
-  let html =
-    escapeHTML(text);
-
-
-  html =
-    html.replace(
-      /^### (.*)$/gm,
-      "<h3>$1</h3>"
-    );
-
-
-  html =
-    html.replace(
-      /^## (.*)$/gm,
-      "<h2>$1</h2>"
-    );
-
-
-  html =
-    html.replace(
-      /^# (.*)$/gm,
-      "<h1>$1</h1>"
-    );
-
-
-  html =
-    html.replace(
-      /\*\*(.*?)\*\*/g,
-      "<strong>$1</strong>"
-    );
-
-
-  html =
-    html.replace(
-      /\*(.*?)\*/g,
-      "<em>$1</em>"
-    );
-
-
-  html =
-    html.replace(
-      /^\s*[-*] (.*)$/gm,
-      "<li>$1</li>"
-    );
-
-
-  html =
-    html.replace(
-      /(<li>.*<\/li>)/gs,
-      "<ul>$1</ul>"
-    );
-
-
-  html =
-    html.replace(
-      /\n\n/g,
-      "</p><p>"
-    );
-
-
-  html =
-    html.replace(
-      /\n/g,
-      "<br>"
-    );
-
-
-  html =
-    "<p>" +
-    html +
-    "</p>";
-
-
-  codeBlocks.forEach(
-    function(
-      block,
-      index
-    ) {
-
-      const safeCode =
-        escapeHTML(
-          block.code
-        );
-
-
-      const codeHTML = `
-
-        <div class="code-wrapper">
-
-          <div class="code-header">
-
-            <span>
-              ${escapeHTML(
-                block.language
-              )}
-            </span>
-
-            <button
-              class="copy-code"
-              data-code="${encodeURIComponent(
-                block.code
-              )}"
-            >
-              Copy
-            </button>
-
-          </div>
-
-          <pre><code>${safeCode}</code></pre>
-
-        </div>
-
-      `;
-
-
-      html =
-        html.replace(
-          `___CODE_BLOCK_${index}___`,
-          codeHTML
-        );
-
-    }
-  );
-
-
-  return html;
-
-}
-
-
-// =====================================================
-// INITIAL MESSAGE
-// =====================================================
-
-function addInitialMessage() {
-
-  const div =
-    document.createElement(
-      "div"
-    );
-
-  div.className =
-    "message ai";
-
-  div.textContent =
-    "Hello! 👋 I'm NEXORA AI. How can I help you today?";
-
-  chat.appendChild(
-    div
-  );
-
-}
-
-
-// =====================================================
-// RENDER CONVERSATION
-// =====================================================
+/* =========================================================
+   RENDER CONVERSATION
+========================================================= */
 
 function renderConversation() {
 
   chat.innerHTML = "";
 
+  if (!conversation.length) {
 
-  if (
-    !conversation.length
-  ) {
-
-    addInitialMessage();
+    chat.appendChild(
+      createWelcome()
+    );
 
     return;
 
   }
 
-
   conversation.forEach(
-    function(message) {
+    (message) => {
 
       if (
-        message.role === "user"
+        !message ||
+        !message.role ||
+        typeof message.content !== "string"
       ) {
-
-        addUserMessage(
-          message.content,
-          false
-        );
-
+        return;
       }
 
-
-      if (
-        message.role === "assistant"
-      ) {
-
-        addAIMessage(
-          message.content,
-          false
-        );
-
-      }
+      addMessageToUI(
+        message.role,
+        message.content,
+        false
+      );
 
     }
   );
 
-
   scrollToBottom();
 
 }
 
 
-// =====================================================
-// USER MESSAGE
-// =====================================================
+/* =========================================================
+   WELCOME
+========================================================= */
 
-function addUserMessage(
-  text,
-  scroll = true
-) {
+function createWelcome() {
 
   const div =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
-  div.className =
-    "message user";
+  div.className = "welcome";
 
-  div.textContent =
-    text;
+  div.innerHTML = `
+    <div class="welcome-icon">N</div>
 
-  chat.appendChild(
-    div
-  );
+    <h2>
+      Hello, I'm NEXORA AI
+    </h2>
 
+    <p>
+      Your custom AI assistant.
+      Ask me anything, write something,
+      solve a problem, or build something together.
+    </p>
+  `;
 
-  if (scroll) {
-
-    scrollToBottom();
-
-  }
+  return div;
 
 }
 
 
-// =====================================================
-// AI MESSAGE
-// =====================================================
+/* =========================================================
+   ADD MESSAGE
+========================================================= */
 
-function addAIMessage(
+function addMessageToUI(
+  role,
   text,
   scroll = true
 ) {
 
-  const wrapper =
-    document.createElement(
-      "div"
-    );
+  if (welcome) {
+    welcome.remove();
+  }
 
+  const row =
+    document.createElement("div");
+
+  row.className =
+    "message-row " +
+    (role === "user" ? "user" : "ai");
 
   const message =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
-  message.className =
-    "message ai";
-
-  message.innerHTML =
-    renderMarkdown(
-      text
-    );
+  message.className = "message";
 
 
-  wrapper.appendChild(
-    message
-  );
+  const content =
+    document.createElement("div");
+
+  content.className =
+    "message-content";
 
 
-  const actions =
-    document.createElement(
-      "div"
-    );
+  if (role === "user") {
 
-  actions.className =
-    "actions";
+    content.textContent = text;
 
+  } else {
 
-  const speakButton =
-    document.createElement(
-      "button"
-    );
-
-  speakButton.className =
-    "action-btn";
-
-  speakButton.textContent =
-    "🔊";
-
-  speakButton.title =
-    "Read aloud";
-
-
-  speakButton.onclick =
-    function() {
-
-      speak(text);
-
-    };
-
-
-  const copyButton =
-    document.createElement(
-      "button"
-    );
-
-  copyButton.className =
-    "action-btn";
-
-  copyButton.textContent =
-    "📋";
-
-  copyButton.title =
-    "Copy";
-
-
-  copyButton.onclick =
-    async function() {
-
-      try {
-
-        await navigator.clipboard.writeText(
-          text
-        );
-
-        copyButton.textContent =
-          "✓";
-
-
-        setTimeout(
-          function() {
-
-            copyButton.textContent =
-              "📋";
-
-          },
-          1000
-        );
-
-      } catch (error) {
-
-        console.error(
-          error
-        );
-
-      }
-
-    };
-
-
-  actions.appendChild(
-    speakButton
-  );
-
-  actions.appendChild(
-    copyButton
-  );
-
-
-  wrapper.appendChild(
-    actions
-  );
-
-
-  chat.appendChild(
-    wrapper
-  );
-
-
-  if (scroll) {
-
-    scrollToBottom();
+    content.innerHTML =
+      renderMarkdown(text);
 
   }
 
 
-  return message;
+  message.appendChild(content);
+
+
+  /* AI ACTIONS */
+
+  if (role === "assistant") {
+
+    const actions =
+      document.createElement("div");
+
+    actions.className =
+      "message-actions";
+
+
+    const speakButton =
+      document.createElement("button");
+
+    speakButton.className =
+      "action-btn";
+
+    speakButton.textContent =
+      "🔊";
+
+    speakButton.title =
+      "Speak";
+
+    speakButton.onclick =
+      () => speak(text);
+
+
+    const copyButton =
+      document.createElement("button");
+
+    copyButton.className =
+      "action-btn";
+
+    copyButton.textContent =
+      "Copy";
+
+    copyButton.title =
+      "Copy response";
+
+    copyButton.onclick =
+      async () => {
+
+        try {
+
+          await navigator.clipboard.writeText(
+            text
+          );
+
+          copyButton.textContent =
+            "Copied!";
+
+          setTimeout(
+            () => {
+              copyButton.textContent =
+                "Copy";
+            },
+            1200
+          );
+
+        } catch {
+
+          copyButton.textContent =
+            "Failed";
+
+        }
+
+      };
+
+
+    actions.appendChild(
+      speakButton
+    );
+
+    actions.appendChild(
+      copyButton
+    );
+
+    message.appendChild(
+      actions
+    );
+
+  }
+
+
+  row.appendChild(message);
+
+  chat.appendChild(row);
+
+
+  if (scroll) {
+    scrollToBottom();
+  }
 
 }
 
 
-// =====================================================
-// ERROR
-// =====================================================
-
-function addErrorMessage(
-  title,
-  details
-) {
-
-  const wrapper =
-    document.createElement(
-      "div"
-    );
-
-
-  const message =
-    document.createElement(
-      "div"
-    );
-
-  message.className =
-    "message ai";
-
-
-  message.innerHTML = `
-
-    <strong>
-      ⚠️ ${escapeHTML(title)}
-    </strong>
-
-    <div
-      class="error-message"
-      style="margin-top:10px;"
-    >
-      ${escapeHTML(details)}
-    </div>
-
-  `;
-
-
-  wrapper.appendChild(
-    message
-  );
-
-
-  chat.appendChild(
-    wrapper
-  );
-
-
-  scrollToBottom();
-
-}
-
-
-// =====================================================
-// THINKING
-// =====================================================
+/* =========================================================
+   THINKING
+========================================================= */
 
 function showThinking() {
 
-  const wrapper =
-    document.createElement(
-      "div"
-    );
+  removeThinking();
 
-  wrapper.id =
-    "thinkingWrapper";
+  const row =
+    document.createElement("div");
+
+  row.id =
+    "thinkingMessage";
+
+  row.className =
+    "message-row ai";
 
 
   const message =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
   message.className =
-    "message ai";
+    "message";
 
 
   message.innerHTML = `
-
     <div class="thinking">
-
       <span></span>
       <span></span>
       <span></span>
-
     </div>
-
   `;
 
 
-  wrapper.appendChild(
-    message
-  );
+  row.appendChild(message);
 
-
-  chat.appendChild(
-    wrapper
-  );
-
+  chat.appendChild(row);
 
   scrollToBottom();
 
 }
 
-
-// =====================================================
-// REMOVE THINKING
-// =====================================================
 
 function removeThinking() {
 
   const thinking =
     document.getElementById(
-      "thinkingWrapper"
+      "thinkingMessage"
     );
 
-
   if (thinking) {
-
     thinking.remove();
-
   }
 
 }
 
 
-// =====================================================
-// SCROLL
-// =====================================================
+/* =========================================================
+   SCROLL
+========================================================= */
 
 function scrollToBottom() {
 
-  chat.scrollTop =
-    chat.scrollHeight;
-
-}
-
-
-// =====================================================
-// CLEAN TEXT FOR SPEECH
-// =====================================================
-
-function cleanTextForSpeech(
-  text
-) {
-
-  return String(text)
-
-    .replace(
-      /```[\s\S]*?```/g,
-      ""
-    )
-
-    .replace(
-      /#{1,6}\s*/g,
-      ""
-    )
-
-    .replace(
-      /\*\*(.*?)\*\*/g,
-      "$1"
-    )
-
-    .replace(
-      /\*(.*?)\*/g,
-      "$1"
-    )
-
-    .replace(
-      /`([^`]+)`/g,
-      "$1"
-    )
-
-    .replace(
-      /\[([^\]]+)\]\([^)]+\)/g,
-      "$1"
-    )
-
-    .replace(
-      /\n+/g,
-      " "
-    )
-
-    .replace(
-      /\s+/g,
-      " "
-    )
-
-    .trim();
-
-}
-
-
-// =====================================================
-// SELECT BEST VOICE
-// =====================================================
-
-function getBestVoice(
-  language
-) {
-
-  if (
-    !("speechSynthesis" in window)
-  ) {
-
-    return null;
-
-  }
-
-
-  const voices =
-    speechSynthesis.getVoices();
-
-
-  if (!voices.length) {
-
-    return null;
-
-  }
-
-
-  const wanted =
-    language.toLowerCase();
-
-
-  // Exact language
-  let voice =
-    voices.find(
-      v =>
-        v.lang &&
-        v.lang.toLowerCase() === wanted
-    );
-
-
-  if (voice) {
-
-    return voice;
-
-  }
-
-
-  // Language family
-  const family =
-    wanted.split("-")[0];
-
-
-  voice =
-    voices.find(
-      v =>
-        v.lang &&
-        v.lang
-          .toLowerCase()
-          .startsWith(
-            family
-          )
-    );
-
-
-  if (voice) {
-
-    return voice;
-
-  }
-
-
-  // English fallback
-  if (
-    family === "en"
-  ) {
-
-    voice =
-      voices.find(
-        v =>
-          v.lang &&
-          v.lang
-            .toLowerCase()
-            .startsWith("en")
-      );
-
-  }
-
-
-  // Bengali fallback
-  if (
-    family === "bn"
-  ) {
-
-    voice =
-      voices.find(
-        v =>
-          v.lang &&
-          v.lang
-            .toLowerCase()
-            .startsWith("bn")
-      );
-
-  }
-
-
-  return voice || voices[0];
-
-}
-
-
-// =====================================================
-// SPEAK
-// =====================================================
-
-function speak(
-  text
-) {
-
-  if (!voiceEnabled) {
-
-    return;
-
-  }
-
-
-  if (
-    !("speechSynthesis" in window)
-  ) {
-
-    return;
-
-  }
-
-
-  stopSpeaking();
-
-
-  const cleanText =
-    cleanTextForSpeech(
-      text
-    );
-
-
-  if (!cleanText) {
-
-    return;
-
-  }
-
-
-  currentSpeakingText =
-    cleanText;
-
-
-  const selectedLanguage =
-    voiceLanguage.value;
-
-
-  const utterance =
-    new SpeechSynthesisUtterance(
-      cleanText
-    );
-
-
-  utterance.lang =
-    selectedLanguage;
-
-
-  utterance.rate =
-    selectedLanguage === "bn-BD"
-      ? 0.95
-      : 1.0;
-
-
-  utterance.pitch =
-    1;
-
-
-  utterance.volume =
-    1;
-
-
-  const voice =
-    getBestVoice(
-      selectedLanguage
-    );
-
-
-  if (voice) {
-
-    utterance.voice =
-      voice;
-
-  }
-
-
-  utterance.onstart =
-    function() {
-
-      stopVoiceBtn.style.display =
-        "inline-block";
-
-    };
-
-
-  utterance.onend =
-    function() {
-
-      stopVoiceBtn.style.display =
-        "none";
-
-      currentSpeakingText =
-        "";
-
-    };
-
-
-  utterance.onerror =
-    function() {
-
-      stopVoiceBtn.style.display =
-        "none";
-
-      currentSpeakingText =
-        "";
-
-    };
-
-
-  speechSynthesis.speak(
-    utterance
-  );
-
-}
-
-
-// =====================================================
-// STOP SPEAKING
-// =====================================================
-
-function stopSpeaking() {
-
-  if (
-    "speechSynthesis" in window
-  ) {
-
-    speechSynthesis.cancel();
-
-  }
-
-
-  stopVoiceBtn.style.display =
-    "none";
-
-  currentSpeakingText =
-    "";
-
-}
-
-
-// =====================================================
-// VOICE STOP BUTTON
-// =====================================================
-
-stopVoiceBtn.addEventListener(
-  "click",
-  function() {
-
-    stopSpeaking();
-
-  }
-);
-
-
-// =====================================================
-// VOICE TOGGLE
-// =====================================================
-
-voiceToggle.addEventListener(
-  "click",
-  function() {
-
-    voiceEnabled =
-      !voiceEnabled;
-
-
-    if (!voiceEnabled) {
-
-      stopSpeaking();
-
-
-      voiceToggle.textContent =
-        "🔇 Voice OFF";
-
-
-      voiceToggle.classList.remove(
-        "active"
-      );
-
-    } else {
-
-      voiceToggle.textContent =
-        "🔊 Voice ON";
-
-
-      voiceToggle.classList.add(
-        "active"
-      );
-
-    }
-
-  }
-);
-
-
-// =====================================================
-// SPEECH RECOGNITION
-// =====================================================
-
-const SpeechRecognition =
-  window.SpeechRecognition ||
-  window.webkitSpeechRecognition;
-
-
-if (SpeechRecognition) {
-
-  recognition =
-    new SpeechRecognition();
-
-
-  recognition.continuous =
-    false;
-
-
-  recognition.interimResults =
-    true;
-
-
-  recognition.maxAlternatives =
-    1;
-
-
-  recognition.onstart =
-    function() {
-
-      isListening =
-        true;
-
-
-      // Stop AI voice immediately
-      stopSpeaking();
-
-
-      micBtn.classList.add(
-        "listening"
-      );
-
-
-      micBtn.textContent =
-        "⏹️";
-
-
-      listeningStatus.classList.add(
-        "show"
-      );
-
-
-      listeningStatus.textContent =
-        "🎙️ Listening... Speak now";
-
-    };
-
-
-  recognition.onresult =
-    function(event) {
-
-      let transcript =
-        "";
-
-
-      for (
-        let i =
-          event.resultIndex;
-
-        i <
-          event.results.length;
-
-        i++
-      ) {
-
-        transcript +=
-          event.results[i][0].transcript;
-
-      }
-
-
-      input.value =
-        transcript.trim();
-
-
-      scrollToBottom();
-
-    };
-
-
-  recognition.onend =
-    function() {
-
-      isListening =
-        false;
-
-
-      micBtn.classList.remove(
-        "listening"
-      );
-
-
-      micBtn.textContent =
-        "🎙️";
-
-
-      listeningStatus.classList.remove(
-        "show"
-      );
-
-
-      // Auto send
-      if (
-        input.value.trim() &&
-        !isGenerating
-      ) {
-
-        setTimeout(
-          function() {
-
-            sendMessage();
-
-          },
-          150
-        );
-
-      }
-
-    };
-
-
-  recognition.onerror =
-    function(event) {
-
-      console.error(
-        "Speech recognition error:",
-        event.error
-      );
-
-
-      isListening =
-        false;
-
-
-      micBtn.classList.remove(
-        "listening"
-      );
-
-
-      micBtn.textContent =
-        "🎙️";
-
-
-      listeningStatus.classList.remove(
-        "show"
-      );
-
-
-      if (
-        event.error ===
-        "not-allowed"
-      ) {
-
-        listeningStatus.textContent =
-          "⚠️ Microphone permission denied.";
-
-      }
-
-
-      if (
-        event.error ===
-        "no-speech"
-      ) {
-
-        listeningStatus.textContent =
-          "🎙️ No speech detected.";
-
-      }
-
-    };
-
-
-  micBtn.addEventListener(
-    "click",
-    function() {
-
-      // If AI is speaking:
-      // stop it and start microphone.
-      if (
-        "speechSynthesis" in window &&
-        speechSynthesis.speaking
-      ) {
-
-        stopSpeaking();
-
-      }
-
-
-      if (isListening) {
-
-        recognition.stop();
-
-        return;
-
-      }
-
-
-      if (isGenerating) {
-
-        return;
-
-      }
-
-
-      try {
-
-        // Current selected voice language
-        recognition.lang =
-          voiceLanguage.value;
-
-
-        recognition.start();
-
-      } catch (error) {
-
-        console.error(
-          "Recognition start error:",
-          error
-        );
-
-      }
+  requestAnimationFrame(
+    () => {
+
+      chat.scrollTop =
+        chat.scrollHeight;
 
     }
   );
 
-
-} else {
-
-  micBtn.disabled =
-    true;
-
-
-  micBtn.title =
-    "Speech recognition is not supported in this browser.";
-
 }
 
 
-// =====================================================
-// VOICE LANGUAGE CHANGE
-// =====================================================
-
-voiceLanguage.addEventListener(
-  "change",
-  function() {
-
-    if (isListening) {
-
-      recognition.stop();
-
-    }
-
-
-    stopSpeaking();
-
-  }
-);
-
-
-// =====================================================
-// SEND MESSAGE
-// =====================================================
+/* =========================================================
+   SEND MESSAGE
+========================================================= */
 
 async function sendMessage() {
 
@@ -2187,403 +1217,149 @@ async function sendMessage() {
     input.value.trim();
 
 
-  if (
-    !message ||
-    isGenerating
-  ) {
-
+  if (!message) {
     return;
-
   }
 
 
-  // Stop voice
+  if (isBusy) {
+    return;
+  }
+
+
+  /* Stop voice recognition */
+
+  stopListening();
+
+
+  /* Stop current speech */
+
   stopSpeaking();
 
 
-  // Stop recognition
-  if (
-    recognition &&
-    isListening
-  ) {
-
-    try {
-
-      recognition.stop();
-
-    } catch (error) {}
-
-  }
+  isBusy = true;
 
 
-  // Previous history
-  const previousMessages =
-    conversation
-      .filter(
-        item =>
-          item.role === "user" ||
-          item.role === "assistant"
-      )
-      .slice(-20);
+  sendButton.disabled = true;
+
+  micButton.disabled = true;
 
 
-  // Save user message
-  conversation.push({
+  /* Add user message */
 
-    role: "user",
-
-    content:
-      message
-
-  });
-
-
-  saveConversation();
-
-
-  addUserMessage(
+  addMessageToUI(
+    "user",
     message
   );
 
 
-  input.value =
-    "";
+  /*
+    IMPORTANT:
+
+    Worker itself adds the current user
+    message.
+
+    So frontend sends ONLY previous history.
+  */
+
+  const previousMessages =
+    conversation
+      .filter(
+        item =>
+          item &&
+          (
+            item.role === "user" ||
+            item.role === "assistant"
+          ) &&
+          typeof item.content === "string"
+      )
+      .slice(-20);
 
 
-  isGenerating =
-    true;
+  /* Save current user message */
+
+  conversation.push({
+    role: "user",
+    content: message
+  });
+
+  saveConversation();
 
 
-  sendBtn.disabled =
-    true;
-
-
-  micBtn.disabled =
-    true;
-
+  input.value = "";
 
   showThinking();
 
 
   try {
 
-    // ==========================================
-    // REQUEST
-    // ==========================================
-
     const response =
       await fetch(
         API_URL,
         {
-
-          method:
-            "POST",
+          method: "POST",
 
           headers: {
-
             "Content-Type":
               "application/json"
-
           },
 
-          body:
-            JSON.stringify({
-
-              message:
-                message,
-
-              messages:
-                previousMessages
-
-            })
-
+          body: JSON.stringify({
+            message: message,
+            messages: previousMessages
+          })
         }
       );
 
 
-    // ==========================================
-    // ERROR
-    // ==========================================
+    /*
+      Worker returns normal JSON:
+
+      {
+        "reply": "..."
+      }
+
+      NOT SSE streaming.
+    */
+
+    let data = null;
+
+    try {
+
+      data =
+        await response.json();
+
+    } catch {
+
+      throw new Error(
+        "Server returned an invalid response."
+      );
+
+    }
+
 
     if (!response.ok) {
 
-      const errorText =
-        await response.text();
-
-
-      throw new Error(
-        `HTTP ${response.status}\n\n${errorText}`
-      );
-
-    }
-
-
-    if (!response.body) {
+      const serverError =
+        data?.details?.error?.message ||
+        data?.message ||
+        data?.error ||
+        `HTTP ${response.status}`;
 
       throw new Error(
-        "The server did not return a streaming response."
+        serverError
       );
 
     }
 
 
-    removeThinking();
+    const reply =
+      typeof data?.reply === "string"
+        ? data.reply.trim()
+        : "";
 
 
-    // ==========================================
-    // CREATE AI MESSAGE
-    // ==========================================
-
-    const wrapper =
-      document.createElement(
-        "div"
-      );
-
-
-    const aiMessage =
-      document.createElement(
-        "div"
-      );
-
-
-    aiMessage.className =
-      "message ai";
-
-
-    aiMessage.innerHTML =
-      "";
-
-
-    wrapper.appendChild(
-      aiMessage
-    );
-
-
-    // ==========================================
-    // ACTION BUTTONS
-    // ==========================================
-
-    const actions =
-      document.createElement(
-        "div"
-      );
-
-
-    actions.className =
-      "actions";
-
-
-    const speakButton =
-      document.createElement(
-        "button"
-      );
-
-
-    speakButton.className =
-      "action-btn";
-
-
-    speakButton.textContent =
-      "🔊";
-
-
-    speakButton.title =
-      "Read aloud";
-
-
-    const copyButton =
-      document.createElement(
-        "button"
-      );
-
-
-    copyButton.className =
-      "action-btn";
-
-
-    copyButton.textContent =
-      "📋";
-
-
-    copyButton.title =
-      "Copy";
-
-
-    actions.appendChild(
-      speakButton
-    );
-
-
-    actions.appendChild(
-      copyButton
-    );
-
-
-    wrapper.appendChild(
-      actions
-    );
-
-
-    chat.appendChild(
-      wrapper
-    );
-
-
-    // ==========================================
-    // STREAM
-    // ==========================================
-
-    const reader =
-      response.body.getReader();
-
-
-    const decoder =
-      new TextDecoder(
-        "utf-8"
-      );
-
-
-    let buffer =
-      "";
-
-
-    let fullReply =
-      "";
-
-
-    while (true) {
-
-      const {
-        done,
-        value
-      } =
-        await reader.read();
-
-
-      if (done) {
-
-        break;
-
-      }
-
-
-      buffer +=
-        decoder.decode(
-          value,
-          {
-            stream:
-              true
-          }
-        );
-
-
-      const events =
-        buffer.split(
-          "\n\n"
-        );
-
-
-      buffer =
-        events.pop() ||
-        "";
-
-
-      for (
-        const event
-        of events
-      ) {
-
-        const lines =
-          event.split(
-            "\n"
-          );
-
-
-        for (
-          const line
-          of lines
-        ) {
-
-          if (
-            !line.startsWith(
-              "data:"
-            )
-          ) {
-
-            continue;
-
-          }
-
-
-          const data =
-            line
-              .slice(5)
-              .trim();
-
-
-          if (
-            !data ||
-            data === "[DONE]"
-          ) {
-
-            continue;
-
-          }
-
-
-          try {
-
-            const parsed =
-              JSON.parse(
-                data
-              );
-
-
-            const token =
-              parsed
-                ?.choices?.[0]
-                ?.delta?.content;
-
-
-            if (token) {
-
-              fullReply +=
-                token;
-
-
-              aiMessage.innerHTML =
-                renderMarkdown(
-                  fullReply
-                );
-
-
-              scrollToBottom();
-
-            }
-
-          } catch (parseError) {
-
-            console.log(
-              "Stream chunk:",
-              data
-            );
-
-          }
-
-        }
-
-      }
-
-    }
-
-
-    // ==========================================
-    // EMPTY RESPONSE
-    // ==========================================
-
-    if (
-      !fullReply.trim()
-    ) {
+    if (!reply) {
 
       throw new Error(
         "NEXORA returned an empty response."
@@ -2592,102 +1368,35 @@ async function sendMessage() {
     }
 
 
-    // ==========================================
-    // BUTTONS
-    // ==========================================
-
-    speakButton.onclick =
-      function() {
-
-        speak(
-          fullReply
-        );
-
-      };
+    removeThinking();
 
 
-    copyButton.onclick =
-      async function() {
-
-        try {
-
-          await navigator.clipboard.writeText(
-            fullReply
-          );
+    addMessageToUI(
+      "assistant",
+      reply
+    );
 
 
-          copyButton.textContent =
-            "✓";
-
-
-          setTimeout(
-            function() {
-
-              copyButton.textContent =
-                "📋";
-
-            },
-            1000
-          );
-
-
-        } catch (error) {
-
-          console.error(
-            error
-          );
-
-        }
-
-      };
-
-
-    // ==========================================
-    // SAVE
-    // ==========================================
+    /* Save AI response */
 
     conversation.push({
-
-      role:
-        "assistant",
-
-      content:
-        fullReply
-
+      role: "assistant",
+      content: reply
     });
-
 
     saveConversation();
 
 
-    // ==========================================
-    // AUTO VOICE
-    // ==========================================
+    /* Voice response */
 
-    if (
-      voiceEnabled &&
-      fullReply.trim()
-    ) {
+    if (voiceEnabled) {
 
-      // Small delay gives UI time to finish rendering
-      setTimeout(
-        function() {
-
-          speak(
-            fullReply
-          );
-
-        },
-        100
-      );
+      speak(reply);
 
     }
 
 
   } catch (error) {
-
-    removeThinking();
-
 
     console.error(
       "NEXORA ERROR:",
@@ -2695,50 +1404,39 @@ async function sendMessage() {
     );
 
 
-    addErrorMessage(
-      "NEXORA request failed",
-      error.message ||
-      String(error)
+    removeThinking();
+
+
+    const errorMessage =
+      `⚠️ NEXORA request failed.\n\n${error.message}`;
+
+
+    addMessageToUI(
+      "assistant",
+      errorMessage
     );
 
-  } finally {
-
-    isGenerating =
-      false;
-
-
-    sendBtn.disabled =
-      false;
-
-
-    micBtn.disabled =
-      false;
-
-
-    input.focus();
-
   }
+
+
+  isBusy = false;
+
+  sendButton.disabled = false;
+
+  micButton.disabled = false;
+
+  input.focus();
 
 }
 
 
-// =====================================================
-// SEND BUTTON
-// =====================================================
-
-sendBtn.addEventListener(
-  "click",
-  sendMessage
-);
-
-
-// =====================================================
-// ENTER
-// =====================================================
+/* =========================================================
+   ENTER KEY
+========================================================= */
 
 input.addEventListener(
   "keydown",
-  function(event) {
+  (event) => {
 
     if (
       event.key === "Enter" &&
@@ -2755,144 +1453,779 @@ input.addEventListener(
 );
 
 
-// =====================================================
-// CLEAR CHAT
-// =====================================================
+/* =========================================================
+   MARKDOWN RENDERER
+========================================================= */
 
-clearBtn.addEventListener(
-  "click",
-  function() {
+function escapeHTML(text) {
 
-    const confirmed =
-      confirm(
-        "Clear the entire conversation?"
-      );
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
-
-    if (!confirmed) {
-
-      return;
-
-    }
+}
 
 
-    stopSpeaking();
+function renderMarkdown(text) {
+
+  if (!text) {
+    return "";
+  }
 
 
-    if (
-      recognition &&
-      isListening
-    ) {
-
-      try {
-
-        recognition.stop();
-
-      } catch (error) {}
-
-    }
+  let safe =
+    escapeHTML(text);
 
 
-    conversation =
-      [];
+  /*
+    CODE BLOCKS
+  */
+
+  const codeBlocks = [];
 
 
-    localStorage.removeItem(
-      STORAGE_KEY
+  safe =
+    safe.replace(
+      /```([\w+-]*)\n?([\s\S]*?)```/g,
+      function (
+        match,
+        language,
+        code
+      ) {
+
+        const id =
+          "code_" +
+          codeBlocks.length;
+
+
+        codeBlocks.push({
+          language:
+            language || "code",
+          code:
+            code.trim()
+        });
+
+
+        return `___CODE_BLOCK_${id}___`;
+
+      }
     );
 
 
-    chat.innerHTML =
-      "";
+  /*
+    INLINE CODE
+  */
+
+  safe =
+    safe.replace(
+      /`([^`]+)`/g,
+      '<span class="inline-code">$1</span>'
+    );
 
 
-    addInitialMessage();
+  /*
+    BOLD
+  */
 
-  }
-);
-
-
-// =====================================================
-// COPY CODE
-// =====================================================
-
-document.addEventListener(
-  "click",
-  async function(event) {
-
-    const button =
-      event.target.closest(
-        ".copy-code"
-      );
+  safe =
+    safe.replace(
+      /\*\*(.*?)\*\*/g,
+      "<strong>$1</strong>"
+    );
 
 
-    if (!button) {
+  /*
+    HEADINGS
+  */
 
-      return;
+  safe =
+    safe.replace(
+      /^### (.*)$/gm,
+      "<strong>$1</strong>"
+    );
+
+  safe =
+    safe.replace(
+      /^## (.*)$/gm,
+      "<strong>$1</strong>"
+    );
+
+  safe =
+    safe.replace(
+      /^# (.*)$/gm,
+      "<strong>$1</strong>"
+    );
+
+
+  /*
+    BULLET LIST
+  */
+
+  safe =
+    safe.replace(
+      /^\s*[-*] (.*)$/gm,
+      "• $1"
+    );
+
+
+  /*
+    NEWLINES
+  */
+
+  safe =
+    safe.replace(
+      /\n/g,
+      "<br>"
+    );
+
+
+  /*
+    CODE BLOCK RESTORE
+  */
+
+  codeBlocks.forEach(
+    (block, index) => {
+
+      const escapedCode =
+        escapeHTML(
+          block.code
+        );
+
+      const html = `
+        <div class="code-wrapper">
+
+          <div class="code-header">
+
+            <span>
+              ${escapeHTML(block.language)}
+            </span>
+
+            <button
+              class="copy-code"
+              onclick="copyCode(this)"
+            >
+              Copy
+            </button>
+
+          </div>
+
+          <pre
+            data-code="${encodeURIComponent(block.code)}"
+          >${escapedCode}</pre>
+
+        </div>
+      `;
+
+
+      safe =
+        safe.replace(
+          `___CODE_BLOCK_${index}___`,
+          html
+        );
 
     }
+  );
 
 
-    const code =
-      decodeURIComponent(
-        button.dataset.code
+  return safe;
+
+}
+
+
+/* =========================================================
+   COPY CODE
+========================================================= */
+
+async function copyCode(button) {
+
+  const wrapper =
+    button.closest(
+      ".code-wrapper"
+    );
+
+  const pre =
+    wrapper?.querySelector(
+      "pre"
+    );
+
+  if (!pre) {
+    return;
+  }
+
+
+  const code =
+    decodeURIComponent(
+      pre.dataset.code || ""
+    );
+
+
+  try {
+
+    await navigator.clipboard.writeText(
+      code
+    );
+
+    button.textContent =
+      "Copied!";
+
+    setTimeout(
+      () => {
+        button.textContent =
+          "Copy";
+      },
+      1200
+    );
+
+  } catch {
+
+    button.textContent =
+      "Failed";
+
+  }
+
+}
+
+
+/* =========================================================
+   VOICE OUTPUT
+========================================================= */
+
+function speak(text) {
+
+  if (!voiceEnabled) {
+    return;
+  }
+
+
+  if (
+    !("speechSynthesis" in window)
+  ) {
+
+    console.log(
+      "Speech synthesis not supported."
+    );
+
+    return;
+
+  }
+
+
+  stopSpeaking();
+
+
+  const cleanText =
+    text
+      .replace(
+        /```[\s\S]*?```/g,
+        ""
+      )
+      .replace(
+        /[#*_>`]/g,
+        ""
+      )
+      .replace(
+        /\[(.*?)\]\(.*?\)/g,
+        "$1"
+      )
+      .trim();
+
+
+  if (!cleanText) {
+    return;
+  }
+
+
+  const utterance =
+    new SpeechSynthesisUtterance(
+      cleanText
+    );
+
+
+  const voices =
+    window.speechSynthesis.getVoices();
+
+
+  /*
+    Try to choose a suitable voice.
+  */
+
+  const bangla =
+    /[\u0980-\u09FF]/.test(
+      cleanText
+    );
+
+
+  if (bangla) {
+
+    const bnVoice =
+      voices.find(
+        voice =>
+          voice.lang
+            .toLowerCase()
+            .startsWith("bn")
       );
 
+    if (bnVoice) {
+      utterance.voice =
+        bnVoice;
+    }
+
+  } else {
+
+    const englishVoice =
+      voices.find(
+        voice =>
+          voice.lang
+            .toLowerCase()
+            .startsWith("en")
+      );
+
+    if (englishVoice) {
+      utterance.voice =
+        englishVoice;
+    }
+
+  }
+
+
+  utterance.rate =
+    1;
+
+  utterance.pitch =
+    1;
+
+  utterance.volume =
+    1;
+
+
+  window.speechSynthesis.speak(
+    utterance
+  );
+
+}
+
+
+function stopSpeaking() {
+
+  if (
+    "speechSynthesis" in window
+  ) {
+
+    window.speechSynthesis.cancel();
+
+  }
+
+}
+
+
+/* =========================================================
+   VOICE TOGGLE
+========================================================= */
+
+function toggleVoice() {
+
+  voiceEnabled =
+    !voiceEnabled;
+
+
+  if (!voiceEnabled) {
+
+    stopSpeaking();
+
+    voiceToggle.textContent =
+      "🔇 Voice OFF";
+
+    voiceToggle.classList.remove(
+      "voice-active"
+    );
+
+  } else {
+
+    voiceToggle.textContent =
+      "🔊 Voice ON";
+
+    voiceToggle.classList.add(
+      "voice-active"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   SPEECH RECOGNITION
+========================================================= */
+
+function setupRecognition() {
+
+  const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+
+  if (!SpeechRecognition) {
+
+    console.log(
+      "Speech recognition is not supported."
+    );
+
+    return null;
+
+  }
+
+
+  const rec =
+    new SpeechRecognition();
+
+
+  /*
+    We allow both English and Bangla
+    by selecting language automatically
+    before starting.
+  */
+
+  rec.continuous = false;
+
+  rec.interimResults = true;
+
+  rec.maxAlternatives = 1;
+
+
+  rec.onstart =
+    () => {
+
+      isListening = true;
+
+      micButton.classList.add(
+        "listening"
+      );
+
+      micButton.textContent =
+        "⏹️";
+
+      stopSpeaking();
+
+    };
+
+
+  rec.onresult =
+    (event) => {
+
+      let finalText = "";
+
+      let interimText = "";
+
+
+      for (
+        let i = event.resultIndex;
+        i < event.results.length;
+        i++
+      ) {
+
+        const transcript =
+          event.results[i][0].transcript;
+
+
+        if (
+          event.results[i].isFinal
+        ) {
+
+          finalText +=
+            transcript;
+
+        } else {
+
+          interimText +=
+            transcript;
+
+        }
+
+      }
+
+
+      const text =
+        (
+          finalText ||
+          interimText
+        ).trim();
+
+
+      if (text) {
+
+        input.value =
+          text;
+
+      }
+
+
+      if (finalText.trim()) {
+
+        shouldSendAfterVoice =
+          true;
+
+      }
+
+    };
+
+
+  rec.onerror =
+    (event) => {
+
+      console.log(
+        "Speech recognition error:",
+        event.error
+      );
+
+      shouldSendAfterVoice =
+        false;
+
+    };
+
+
+  rec.onend =
+    () => {
+
+      isListening = false;
+
+      micButton.classList.remove(
+        "listening"
+      );
+
+      micButton.textContent =
+        "🎙️";
+
+
+      /*
+        Automatically send after
+        successful speech input.
+      */
+
+      if (
+        shouldSendAfterVoice &&
+        input.value.trim() &&
+        !isBusy
+      ) {
+
+        shouldSendAfterVoice =
+          false;
+
+        setTimeout(
+          () => {
+            sendMessage();
+          },
+          150
+        );
+
+      } else {
+
+        shouldSendAfterVoice =
+          false;
+
+      }
+
+    };
+
+
+  return rec;
+
+}
+
+
+recognition =
+  setupRecognition();
+
+
+/* =========================================================
+   DETECT VOICE LANGUAGE
+========================================================= */
+
+function detectSpeechLanguage() {
+
+  const currentText =
+    input.value.trim();
+
+
+  /*
+    If user already typed Bangla,
+    use Bangla recognition.
+  */
+
+  if (
+    /[\u0980-\u09FF]/.test(
+      currentText
+    )
+  ) {
+
+    return "bn-BD";
+
+  }
+
+
+  /*
+    Default English.
+  */
+
+  return "en-US";
+
+}
+
+
+/* =========================================================
+   START / STOP LISTENING
+========================================================= */
+
+function toggleListening() {
+
+  if (!recognition) {
+
+    alert(
+      "Voice input is not supported by this browser. Please try Chrome or Edge."
+    );
+
+    return;
+
+  }
+
+
+  if (isListening) {
+
+    shouldSendAfterVoice =
+      false;
+
+    recognition.stop();
+
+    return;
+
+  }
+
+
+  if (isBusy) {
+    return;
+  }
+
+
+  stopSpeaking();
+
+
+  recognition.lang =
+    detectSpeechLanguage();
+
+
+  shouldSendAfterVoice =
+    false;
+
+
+  try {
+
+    recognition.start();
+
+  } catch (error) {
+
+    console.log(
+      "Recognition start error:",
+      error
+    );
+
+  }
+
+}
+
+
+function stopListening() {
+
+  if (
+    recognition &&
+    isListening
+  ) {
+
+    shouldSendAfterVoice =
+      false;
 
     try {
-
-      await navigator.clipboard.writeText(
-        code
-      );
-
-
-      button.textContent =
-        "Copied!";
-
-
-      setTimeout(
-        function() {
-
-          button.textContent =
-            "Copy";
-
-        },
-        1200
-      );
-
-
-    } catch (error) {
-
-      console.error(
-        error
-      );
-
-    }
-
+      recognition.stop();
+    } catch {}
   }
-);
+
+}
 
 
-// =====================================================
-// LOAD AVAILABLE VOICES
-// =====================================================
+/* =========================================================
+   CLEAR CHAT
+========================================================= */
+
+function clearChat() {
+
+  const confirmed =
+    confirm(
+      "Clear all NEXORA conversation memory?"
+    );
+
+
+  if (!confirmed) {
+    return;
+  }
+
+
+  stopSpeaking();
+
+  stopListening();
+
+
+  conversation = [];
+
+
+  localStorage.removeItem(
+    "nexora_conversation"
+  );
+
+
+  renderConversation();
+
+
+  input.value = "";
+
+  input.focus();
+
+}
+
+
+/* =========================================================
+   LOAD SPEECH VOICES
+========================================================= */
 
 if (
   "speechSynthesis" in window
 ) {
 
-  speechSynthesis.onvoiceschanged =
-    function() {
+  window.speechSynthesis.onvoiceschanged =
+    () => {
 
-      speechSynthesis.getVoices();
+      window.speechSynthesis
+        .getVoices();
 
     };
 
 }
 
 
+/* =========================================================
+   SAFETY: STOP SPEECH BEFORE PAGE HIDDEN
+========================================================= */
+
+window.addEventListener(
+  "beforeunload",
+  () => {
+
+    stopSpeaking();
+
+  }
+);
+
 </script>
 
 </body>
-
 </html>
