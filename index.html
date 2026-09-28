@@ -1,574 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>NEXORA AI</title>
-
-<style>
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,sans-serif;
-}
-
-body{
-  background:#0b1020;
-  color:white;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.app{
-  width:95%;
-  max-width:900px;
-  height:90vh;
-  background:#11182b;
-  border:1px solid #293451;
-  border-radius:20px;
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-  box-shadow:0 20px 60px rgba(0,0,0,.4);
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-.header{
-  padding:20px 25px;
-  border-bottom:1px solid #293451;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.logo{
-  width:42px;
-  height:42px;
-  border-radius:12px;
-  background:linear-gradient(135deg,#7c3aed,#06b6d4);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-weight:bold;
-  font-size:18px;
-}
-
-.header h1{
-  font-size:22px;
-}
-
-.header p{
-  font-size:12px;
-  color:#94a3b8;
-  margin-top:3px;
-}
-
-.header-buttons{
-  display:flex;
-  gap:8px;
-}
-
-#voiceToggle,
-#clearBtn{
-  padding:9px 13px;
-  border:1px solid #33415f;
-  border-radius:9px;
-  background:#0c1325;
-  color:#cbd5e1;
-  cursor:pointer;
-  font-size:12px;
-}
-
-#voiceToggle:hover,
-#clearBtn:hover{
-  border-color:#7c3aed;
-  color:white;
-}
-
-#voiceToggle.active{
-  background:#1e293b;
-  border-color:#7c3aed;
-  color:white;
-}
-
-
-/* =========================
-   CHAT
-========================= */
-
-.chat{
-  flex:1;
-  padding:25px;
-  overflow-y:auto;
-  scroll-behavior:smooth;
-}
-
-.message-row{
-  display:flex;
-  width:100%;
-  margin-bottom:18px;
-}
-
-.message-row.user-row{
-  justify-content:flex-end;
-}
-
-.message-row.ai-row{
-  justify-content:flex-start;
-}
-
-.message{
-  max-width:75%;
-  padding:14px 17px;
-  border-radius:15px;
-  line-height:1.6;
-  word-wrap:break-word;
-  overflow-wrap:anywhere;
-}
-
-.message.user{
-  background:linear-gradient(135deg,#7c3aed,#2563eb);
-  border-top-right-radius:4px;
-}
-
-.message.ai{
-  background:#1b2540;
-  border-top-left-radius:4px;
-}
-
-
-/* =========================
-   AI CONTENT
-========================= */
-
-.ai-container{
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  max-width:85%;
-}
-
-.ai-content{
-  max-width:100%;
-}
-
-.ai-content p{
-  margin:0 0 12px 0;
-}
-
-.ai-content p:last-child{
-  margin-bottom:0;
-}
-
-.ai-content strong{
-  font-weight:700;
-  color:#ffffff;
-}
-
-.ai-content em{
-  font-style:italic;
-}
-
-.ai-content h1,
-.ai-content h2,
-.ai-content h3{
-  margin:12px 0 8px;
-}
-
-.ai-content h1{
-  font-size:22px;
-}
-
-.ai-content h2{
-  font-size:19px;
-}
-
-.ai-content h3{
-  font-size:17px;
-}
-
-.ai-content ul,
-.ai-content ol{
-  margin:8px 0 12px 22px;
-}
-
-.ai-content li{
-  margin-bottom:5px;
-}
-
-
-/* =========================
-   INLINE CODE
-========================= */
-
-.inline-code{
-  background:#0b1222;
-  border:1px solid #33415f;
-  padding:2px 6px;
-  border-radius:5px;
-  font-family:Consolas,"Courier New",monospace;
-  font-size:13px;
-}
-
-
-/* =========================
-   CODE BLOCK
-========================= */
-
-.code-wrapper{
-  width:100%;
-  margin:12px 0;
-  border:1px solid #33415f;
-  border-radius:10px;
-  overflow:hidden;
-  background:#090e1a;
-}
-
-.code-header{
-  min-height:36px;
-  padding:6px 10px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:#111827;
-  border-bottom:1px solid #33415f;
-  color:#94a3b8;
-  font-size:11px;
-}
-
-.code-language{
-  font-family:Arial,sans-serif;
-  text-transform:lowercase;
-}
-
-.code-copy{
-  border:1px solid #33415f;
-  background:#0c1325;
-  color:#cbd5e1;
-  border-radius:6px;
-  padding:5px 9px;
-  cursor:pointer;
-  font-size:11px;
-}
-
-.code-copy:hover{
-  border-color:#7c3aed;
-  color:white;
-}
-
-.code-wrapper pre{
-  margin:0;
-  padding:15px;
-  overflow-x:auto;
-}
-
-.code-wrapper code{
-  font-family:Consolas,"Courier New",monospace;
-  font-size:13px;
-  line-height:1.6;
-  color:#e2e8f0;
-  white-space:pre;
-}
-
-
-/* =========================
-   AI ACTIONS
-========================= */
-
-.ai-actions{
-  display:flex;
-  gap:6px;
-  margin-top:6px;
-}
-
-.action-btn{
-  width:32px;
-  height:32px;
-  border:1px solid #33415f;
-  border-radius:8px;
-  background:#0c1325;
-  color:white;
-  cursor:pointer;
-  font-size:14px;
-}
-
-.action-btn:hover{
-  border-color:#7c3aed;
-}
-
-
-/* =========================
-   THINKING
-========================= */
-
-.thinking-box{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:14px 17px;
-  background:#1b2540;
-  border-radius:15px;
-  border-top-left-radius:4px;
-  color:#94a3b8;
-}
-
-.dots{
-  display:flex;
-  gap:4px;
-}
-
-.dot{
-  width:6px;
-  height:6px;
-  background:#94a3b8;
-  border-radius:50%;
-  animation:thinking 1.4s infinite;
-}
-
-.dot:nth-child(2){
-  animation-delay:.2s;
-}
-
-.dot:nth-child(3){
-  animation-delay:.4s;
-}
-
-@keyframes thinking{
-
-  0%,60%,100%{
-    opacity:.3;
-    transform:translateY(0);
-  }
-
-  30%{
-    opacity:1;
-    transform:translateY(-3px);
-  }
-
-}
-
-
-/* =========================
-   INPUT
-========================= */
-
-.input-area{
-  padding:18px;
-  border-top:1px solid #293451;
-  display:flex;
-  gap:10px;
-}
-
-#userInput{
-  flex:1;
-  padding:15px;
-  border:1px solid #33415f;
-  border-radius:12px;
-  outline:none;
-  background:#0c1325;
-  color:white;
-  font-size:15px;
-}
-
-#userInput:focus{
-  border-color:#7c3aed;
-}
-
-#micBtn{
-  width:50px;
-  border:1px solid #33415f;
-  border-radius:12px;
-  background:#0c1325;
-  color:white;
-  font-size:20px;
-  cursor:pointer;
-}
-
-#micBtn:hover{
-  border-color:#7c3aed;
-}
-
-#micBtn.listening{
-  background:linear-gradient(135deg,#ef4444,#dc2626);
-  border-color:#ef4444;
-  animation:pulse 1s infinite;
-}
-
-@keyframes pulse{
-
-  0%{
-    box-shadow:0 0 0 0 rgba(239,68,68,.5);
-  }
-
-  70%{
-    box-shadow:0 0 0 10px rgba(239,68,68,0);
-  }
-
-  100%{
-    box-shadow:0 0 0 0 rgba(239,68,68,0);
-  }
-
-}
-
-#sendBtn{
-  padding:0 22px;
-  border:none;
-  border-radius:12px;
-  background:linear-gradient(135deg,#7c3aed,#2563eb);
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-#sendBtn:hover{
-  opacity:.9;
-}
-
-#sendBtn:disabled{
-  opacity:.6;
-  cursor:not-allowed;
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:600px){
-
-  .app{
-    width:100%;
-    height:100vh;
-    border-radius:0;
-  }
-
-  .message{
-    max-width:90%;
-  }
-
-  .ai-container{
-    max-width:95%;
-  }
-
-  .header{
-    padding:15px;
-  }
-
-  .header p{
-    display:none;
-  }
-
-  .header-buttons{
-    gap:5px;
-  }
-
-  #voiceToggle,
-  #clearBtn{
-    padding:8px 9px;
-  }
-
-  .chat{
-    padding:15px;
-  }
-
-  .input-area{
-    padding:12px;
-  }
-
-  #sendBtn{
-    padding:0 16px;
-  }
-
-}
-
-</style>
-</head>
-
-
-<body>
-
-<div class="app">
-
-  <div class="header">
-
-    <div class="brand">
-
-      <div class="logo">
-        N
-      </div>
-
-      <div>
-        <h1>NEXORA AI</h1>
-        <p>Your intelligent AI assistant</p>
-      </div>
-
-    </div>
-
-
-    <div class="header-buttons">
-
-      <button id="voiceToggle">
-        🔊 Voice ON
-      </button>
-
-      <button id="clearBtn">
-        Clear Chat
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <div
-    class="chat"
-    id="chat">
-  </div>
-
-
-  <div class="input-area">
-
-    <input
-      type="text"
-      id="userInput"
-      placeholder="Ask NEXORA anything..."
-      autocomplete="off"
-    >
-
-    <button
-      id="micBtn"
-      title="Voice Input">
-      🎤
-    </button>
-
-    <button id="sendBtn">
-      Send
-    </button>
-
-  </div>
-
-</div>
-
-
 <script>
 
 /* ==========================================
-   NEXORA API
+   NEXORA AI — CHATGPT STYLE VOICE SYSTEM
 ========================================== */
 
 const API_URL =
@@ -607,11 +40,26 @@ JSON.parse(
   localStorage.getItem("nexoraConversation")
 ) || [];
 
+
+/* ==========================================
+   VOICE STATE
+========================================== */
+
 let voiceEnabled = true;
+
+let isListening = false;
+
+let isSpeaking = false;
+
+let recognition = null;
+
+let speechQueue = [];
+
+let currentSpeechIndex = 0;
 
 
 /* ==========================================
-   SAVE
+   SAVE MEMORY
 ========================================== */
 
 function saveConversation(){
@@ -625,7 +73,7 @@ function saveConversation(){
 
 
 /* ==========================================
-   ESCAPE HTML
+   HTML ESCAPE
 ========================================== */
 
 function escapeHTML(text){
@@ -641,7 +89,7 @@ function escapeHTML(text){
 
 
 /* ==========================================
-   MARKDOWN INLINE
+   MARKDOWN
 ========================================== */
 
 function renderInlineMarkdown(text){
@@ -649,17 +97,11 @@ function renderInlineMarkdown(text){
   let result =
     escapeHTML(text);
 
-
-  /* bold */
-
   result =
     result.replace(
       /\*\*(.*?)\*\*/g,
       "<strong>$1</strong>"
     );
-
-
-  /* italic */
 
   result =
     result.replace(
@@ -667,15 +109,11 @@ function renderInlineMarkdown(text){
       "<em>$1</em>"
     );
 
-
-  /* inline code */
-
   result =
     result.replace(
       /`([^`]+)`/g,
       '<span class="inline-code">$1</span>'
     );
-
 
   return result;
 
@@ -683,23 +121,15 @@ function renderInlineMarkdown(text){
 
 
 /* ==========================================
-   CODE BLOCK PARSER
+   CODE BLOCKS
 ========================================== */
 
 function parseCodeBlocks(text){
 
   const blocks = [];
 
-  /*
-    Accept normal 3-backtick fences,
-    and also tolerate 2-backtick fences
-    because some AI responses occasionally
-    produce malformed Markdown.
-  */
-
   const regex =
     /^(`{2,3})([a-zA-Z0-9_+#.-]*)[ \t]*\r?\n([\s\S]*?)^\1[ \t]*$/gm;
-
 
   const cleaned =
     text.replace(
@@ -715,15 +145,11 @@ function parseCodeBlocks(text){
           blocks.length;
 
         blocks.push({
-
           language:
             language || "code",
-
           code:
             code.replace(/\s+$/,"")
-
         });
-
 
         return (
           "\n\n" +
@@ -734,7 +160,6 @@ function parseCodeBlocks(text){
       }
     );
 
-
   return {
     text:cleaned,
     blocks:blocks
@@ -744,7 +169,7 @@ function parseCodeBlocks(text){
 
 
 /* ==========================================
-   MARKDOWN BLOCK PARSER
+   MARKDOWN RENDER
 ========================================== */
 
 function renderMarkdown(text){
@@ -752,14 +177,11 @@ function renderMarkdown(text){
   const parsed =
     parseCodeBlocks(text);
 
-
   const blocks =
     parsed.blocks;
 
-
   const lines =
     parsed.text.split(/\r?\n/);
-
 
   let html = "";
 
@@ -770,18 +192,16 @@ function renderMarkdown(text){
 
   function closeParagraph(){
 
-    if(paragraph.length === 0){
+    if(
+      paragraph.length === 0
+    ){
       return;
     }
 
-
-    const content =
-      paragraph.join("<br>");
-
-
     html +=
-      `<p>${renderInlineMarkdown(content)}</p>`;
-
+      `<p>${renderInlineMarkdown(
+        paragraph.join("<br>")
+      )}</p>`;
 
     paragraph = [];
 
@@ -794,19 +214,21 @@ function renderMarkdown(text){
       return;
     }
 
-
     html +=
       listType === "ul"
       ? "</ul>"
       : "</ol>";
-
 
     listType = null;
 
   }
 
 
-  for(let i=0;i<lines.length;i++){
+  for(
+    let i = 0;
+    i < lines.length;
+    i++
+  ){
 
     const raw =
       lines[i];
@@ -814,8 +236,6 @@ function renderMarkdown(text){
     const line =
       raw.trim();
 
-
-    /* empty line */
 
     if(line === ""){
 
@@ -826,8 +246,6 @@ function renderMarkdown(text){
 
     }
 
-
-    /* code placeholder */
 
     const codeMatch =
       line.match(
@@ -849,32 +267,32 @@ function renderMarkdown(text){
 
       if(block){
 
-        const safeCode =
-          escapeHTML(block.code);
-
-
         html += `
 
-          <div class="code-wrapper">
+        <div class="code-wrapper">
 
-            <div class="code-header">
+          <div class="code-header">
 
-              <span class="code-language">
-                ${escapeHTML(block.language)}
-              </span>
+            <span class="code-language">
+              ${escapeHTML(
+                block.language
+              )}
+            </span>
 
-              <button
-                class="code-copy"
-                onclick="copyCode(this)"
-              >
-                Copy
-              </button>
-
-            </div>
-
-            <pre><code>${safeCode}</code></pre>
+            <button
+              class="code-copy"
+              onclick="copyCode(this)"
+            >
+              Copy
+            </button>
 
           </div>
+
+          <pre><code>${escapeHTML(
+            block.code
+          )}</code></pre>
+
+        </div>
 
         `;
 
@@ -884,8 +302,6 @@ function renderMarkdown(text){
 
     }
 
-
-    /* headings */
 
     if(line.startsWith("### ")){
 
@@ -932,8 +348,6 @@ function renderMarkdown(text){
     }
 
 
-    /* unordered list */
-
     const unordered =
       line.match(
         /^[-*•]\s+(.*)$/
@@ -943,7 +357,6 @@ function renderMarkdown(text){
     if(unordered){
 
       closeParagraph();
-
 
       if(listType !== "ul"){
 
@@ -955,19 +368,15 @@ function renderMarkdown(text){
 
       }
 
-
       html +=
         `<li>${renderInlineMarkdown(
           unordered[1]
         )}</li>`;
 
-
       continue;
 
     }
 
-
-    /* ordered list */
 
     const ordered =
       line.match(
@@ -979,7 +388,6 @@ function renderMarkdown(text){
 
       closeParagraph();
 
-
       if(listType !== "ol"){
 
         closeList();
@@ -990,20 +398,15 @@ function renderMarkdown(text){
 
       }
 
-
       html +=
         `<li>${renderInlineMarkdown(
           ordered[1]
-        )}` +
-        `</li>`;
-
+        )}</li>`;
 
       continue;
 
     }
 
-
-    /* horizontal line */
 
     if(
       line === "---" ||
@@ -1020,8 +423,6 @@ function renderMarkdown(text){
 
     }
 
-
-    /* normal text */
 
     closeList();
 
@@ -1050,18 +451,18 @@ async function copyCode(button){
       ".code-wrapper"
     );
 
-
-  if(!wrapper) return;
-
+  if(!wrapper){
+    return;
+  }
 
   const code =
     wrapper.querySelector(
       "code"
     );
 
-
-  if(!code) return;
-
+  if(!code){
+    return;
+  }
 
   try{
 
@@ -1069,26 +470,21 @@ async function copyCode(button){
       code.innerText
     );
 
-
     button.textContent =
       "Copied!";
 
-
     setTimeout(
-      function(){
-
+      ()=>{
         button.textContent =
           "Copy";
-
       },
       1500
     );
 
-
   }catch(error){
 
     console.error(
-      "Code copy error:",
+      "Copy error:",
       error
     );
 
@@ -1108,49 +504,40 @@ async function copyResponse(button){
       ".ai-container"
     );
 
-
-  if(!container) return;
-
+  if(!container){
+    return;
+  }
 
   const content =
     container.querySelector(
       ".ai-content"
     );
 
-
-  if(!content) return;
-
-
-  const text =
-    content.innerText;
-
+  if(!content){
+    return;
+  }
 
   try{
 
     await navigator.clipboard.writeText(
-      text
+      content.innerText
     );
-
 
     button.textContent =
       "✓";
 
-
     setTimeout(
-      function(){
-
+      ()=>{
         button.textContent =
           "📋";
-
       },
       1500
     );
 
-
   }catch(error){
 
     console.error(
-      "Response copy error:",
+      "Copy response error:",
       error
     );
 
@@ -1160,10 +547,110 @@ async function copyResponse(button){
 
 
 /* ==========================================
-   SPEECH
+   CHATGPT STYLE VOICE
 ========================================== */
 
-function speakText(text){
+/*
+  Split long AI response into natural
+  speech chunks.
+
+  Example:
+
+  "Hello Fahim. How are you?
+   I can help you with coding."
+
+  becomes:
+
+  1. Hello Fahim.
+  2. How are you?
+  3. I can help you with coding.
+*/
+
+function createSpeechChunks(text){
+
+  let cleanText =
+    text
+      .replace(/```[\s\S]*?```/g,"")
+      .replace(/`([^`]+)`/g,"$1")
+      .replace(/\*\*(.*?)\*\*/g,"$1")
+      .replace(/\*(.*?)\*/g,"$1")
+      .replace(/#+\s/g,"")
+      .trim();
+
+
+  if(!cleanText){
+    return [];
+  }
+
+
+  /*
+    Split after sentences.
+  */
+
+  const sentences =
+    cleanText.match(
+      /[^.!?।]+[.!?।]+|[^.!?।]+$/g
+    );
+
+
+  if(!sentences){
+    return [cleanText];
+  }
+
+
+  const chunks = [];
+
+  let current = "";
+
+
+  sentences.forEach(
+    sentence => {
+
+      const next =
+        (current + " " + sentence)
+          .trim();
+
+
+      /*
+        Keep chunks reasonably short
+        for natural voice.
+      */
+
+      if(next.length > 180){
+
+        if(current){
+          chunks.push(current);
+        }
+
+        current =
+          sentence.trim();
+
+      }else{
+
+        current =
+          next;
+
+      }
+
+    }
+  );
+
+
+  if(current){
+    chunks.push(current);
+  }
+
+
+  return chunks;
+
+}
+
+
+/* ==========================================
+   START SPEECH QUEUE
+========================================== */
+
+function speakResponse(text){
 
   if(!voiceEnabled){
     return;
@@ -1177,46 +664,149 @@ function speakText(text){
   }
 
 
-  window.speechSynthesis.cancel();
+  stopSpeaking();
 
 
-  const speech =
+  speechQueue =
+    createSpeechChunks(text);
+
+
+  currentSpeechIndex = 0;
+
+
+  if(
+    speechQueue.length === 0
+  ){
+    return;
+  }
+
+
+  speakNextChunk();
+
+}
+
+
+/* ==========================================
+   SPEAK NEXT CHUNK
+========================================== */
+
+function speakNextChunk(){
+
+  if(!voiceEnabled){
+    stopSpeaking();
+    return;
+  }
+
+
+  if(
+    currentSpeechIndex >=
+    speechQueue.length
+  ){
+
+    isSpeaking = false;
+
+    updateVoiceButton();
+
+    return;
+
+  }
+
+
+  isSpeaking = true;
+
+  updateVoiceButton();
+
+
+  const text =
+    speechQueue[
+      currentSpeechIndex
+    ];
+
+
+  const utterance =
     new SpeechSynthesisUtterance(
       text
     );
 
 
-  speech.rate = 1;
-  speech.pitch = 1;
-  speech.volume = 1;
+  utterance.rate = 1.02;
 
+  utterance.pitch = 1;
+
+  utterance.volume = 1;
+
+
+  /*
+    Pick a natural English voice
+    when available.
+  */
 
   const voices =
-    window.speechSynthesis.getVoices();
+    window.speechSynthesis
+      .getVoices();
 
 
-  const englishVoice =
+  const preferredVoice =
     voices.find(
       voice =>
         voice.lang &&
-        voice.lang
-          .toLowerCase()
-          .startsWith("en")
+        (
+          voice.lang
+            .toLowerCase()
+            .startsWith("en-us") ||
+          voice.lang
+            .toLowerCase()
+            .startsWith("en-gb")
+        )
     );
 
 
-  if(englishVoice){
-    speech.voice =
-      englishVoice;
+  if(preferredVoice){
+
+    utterance.voice =
+      preferredVoice;
+
   }
 
 
+  utterance.onend =
+    function(){
+
+      currentSpeechIndex++;
+
+      /*
+        Small pause between sentences
+        makes it sound more natural.
+      */
+
+      setTimeout(
+        speakNextChunk,
+        80
+      );
+
+    };
+
+
+  utterance.onerror =
+    function(){
+
+      isSpeaking = false;
+
+      updateVoiceButton();
+
+    };
+
+
   window.speechSynthesis.speak(
-    speech
+    utterance
   );
 
 }
 
+
+/* ==========================================
+   STOP SPEAKING
+========================================== */
 
 function stopSpeaking(){
 
@@ -1225,6 +815,62 @@ function stopSpeaking(){
   ){
 
     window.speechSynthesis.cancel();
+
+  }
+
+
+  speechQueue = [];
+
+  currentSpeechIndex = 0;
+
+  isSpeaking = false;
+
+  updateVoiceButton();
+
+}
+
+
+/* ==========================================
+   VOICE BUTTON STATE
+========================================== */
+
+function updateVoiceButton(){
+
+  if(
+    isSpeaking
+  ){
+
+    voiceToggle.textContent =
+      "⏹ Stop Voice";
+
+    voiceToggle.classList.add(
+      "active"
+    );
+
+    return;
+
+  }
+
+
+  if(
+    voiceEnabled
+  ){
+
+    voiceToggle.textContent =
+      "🔊 Voice ON";
+
+    voiceToggle.classList.add(
+      "active"
+    );
+
+  }else{
+
+    voiceToggle.textContent =
+      "🔇 Voice OFF";
+
+    voiceToggle.classList.remove(
+      "active"
+    );
 
   }
 
@@ -1256,8 +902,6 @@ function addMessage(
     );
 
 
-  /* USER */
-
   if(role === "user"){
 
     const message =
@@ -1265,31 +909,22 @@ function addMessage(
         "div"
       );
 
-
     message.className =
       "message user";
 
-
     message.textContent =
       content;
-
 
     row.appendChild(
       message
     );
 
-  }
-
-
-  /* AI */
-
-  else{
+  }else{
 
     const container =
       document.createElement(
         "div"
       );
-
 
     container.className =
       "ai-container";
@@ -1300,10 +935,8 @@ function addMessage(
         "div"
       );
 
-
     message.className =
       "message ai ai-content";
-
 
     message.innerHTML =
       renderMarkdown(
@@ -1316,26 +949,20 @@ function addMessage(
         "div"
       );
 
-
     actions.className =
       "ai-actions";
 
-
-    /* speaker */
 
     const speaker =
       document.createElement(
         "button"
       );
 
-
     speaker.className =
       "action-btn";
 
-
     speaker.textContent =
       "🔊";
-
 
     speaker.title =
       "Read response";
@@ -1343,31 +970,24 @@ function addMessage(
 
     speaker.addEventListener(
       "click",
-      function(){
-
-        speakText(
+      ()=>{
+        speakResponse(
           content
         );
-
       }
     );
 
-
-    /* copy */
 
     const copy =
       document.createElement(
         "button"
       );
 
-
     copy.className =
       "action-btn";
 
-
     copy.textContent =
       "📋";
-
 
     copy.title =
       "Copy response";
@@ -1375,12 +995,10 @@ function addMessage(
 
     copy.addEventListener(
       "click",
-      function(){
-
+      ()=>{
         copyResponse(
           copy
         );
-
       }
     );
 
@@ -1388,7 +1006,6 @@ function addMessage(
     actions.appendChild(
       speaker
     );
-
 
     actions.appendChild(
       copy
@@ -1398,7 +1015,6 @@ function addMessage(
     container.appendChild(
       message
     );
-
 
     container.appendChild(
       actions
@@ -1412,7 +1028,12 @@ function addMessage(
 
     if(speak){
 
-      speakText(
+      /*
+        Start voice immediately after
+        the AI response is rendered.
+      */
+
+      speakResponse(
         content
       );
 
@@ -1443,10 +1064,8 @@ function showThinking(){
       "div"
     );
 
-
   row.className =
     "message-row ai-row";
-
 
   row.id =
     "thinkingMessage";
@@ -1461,9 +1080,7 @@ function showThinking(){
       <div class="dots">
 
         <span class="dot"></span>
-
         <span class="dot"></span>
-
         <span class="dot"></span>
 
       </div>
@@ -1502,7 +1119,7 @@ function removeThinking(){
 
 
 /* ==========================================
-   LOAD CONVERSATION
+   LOAD CHAT
 ========================================== */
 
 function loadConversation(){
@@ -1519,14 +1136,13 @@ function loadConversation(){
       "Hello! 👋 I'm NEXORA AI. How can I help you today?"
     );
 
-
     return;
 
   }
 
 
   conversation.forEach(
-    function(message){
+    message => {
 
       addMessage(
         message.role,
@@ -1559,11 +1175,11 @@ async function sendMessage(){
 
 
   input.disabled = true;
+
   sendBtn.disabled = true;
+
   micBtn.disabled = true;
 
-
-  /* Show user message */
 
   addMessage(
     "user",
@@ -1572,9 +1188,8 @@ async function sendMessage(){
 
 
   /*
-    Send previous history only.
-    The current user message is already
-    sent separately as "message".
+    Send previous messages only.
+    Current message is sent separately.
   */
 
   const previousMessages =
@@ -1582,11 +1197,8 @@ async function sendMessage(){
 
 
   conversation.push({
-
     role:"user",
-
     content:message
-
   });
 
 
@@ -1650,6 +1262,11 @@ async function sendMessage(){
       "Sorry, I couldn't generate a response.";
 
 
+    /*
+      Text appears immediately,
+      then voice starts right away.
+    */
+
     addMessage(
       "assistant",
       reply,
@@ -1658,11 +1275,8 @@ async function sendMessage(){
 
 
     conversation.push({
-
       role:"assistant",
-
       content:reply
-
     });
 
 
@@ -1689,7 +1303,9 @@ async function sendMessage(){
 
 
   input.disabled = false;
+
   sendBtn.disabled = false;
+
   micBtn.disabled = false;
 
   input.focus();
@@ -1741,42 +1357,38 @@ voiceToggle.addEventListener(
   "click",
   function(){
 
+    /*
+      If currently speaking,
+      clicking button stops voice.
+    */
+
+    if(isSpeaking){
+
+      stopSpeaking();
+
+      return;
+
+    }
+
+
     voiceEnabled =
       !voiceEnabled;
 
 
-    if(voiceEnabled){
-
-      voiceToggle.textContent =
-        "🔊 Voice ON";
-
-
-      voiceToggle.classList.add(
-        "active"
-      );
-
-    }else{
-
-      voiceToggle.textContent =
-        "🔇 Voice OFF";
-
-
-      voiceToggle.classList.remove(
-        "active"
-      );
-
+    if(!voiceEnabled){
 
       stopSpeaking();
 
     }
 
+
+    updateVoiceButton();
+
   }
 );
 
 
-voiceToggle.classList.add(
-  "active"
-);
+updateVoiceButton();
 
 
 /* ==========================================
@@ -1790,14 +1402,16 @@ sendBtn.addEventListener(
 
 
 /* ==========================================
-   ENTER KEY
+   ENTER
 ========================================== */
 
 input.addEventListener(
   "keydown",
   function(event){
 
-    if(event.key === "Enter"){
+    if(
+      event.key === "Enter"
+    ){
 
       event.preventDefault();
 
@@ -1810,7 +1424,7 @@ input.addEventListener(
 
 
 /* ==========================================
-   VOICE INPUT
+   SPEECH RECOGNITION
 ========================================== */
 
 const SpeechRecognition =
@@ -1818,16 +1432,17 @@ const SpeechRecognition =
   window.webkitSpeechRecognition;
 
 
-let recognition = null;
-
-let isListening = false;
-
-
 if(SpeechRecognition){
 
   recognition =
     new SpeechRecognition();
 
+
+  /*
+    English + Bangla mixed speech
+    can work depending on browser.
+    Change to bn-BD if you mainly speak Bangla.
+  */
 
   recognition.lang =
     "en-US";
@@ -1845,6 +1460,9 @@ if(SpeechRecognition){
     function(){
 
       isListening = true;
+
+
+      stopSpeaking();
 
 
       micBtn.classList.add(
@@ -1883,6 +1501,40 @@ if(SpeechRecognition){
 
       input.value =
         transcript;
+
+
+      /*
+        If browser marks speech as final,
+        prepare for automatic sending.
+      */
+
+      const lastResult =
+        event.results[
+          event.results.length - 1
+        ];
+
+
+      if(
+        lastResult &&
+        lastResult.isFinal
+      ){
+
+        setTimeout(
+          function(){
+
+            if(
+              input.value.trim()
+            ){
+
+              sendMessage();
+
+            }
+
+          },
+          300
+        );
+
+      }
 
     };
 
@@ -1948,6 +1600,13 @@ if(SpeechRecognition){
       }
 
 
+      if(
+        input.disabled
+      ){
+        return;
+      }
+
+
       try{
 
         recognition.start();
@@ -1969,7 +1628,6 @@ if(SpeechRecognition){
 
   micBtn.disabled = true;
 
-
   micBtn.title =
     "Voice input is not supported in this browser";
 
@@ -1977,7 +1635,7 @@ if(SpeechRecognition){
 
 
 /* ==========================================
-   START NEXORA
+   START
 ========================================== */
 
 loadConversation();
@@ -1985,6 +1643,3 @@ loadConversation();
 input.focus();
 
 </script>
-
-</body>
-</html>
