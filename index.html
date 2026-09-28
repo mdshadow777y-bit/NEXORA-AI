@@ -123,6 +123,7 @@
       color: white;
       font-weight: bold;
       cursor: pointer;
+      transition: opacity 0.2s ease;
     }
 
     #sendBtn:hover {
@@ -153,13 +154,18 @@
   <div class="app">
 
     <div class="header">
-      <div class="logo">N</div>
+
+      <div class="logo">
+        N
+      </div>
 
       <div>
         <h1>NEXORA AI</h1>
         <p>Your intelligent AI assistant</p>
       </div>
+
     </div>
+
 
     <div class="chat" id="chat">
 
@@ -169,15 +175,19 @@
 
     </div>
 
+
     <div class="input-area">
 
       <input
         type="text"
         id="userInput"
         placeholder="Ask NEXORA anything..."
+        autocomplete="off"
       >
 
-      <button id="sendBtn">Send</button>
+      <button id="sendBtn">
+        Send
+      </button>
 
     </div>
 
@@ -186,78 +196,127 @@
 
   <script>
 
-    const input = document.getElementById("userInput");
-    const sendBtn = document.getElementById("sendBtn");
-    const chat = document.getElementById("chat");
+    // ============================================
+    // NEXORA AI BACKEND
+    // ============================================
 
     const API_URL =
       "https://nexora-ai-api.md-shadow777y.workers.dev/";
 
 
+    // ============================================
+    // DOM ELEMENTS
+    // ============================================
+
+    const input =
+      document.getElementById("userInput");
+
+    const sendBtn =
+      document.getElementById("sendBtn");
+
+    const chat =
+      document.getElementById("chat");
+
+
+    // ============================================
+    // ADD MESSAGE TO CHAT
+    // ============================================
+
     function addMessage(text, type) {
 
-      const message = document.createElement("div");
+      const message =
+        document.createElement("div");
 
-      message.className = "message " + type;
+      message.className =
+        "message " + type;
 
       message.textContent = text;
 
       chat.appendChild(message);
 
-      chat.scrollTop = chat.scrollHeight;
+      chat.scrollTop =
+        chat.scrollHeight;
 
       return message;
     }
 
 
+    // ============================================
+    // SEND MESSAGE TO NEXORA AI
+    // ============================================
+
     async function sendMessage() {
 
-      const message = input.value.trim();
+      const message =
+        input.value.trim();
 
-      if (message === "") return;
+
+      // Don't send empty messages
+
+      if (message === "") {
+        return;
+      }
 
 
       // Show user message
 
-      addMessage(message, "user");
+      addMessage(
+        message,
+        "user"
+      );
+
+
+      // Clear input
 
       input.value = "";
 
 
-      // Disable button while AI is responding
+      // Disable button
 
       sendBtn.disabled = true;
 
-      sendBtn.textContent = "Thinking...";
+      sendBtn.textContent =
+        "Thinking...";
 
 
       // Temporary AI message
 
-      const aiMessage = addMessage(
-        "NEXORA is thinking...",
-        "ai"
-      );
+      const aiMessage =
+        addMessage(
+          "NEXORA is thinking...",
+          "ai"
+        );
 
 
       try {
 
-        const response = await fetch(API_URL, {
+        // Send request to Cloudflare Worker
 
-          method: "POST",
+        const response =
+          await fetch(
+            API_URL,
+            {
+              method: "POST",
 
-          headers: {
-            "Content-Type": "application/json"
-          },
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
 
-          body: JSON.stringify({
-            message: message
-          })
+              body: JSON.stringify({
+                message: message
+              })
+            }
+          );
 
-        });
+
+        // Read response
+
+        const data =
+          await response.json();
 
 
-        const data = await response.json();
-
+        // Check server response
 
         if (!response.ok) {
 
@@ -269,7 +328,7 @@
         }
 
 
-        // Replace temporary message
+        // Display AI response
 
         aiMessage.textContent =
           data.reply ||
@@ -278,7 +337,13 @@
 
       } catch (error) {
 
-        console.error(error);
+        console.error(
+          "NEXORA AI Error:",
+          error
+        );
+
+
+        // Display user-friendly error
 
         aiMessage.textContent =
           "Sorry, something went wrong. Please try again.";
@@ -290,14 +355,26 @@
 
       sendBtn.disabled = false;
 
-      sendBtn.textContent = "Send";
+      sendBtn.textContent =
+        "Send";
+
+
+      // Focus input
 
       input.focus();
 
-      chat.scrollTop = chat.scrollHeight;
+
+      // Scroll to bottom
+
+      chat.scrollTop =
+        chat.scrollHeight;
 
     }
 
+
+    // ============================================
+    // SEND BUTTON
+    // ============================================
 
     sendBtn.addEventListener(
       "click",
@@ -305,11 +382,20 @@
     );
 
 
+    // ============================================
+    // ENTER KEY
+    // ============================================
+
     input.addEventListener(
       "keydown",
       function(event) {
 
-        if (event.key === "Enter") {
+        if (
+          event.key === "Enter" &&
+          !event.shiftKey
+        ) {
+
+          event.preventDefault();
 
           sendMessage();
 
