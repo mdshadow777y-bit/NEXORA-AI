@@ -1,493 +1,616 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
 <title>NEXORA AI</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,sans-serif;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
 }
 
-body{
-  background:#0b1020;
-  color:white;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+body {
+
+  background: #0b1020;
+
+  color: white;
+
+  min-height: 100vh;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
 }
 
-.app{
-  width:95%;
-  max-width:900px;
-  height:90vh;
-  background:#11182b;
-  border:1px solid #293451;
-  border-radius:20px;
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-  box-shadow:0 20px 60px rgba(0,0,0,.4);
+
+.app {
+
+  width: 95%;
+
+  max-width: 1100px;
+
+  height: 92vh;
+
+  background: #11182b;
+
+  border: 1px solid #293451;
+
+  border-radius: 20px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.4);
 }
+
 
 /* HEADER */
 
-.header{
-  padding:18px 22px;
-  border-bottom:1px solid #293451;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+.header {
+
+  padding: 14px 20px;
+
+  border-bottom:
+    1px solid #293451;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
 }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
+
+.logo {
+
+  width: 42px;
+
+  height: 42px;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7c3aed,
+      #06b6d4
+    );
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  font-weight: bold;
+
+  font-size: 18px;
 }
 
-.logo{
-  width:42px;
-  height:42px;
-  border-radius:12px;
-  background:linear-gradient(135deg,#7c3aed,#06b6d4);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-weight:bold;
-  font-size:18px;
+
+.header h1 {
+
+  font-size: 22px;
 }
 
-.header h1{
-  font-size:22px;
+
+.header p {
+
+  font-size: 12px;
+
+  color: #94a3b8;
+
+  margin-top: 3px;
 }
 
-.header p{
-  font-size:12px;
-  color:#94a3b8;
-  margin-top:3px;
+
+.header-actions {
+
+  margin-left: auto;
+
+  display: flex;
+
+  gap: 8px;
 }
 
-.header-buttons{
-  display:flex;
-  gap:8px;
+
+.top-btn {
+
+  padding: 9px 13px;
+
+  border-radius: 10px;
+
+  border: 1px solid #33415f;
+
+  background: #11182b;
+
+  color: white;
+
+  cursor: pointer;
 }
 
-.top-btn{
-  padding:9px 13px;
-  border:1px solid #33415f;
-  border-radius:9px;
-  background:#0c1325;
-  color:#cbd5e1;
-  cursor:pointer;
-  font-size:12px;
+
+.top-btn:hover {
+
+  border-color: #7c3aed;
 }
 
-.top-btn:hover{
-  border-color:#7c3aed;
-  color:white;
+
+#voiceToggle.active {
+
+  border-color: #7c3aed;
+
+  background: #191332;
 }
 
-.top-btn.active{
-  border-color:#7c3aed;
-  background:#1e293b;
-}
 
 /* CHAT */
 
-.chat{
-  flex:1;
-  padding:25px;
-  overflow-y:auto;
-  scroll-behavior:smooth;
+.chat {
+
+  flex: 1;
+
+  padding: 25px;
+
+  overflow-y: auto;
+
+  scroll-behavior: smooth;
 }
 
-.message-row{
-  display:flex;
-  width:100%;
-  margin-bottom:18px;
+
+.message {
+
+  max-width: 75%;
+
+  padding: 14px 17px;
+
+  margin-bottom: 15px;
+
+  border-radius: 15px;
+
+  line-height: 1.55;
+
+  word-wrap: break-word;
 }
 
-.user-row{
-  justify-content:flex-end;
+
+.ai {
+
+  background: #1b2540;
+
+  border-top-left-radius: 4px;
 }
 
-.ai-row{
-  justify-content:flex-start;
+
+.user {
+
+  background:
+    linear-gradient(
+      135deg,
+      #7c3aed,
+      #2563eb
+    );
+
+  margin-left: auto;
+
+  border-top-right-radius: 4px;
 }
 
-.message{
-  max-width:78%;
-  padding:14px 17px;
-  border-radius:15px;
-  line-height:1.6;
-  word-wrap:break-word;
-  overflow-wrap:anywhere;
-}
-
-.user-message{
-  background:linear-gradient(135deg,#7c3aed,#2563eb);
-  border-top-right-radius:4px;
-}
-
-.ai-container{
-  max-width:88%;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-}
-
-.ai-message{
-  background:#1b2540;
-  border-top-left-radius:4px;
-}
 
 /* MARKDOWN */
 
-.ai-message p{
-  margin-bottom:12px;
+.message h1,
+.message h2,
+.message h3 {
+
+  margin:
+    8px 0 10px;
 }
 
-.ai-message p:last-child{
-  margin-bottom:0;
+
+.message strong {
+
+  font-weight: 700;
 }
 
-.ai-message strong{
-  color:white;
+
+.message ul {
+
+  margin:
+    8px 0 8px 20px;
 }
 
-.ai-message h1,
-.ai-message h2,
-.ai-message h3{
-  margin:12px 0 8px;
+
+.message ol {
+
+  margin:
+    8px 0 8px 20px;
 }
 
-.ai-message h1{
-  font-size:22px;
+
+.message li {
+
+  margin-bottom: 7px;
 }
 
-.ai-message h2{
-  font-size:19px;
+
+.message p {
+
+  margin-bottom: 8px;
 }
 
-.ai-message h3{
-  font-size:17px;
+
+.message p:last-child {
+
+  margin-bottom: 0;
 }
 
-.ai-message ul,
-.ai-message ol{
-  margin:8px 0 12px 22px;
-}
-
-.ai-message li{
-  margin-bottom:5px;
-}
-
-.inline-code{
-  background:#0b1222;
-  border:1px solid #33415f;
-  border-radius:5px;
-  padding:2px 6px;
-  font-family:Consolas,monospace;
-}
 
 /* CODE */
 
-.code-box{
-  width:100%;
-  margin:12px 0;
-  border:1px solid #33415f;
-  border-radius:10px;
-  overflow:hidden;
-  background:#080d18;
+.code-wrapper {
+
+  margin-top: 10px;
+
+  background: #0a0f1d;
+
+  border:
+    1px solid #33415f;
+
+  border-radius: 10px;
+
+  overflow: hidden;
 }
 
-.code-top{
-  height:38px;
-  padding:0 10px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:#111827;
-  border-bottom:1px solid #33415f;
+
+.code-header {
+
+  padding: 7px 10px;
+
+  background: #151d31;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  font-size: 12px;
+
+  color: #94a3b8;
 }
 
-.code-language{
-  color:#94a3b8;
-  font-size:11px;
+
+.copy-code {
+
+  border: 1px solid #33415f;
+
+  background: #0d1425;
+
+  color: white;
+
+  padding: 4px 8px;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  font-size: 11px;
 }
 
-.code-copy{
-  border:1px solid #33415f;
-  background:#0c1325;
-  color:#cbd5e1;
-  border-radius:6px;
-  padding:5px 9px;
-  cursor:pointer;
-  font-size:11px;
+
+.code-wrapper pre {
+
+  padding: 13px;
+
+  overflow-x: auto;
+
+  font-family: Consolas, monospace;
+
+  font-size: 13px;
+
+  line-height: 1.5;
 }
 
-.code-copy:hover{
-  border-color:#7c3aed;
-  color:white;
+
+/* MESSAGE ACTIONS */
+
+.actions {
+
+  display: flex;
+
+  gap: 7px;
+
+  margin-top: -7px;
+
+  margin-bottom: 15px;
 }
 
-.code-box pre{
-  margin:0;
-  padding:15px;
-  overflow-x:auto;
+
+.action-btn {
+
+  width: 33px;
+
+  height: 33px;
+
+  border:
+    1px solid #33415f;
+
+  background: #10182b;
+
+  color: white;
+
+  border-radius: 9px;
+
+  cursor: pointer;
 }
 
-.code-box code{
-  font-family:Consolas,"Courier New",monospace;
-  font-size:13px;
-  line-height:1.6;
-  white-space:pre;
-  color:#e2e8f0;
+
+.action-btn:hover {
+
+  border-color: #7c3aed;
 }
 
-/* AI ACTIONS */
-
-.ai-actions{
-  display:flex;
-  gap:6px;
-  margin-top:6px;
-}
-
-.action-btn{
-  width:32px;
-  height:32px;
-  border:1px solid #33415f;
-  border-radius:8px;
-  background:#0c1325;
-  color:white;
-  cursor:pointer;
-}
-
-.action-btn:hover{
-  border-color:#7c3aed;
-}
 
 /* THINKING */
 
-.thinking{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:14px 17px;
-  background:#1b2540;
-  border-radius:15px;
-  border-top-left-radius:4px;
-  color:#94a3b8;
+.thinking {
+
+  display: flex;
+
+  gap: 5px;
+
+  padding: 4px 2px;
 }
 
-.dots{
-  display:flex;
-  gap:4px;
+
+.thinking span {
+
+  width: 7px;
+
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #94a3b8;
+
+  animation:
+    bounce 1.2s infinite ease-in-out;
 }
 
-.dot{
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:#94a3b8;
-  animation:dotPulse 1.2s infinite;
+
+.thinking span:nth-child(2) {
+
+  animation-delay: .15s;
 }
 
-.dot:nth-child(2){
-  animation-delay:.2s;
+
+.thinking span:nth-child(3) {
+
+  animation-delay: .3s;
 }
 
-.dot:nth-child(3){
-  animation-delay:.4s;
-}
 
-@keyframes dotPulse{
-  0%,100%{
-    opacity:.3;
-    transform:translateY(0);
+@keyframes bounce {
+
+  0%, 60%, 100% {
+    transform: translateY(0);
   }
-  50%{
-    opacity:1;
-    transform:translateY(-3px);
+
+  30% {
+    transform: translateY(-5px);
   }
 }
+
 
 /* INPUT */
 
-.input-area{
-  padding:17px;
-  border-top:1px solid #293451;
-  display:flex;
-  gap:9px;
+.input-area {
+
+  padding: 16px;
+
+  border-top:
+    1px solid #293451;
+
+  display: flex;
+
+  gap: 9px;
 }
 
-#userInput{
-  flex:1;
-  min-width:0;
-  padding:15px;
-  border:1px solid #33415f;
-  border-radius:12px;
-  outline:none;
-  background:#0c1325;
-  color:white;
-  font-size:15px;
+
+#micBtn {
+
+  width: 50px;
+
+  border: 1px solid #33415f;
+
+  border-radius: 12px;
+
+  background: #0c1325;
+
+  color: white;
+
+  cursor: pointer;
+
+  font-size: 18px;
 }
 
-#userInput:focus{
-  border-color:#7c3aed;
+
+#micBtn.listening {
+
+  border-color: #7c3aed;
+
+  background: #21163c;
 }
 
-#micBtn{
-  width:50px;
-  flex-shrink:0;
-  border:1px solid #33415f;
-  border-radius:12px;
-  background:#0c1325;
-  color:white;
-  font-size:19px;
-  cursor:pointer;
+
+#userInput {
+
+  flex: 1;
+
+  padding: 14px;
+
+  border:
+    1px solid #33415f;
+
+  border-radius: 12px;
+
+  outline: none;
+
+  background: #0c1325;
+
+  color: white;
+
+  font-size: 15px;
 }
 
-#micBtn:hover{
-  border-color:#7c3aed;
+
+#userInput:focus {
+
+  border-color: #7c3aed;
 }
 
-#micBtn.listening{
-  background:#dc2626;
-  border-color:#ef4444;
-  animation:micPulse 1s infinite;
+
+#sendBtn {
+
+  padding: 0 20px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7c3aed,
+      #2563eb
+    );
+
+  color: white;
+
+  font-weight: bold;
+
+  cursor: pointer;
 }
 
-@keyframes micPulse{
-  0%{
-    box-shadow:0 0 0 0 rgba(239,68,68,.5);
-  }
-  70%{
-    box-shadow:0 0 0 10px rgba(239,68,68,0);
-  }
-  100%{
-    box-shadow:0 0 0 0 rgba(239,68,68,0);
-  }
-}
-
-#sendBtn{
-  flex-shrink:0;
-  padding:0 22px;
-  border:none;
-  border-radius:12px;
-  background:linear-gradient(135deg,#7c3aed,#2563eb);
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-#sendBtn:hover{
-  opacity:.9;
-}
 
 #sendBtn:disabled,
-#micBtn:disabled{
-  opacity:.55;
-  cursor:not-allowed;
+#micBtn:disabled {
+
+  opacity: .5;
+
+  cursor: not-allowed;
 }
+
 
 /* MOBILE */
 
-@media(max-width:600px){
+@media (max-width: 600px) {
 
-  .app{
-    width:100%;
-    height:100vh;
-    border-radius:0;
+  .app {
+
+    width: 100%;
+
+    height: 100vh;
+
+    border-radius: 0;
   }
 
-  .header{
-    padding:14px;
+
+  .message {
+
+    max-width: 90%;
   }
 
-  .header p{
-    display:none;
+
+  .header {
+
+    padding: 12px;
   }
 
-  .header h1{
-    font-size:19px;
+
+  .header-actions {
+
+    gap: 5px;
   }
 
-  .logo{
-    width:38px;
-    height:38px;
+
+  .top-btn {
+
+    padding: 8px;
   }
 
-  .header-buttons{
-    gap:5px;
-  }
 
-  .top-btn{
-    padding:8px 9px;
-  }
+  .chat {
 
-  .chat{
-    padding:15px;
-  }
-
-  .message{
-    max-width:92%;
-  }
-
-  .ai-container{
-    max-width:96%;
-  }
-
-  .input-area{
-    padding:11px;
-  }
-
-  #sendBtn{
-    padding:0 15px;
-  }
-
-  #micBtn{
-    width:46px;
+    padding: 15px;
   }
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="app">
 
+
   <!-- HEADER -->
+
   <div class="header">
 
-    <div class="brand">
+    <div class="logo">
+      N
+    </div>
 
-      <div class="logo">N</div>
+    <div>
 
-      <div>
-        <h1>NEXORA AI</h1>
-        <p>Your intelligent AI assistant</p>
-      </div>
+      <h1>
+        NEXORA AI
+      </h1>
+
+      <p>
+        Your intelligent AI assistant
+      </p>
 
     </div>
 
-    <div class="header-buttons">
+
+    <div class="header-actions">
 
       <button
+        class="top-btn"
         id="voiceToggle"
-        class="top-btn active">
+      >
         🔊 Voice ON
       </button>
 
+
       <button
+        class="top-btn"
         id="clearBtn"
-        class="top-btn">
+      >
         Clear Chat
       </button>
 
@@ -497,182 +620,195 @@ body{
 
 
   <!-- CHAT -->
+
   <div
+    class="chat"
     id="chat"
-    class="chat">
+  >
+
+    <div class="message ai">
+
+      Hello! 👋 I'm NEXORA AI.
+      How can I help you today?
+
+    </div>
+
   </div>
 
 
   <!-- INPUT -->
+
   <div class="input-area">
 
+
+    <button
+      id="micBtn"
+      title="Voice input"
+    >
+      🎙️
+    </button>
+
+
     <input
-      id="userInput"
       type="text"
+      id="userInput"
       placeholder="Ask NEXORA anything..."
       autocomplete="off"
     >
 
-    <button
-      id="micBtn"
-      title="Voice Input">
-      🎤
-    </button>
 
     <button
-      id="sendBtn">
+      id="sendBtn"
+    >
       Send
     </button>
 
   </div>
+
 
 </div>
 
 
 <script>
 
-/* ==========================================
-   NEXORA CONFIG
-========================================== */
+
+// ==========================================
+// CONFIG
+// ==========================================
 
 const API_URL =
-"https://nexora-ai-api.md-shadow777y.workers.dev/";
+  "https://nexora-ai-api.md-shadow777y-bit.workers.dev/";
 
 
-/* ==========================================
-   ELEMENTS
-========================================== */
+const STORAGE_KEY =
+  "nexora_conversation_v1";
 
-const input =
-document.getElementById("userInput");
+
+// ==========================================
+// ELEMENTS
+// ==========================================
 
 const chat =
-document.getElementById("chat");
+  document.getElementById("chat");
+
+const input =
+  document.getElementById("userInput");
 
 const sendBtn =
-document.getElementById("sendBtn");
+  document.getElementById("sendBtn");
 
 const micBtn =
-document.getElementById("micBtn");
+  document.getElementById("micBtn");
 
 const voiceToggle =
-document.getElementById("voiceToggle");
+  document.getElementById("voiceToggle");
 
 const clearBtn =
-document.getElementById("clearBtn");
+  document.getElementById("clearBtn");
 
 
-/* ==========================================
-   MEMORY
-========================================== */
+// ==========================================
+// STATE
+// ==========================================
 
 let conversation = [];
 
-try{
+let voiceEnabled = true;
 
-  conversation =
-    JSON.parse(
-      localStorage.getItem(
-        "nexoraConversation"
-      )
-    ) || [];
+let isGenerating = false;
 
-}catch(error){
+let recognition = null;
+
+let isListening = false;
+
+
+// ==========================================
+// LOAD MEMORY
+// ==========================================
+
+try {
+
+  const saved =
+    localStorage.getItem(
+      STORAGE_KEY
+    );
+
+  if (saved) {
+
+    conversation =
+      JSON.parse(saved);
+
+    renderConversation();
+  }
+
+} catch (error) {
 
   conversation = [];
 
 }
 
 
-/* ==========================================
-   VOICE
-========================================== */
+// ==========================================
+// SAVE MEMORY
+// ==========================================
 
-let voiceEnabled = true;
-
-let speaking = false;
-
-let recognition = null;
-
-let listening = false;
-
-
-/* ==========================================
-   SAVE
-========================================== */
-
-function saveConversation(){
+function saveConversation() {
 
   localStorage.setItem(
-    "nexoraConversation",
+    STORAGE_KEY,
     JSON.stringify(
       conversation
     )
   );
-
 }
 
 
-/* ==========================================
-   ESCAPE HTML
-========================================== */
+// ==========================================
+// ESCAPE HTML
+// ==========================================
 
-function escapeHTML(text){
+function escapeHTML(text) {
 
-  return String(text)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 
-/* ==========================================
-   MARKDOWN
-========================================== */
+// ==========================================
+// MARKDOWN RENDER
+// ==========================================
 
-function markdown(text){
+function renderMarkdown(text) {
 
-  /*
-    First protect code blocks.
-  */
+  let codeBlocks = [];
 
-  const codeBlocks = [];
+  text =
+    text.replace(
+      /```(\w*)\n?([\s\S]*?)```/g,
+      function(_, language, code) {
 
+        const id =
+          codeBlocks.length;
 
-  text = String(text).replace(
-    /```([a-zA-Z0-9_+#.-]*)\s*\n([\s\S]*?)```/g,
-    function(match,language,code){
+        codeBlocks.push({
+          language:
+            language || "code",
+          code:
+            code.trim()
+        });
 
-      const index =
-        codeBlocks.length;
-
-      codeBlocks.push({
-        language:
-          language || "code",
-        code:
-          code.trim()
-      });
-
-      return (
-        "\n\n@@CODE" +
-        index +
-        "@@\n\n"
-      );
-
-    }
-  );
+        return `___CODE_BLOCK_${id}___`;
+      }
+    );
 
 
   let html =
     escapeHTML(text);
 
-
-  /*
-    Headings
-  */
 
   html =
     html.replace(
@@ -680,11 +816,13 @@ function markdown(text){
       "<h3>$1</h3>"
     );
 
+
   html =
     html.replace(
       /^## (.*)$/gm,
       "<h2>$1</h2>"
     );
+
 
   html =
     html.replace(
@@ -693,10 +831,6 @@ function markdown(text){
     );
 
 
-  /*
-    Bold
-  */
-
   html =
     html.replace(
       /\*\*(.*?)\*\*/g,
@@ -704,46 +838,30 @@ function markdown(text){
     );
 
 
-  /*
-    Inline code
-  */
-
   html =
     html.replace(
-      /`([^`]+)`/g,
-      '<span class="inline-code">$1</span>'
+      /\*(.*?)\*/g,
+      "<em>$1</em>"
     );
 
 
-  /*
-    Bullet lists
-  */
-
   html =
     html.replace(
-      /^\s*[-*]\s+(.+)$/gm,
+      /^\s*[-*] (.*)$/gm,
       "<li>$1</li>"
     );
 
 
-  /*
-    Numbered lists
-  */
-
   html =
     html.replace(
-      /^\s*\d+[.)]\s+(.+)$/gm,
-      "<li>$1</li>"
+      /(<li>.*<\/li>)/gs,
+      "<ul>$1</ul>"
     );
 
 
-  /*
-    Paragraph breaks
-  */
-
   html =
     html.replace(
-      /\n\n+/g,
+      /\n\n/g,
       "</p><p>"
     );
 
@@ -761,34 +879,28 @@ function markdown(text){
     "</p>";
 
 
-  /*
-    Restore code blocks
-  */
-
   codeBlocks.forEach(
-    function(block,index){
+    function(block, index) {
 
       const safeCode =
         escapeHTML(
           block.code
         );
 
-
       const codeHTML = `
 
-        <div class="code-box">
+        <div class="code-wrapper">
 
-          <div class="code-top">
+          <div class="code-header">
 
-            <span class="code-language">
-              ${escapeHTML(
-                block.language
-              )}
+            <span>
+              ${escapeHTML(block.language)}
             </span>
 
             <button
-              class="code-copy"
-              onclick="copyCode(this)">
+              class="copy-code"
+              data-code="${encodeURIComponent(block.code)}"
+            >
               Copy
             </button>
 
@@ -800,639 +912,54 @@ function markdown(text){
 
       `;
 
-
       html =
         html.replace(
-          "<p>@@CODE" +
-          index +
-          "@@</p>",
+          `___CODE_BLOCK_${index}___`,
           codeHTML
         );
-
-
-      html =
-        html.replace(
-          "@@CODE" +
-          index +
-          "@@",
-          codeHTML
-        );
-
     }
   );
 
 
   return html;
-
 }
 
 
-/* ==========================================
-   COPY CODE
-========================================== */
-
-async function copyCode(button){
-
-  const box =
-    button.closest(
-      ".code-box"
-    );
-
-  if(!box){
-    return;
-  }
-
-
-  const code =
-    box.querySelector(
-      "code"
-    );
-
-
-  if(!code){
-    return;
-  }
-
-
-  try{
-
-    await navigator.clipboard.writeText(
-      code.innerText
-    );
-
-    button.textContent =
-      "Copied!";
-
-    setTimeout(
-      function(){
-
-        button.textContent =
-          "Copy";
-
-      },
-      1500
-    );
-
-  }catch(error){
-
-    console.error(
-      "Copy failed:",
-      error
-    );
-
-  }
-
-}
-
-
-/* ==========================================
-   COPY RESPONSE
-========================================== */
-
-async function copyResponse(button){
-
-  const container =
-    button.closest(
-      ".ai-container"
-    );
-
-  if(!container){
-    return;
-  }
-
-
-  const message =
-    container.querySelector(
-      ".ai-message"
-    );
-
-  if(!message){
-    return;
-  }
-
-
-  try{
-
-    await navigator.clipboard.writeText(
-      message.innerText
-    );
-
-    button.textContent =
-      "✓";
-
-    setTimeout(
-      function(){
-
-        button.textContent =
-          "📋";
-
-      },
-      1500
-    );
-
-  }catch(error){
-
-    console.error(
-      "Copy failed:",
-      error
-    );
-
-  }
-
-}
-
-
-/* ==========================================
-   SPEECH OUTPUT
-========================================== */
-
-function stopVoice(){
-
-  if(
-    "speechSynthesis" in window
-  ){
-
-    window.speechSynthesis.cancel();
-
-  }
-
-  speaking = false;
-
-  updateVoiceButton();
-
-}
-
-
-function speak(text){
-
-  if(!voiceEnabled){
-    return;
-  }
-
-  if(
-    !("speechSynthesis" in window)
-  ){
-    return;
-  }
-
-
-  stopVoice();
-
-
-  const cleanText =
-    String(text)
-      .replace(/```[\s\S]*?```/g,"")
-      .replace(/`([^`]+)`/g,"$1")
-      .replace(/\*\*(.*?)\*\*/g,"$1")
-      .replace(/\n+/g," ")
-      .trim();
-
-
-  if(!cleanText){
-    return;
-  }
-
-
-  const utterance =
-    new SpeechSynthesisUtterance(
-      cleanText
-    );
-
-
-  utterance.rate = 1;
-
-  utterance.pitch = 1;
-
-  utterance.volume = 1;
-
-
-  const voices =
-    window.speechSynthesis
-      .getVoices();
-
-
-  const voice =
-    voices.find(
-      function(v){
-
-        return (
-          v.lang &&
-          v.lang
-            .toLowerCase()
-            .startsWith("en")
-        );
-
-      }
-    );
-
-
-  if(voice){
-    utterance.voice = voice;
-  }
-
-
-  utterance.onstart =
-    function(){
-
-      speaking = true;
-
-      updateVoiceButton();
-
-    };
-
-
-  utterance.onend =
-    function(){
-
-      speaking = false;
-
-      updateVoiceButton();
-
-    };
-
-
-  utterance.onerror =
-    function(){
-
-      speaking = false;
-
-      updateVoiceButton();
-
-    };
-
-
-  window.speechSynthesis.speak(
-    utterance
-  );
-
-}
-
-
-/* ==========================================
-   VOICE BUTTON
-========================================== */
-
-function updateVoiceButton(){
-
-  if(speaking){
-
-    voiceToggle.textContent =
-      "⏹ Stop Voice";
-
-    voiceToggle.classList.add(
-      "active"
-    );
-
-  }else if(voiceEnabled){
-
-    voiceToggle.textContent =
-      "🔊 Voice ON";
-
-    voiceToggle.classList.add(
-      "active"
-    );
-
-  }else{
-
-    voiceToggle.textContent =
-      "🔇 Voice OFF";
-
-    voiceToggle.classList.remove(
-      "active"
-    );
-
-  }
-
-}
-
-
-voiceToggle.addEventListener(
-  "click",
-  function(){
-
-    if(speaking){
-
-      stopVoice();
-
-      return;
-
-    }
-
-
-    voiceEnabled =
-      !voiceEnabled;
-
-
-    if(!voiceEnabled){
-
-      stopVoice();
-
-    }
-
-
-    updateVoiceButton();
-
-  }
-);
-
-
-/* ==========================================
-   ADD MESSAGE
-========================================== */
-
-function addMessage(
-  role,
-  content,
-  autoVoice = false
-){
-
-  const row =
-    document.createElement(
-      "div"
-    );
-
-
-  row.className =
-    "message-row " +
-    (
-      role === "user"
-      ? "user-row"
-      : "ai-row"
-    );
-
-
-  if(role === "user"){
-
-    const message =
-      document.createElement(
-        "div"
-      );
-
-
-    message.className =
-      "message user-message";
-
-
-    message.textContent =
-      content;
-
-
-    row.appendChild(
-      message
-    );
-
-  }else{
-
-    const container =
-      document.createElement(
-        "div"
-      );
-
-
-    container.className =
-      "ai-container";
-
-
-    const message =
-      document.createElement(
-        "div"
-      );
-
-
-    message.className =
-      "message ai-message";
-
-
-    message.innerHTML =
-      markdown(
-        content
-      );
-
-
-    const actions =
-      document.createElement(
-        "div"
-      );
-
-
-    actions.className =
-      "ai-actions";
-
-
-    const speaker =
-      document.createElement(
-        "button"
-      );
-
-
-    speaker.className =
-      "action-btn";
-
-    speaker.textContent =
-      "🔊";
-
-    speaker.title =
-      "Read response";
-
-
-    speaker.onclick =
-      function(){
-
-        speak(
-          content
-        );
-
-      };
-
-
-    const copy =
-      document.createElement(
-        "button"
-      );
-
-
-    copy.className =
-      "action-btn";
-
-    copy.textContent =
-      "📋";
-
-    copy.title =
-      "Copy response";
-
-
-    copy.onclick =
-      function(){
-
-        copyResponse(
-          copy
-        );
-
-      };
-
-
-    actions.appendChild(
-      speaker
-    );
-
-    actions.appendChild(
-      copy
-    );
-
-
-    container.appendChild(
-      message
-    );
-
-    container.appendChild(
-      actions
-    );
-
-
-    row.appendChild(
-      container
-    );
-
-
-    if(autoVoice){
-
-      /*
-        Start voice after the AI message
-        has been placed on the screen.
-      */
-
-      setTimeout(
-        function(){
-
-          speak(
-            content
-          );
-
-        },
-        80
-      );
-
-    }
-
-  }
-
-
-  chat.appendChild(
-    row
-  );
-
-
-  chat.scrollTop =
-    chat.scrollHeight;
-
-}
-
-
-/* ==========================================
-   THINKING
-========================================== */
-
-function showThinking(){
-
-  const row =
-    document.createElement(
-      "div"
-    );
-
-
-  row.id =
-    "thinkingMessage";
-
-
-  row.className =
-    "message-row ai-row";
-
-
-  row.innerHTML = `
-
-    <div class="thinking">
-
-      <span>Thinking</span>
-
-      <div class="dots">
-
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-
-      </div>
-
-    </div>
-
-  `;
-
-
-  chat.appendChild(
-    row
-  );
-
-
-  chat.scrollTop =
-    chat.scrollHeight;
-
-}
-
-
-function removeThinking(){
-
-  const element =
-    document.getElementById(
-      "thinkingMessage"
-    );
-
-
-  if(element){
-
-    element.remove();
-
-  }
-
-}
-
-
-/* ==========================================
-   LOAD MEMORY
-========================================== */
-
-function loadConversation(){
+// ==========================================
+// RENDER SAVED CONVERSATION
+// ==========================================
+
+function renderConversation() {
 
   chat.innerHTML = "";
 
 
-  if(
-    conversation.length === 0
-  ){
+  if (!conversation.length) {
 
-    addMessage(
-      "assistant",
-      "Hello! 👋 I'm NEXORA AI. How can I help you today?"
-    );
+    addInitialMessage();
 
     return;
-
   }
 
 
   conversation.forEach(
-    function(item){
+    function(message) {
 
-      if(
-        item &&
-        (
-          item.role === "user" ||
-          item.role === "assistant"
-        ) &&
-        typeof item.content === "string"
-      ){
+      if (
+        message.role === "user"
+      ) {
 
-        addMessage(
-          item.role,
-          item.content,
+        addUserMessage(
+          message.content,
+          false
+        );
+
+      } else if (
+        message.role === "assistant"
+      ) {
+
+        addAIMessage(
+          message.content,
           false
         );
 
@@ -1441,74 +968,316 @@ function loadConversation(){
     }
   );
 
+
+  scrollToBottom();
 }
 
 
-/* ==========================================
-   SEND MESSAGE
-========================================== */
+// ==========================================
+// INITIAL MESSAGE
+// ==========================================
 
-async function sendMessage(){
+function addInitialMessage() {
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+  div.className =
+    "message ai";
+
+  div.textContent =
+    "Hello! 👋 I'm NEXORA AI. How can I help you today?";
+
+  chat.appendChild(div);
+}
+
+
+// ==========================================
+// USER MESSAGE
+// ==========================================
+
+function addUserMessage(
+  text,
+  scroll = true
+) {
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+  div.className =
+    "message user";
+
+  div.textContent =
+    text;
+
+  chat.appendChild(div);
+
+
+  if (scroll) {
+    scrollToBottom();
+  }
+}
+
+
+// ==========================================
+// AI MESSAGE
+// ==========================================
+
+function addAIMessage(
+  text,
+  scroll = true
+) {
+
+  const wrapper =
+    document.createElement(
+      "div"
+    );
+
+
+  const message =
+    document.createElement(
+      "div"
+    );
+
+  message.className =
+    "message ai";
+
+  message.innerHTML =
+    renderMarkdown(text);
+
+
+  wrapper.appendChild(
+    message
+  );
+
+
+  const actions =
+    document.createElement(
+      "div"
+    );
+
+  actions.className =
+    "actions";
+
+
+  const speakButton =
+    document.createElement(
+      "button"
+    );
+
+  speakButton.className =
+    "action-btn";
+
+  speakButton.textContent =
+    "🔊";
+
+  speakButton.title =
+    "Read aloud";
+
+
+  speakButton.onclick =
+    function() {
+
+      speak(text);
+
+    };
+
+
+  const copyButton =
+    document.createElement(
+      "button"
+    );
+
+  copyButton.className =
+    "action-btn";
+
+  copyButton.textContent =
+    "📋";
+
+  copyButton.title =
+    "Copy";
+
+
+  copyButton.onclick =
+    async function() {
+
+      try {
+
+        await navigator.clipboard.writeText(
+          text
+        );
+
+        copyButton.textContent =
+          "✓";
+
+        setTimeout(
+          function() {
+            copyButton.textContent =
+              "📋";
+          },
+          1000
+        );
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    };
+
+
+  actions.appendChild(
+    speakButton
+  );
+
+  actions.appendChild(
+    copyButton
+  );
+
+
+  wrapper.appendChild(
+    actions
+  );
+
+
+  chat.appendChild(
+    wrapper
+  );
+
+
+  if (scroll) {
+    scrollToBottom();
+  }
+
+
+  return message;
+}
+
+
+// ==========================================
+// THINKING
+// ==========================================
+
+function showThinking() {
+
+  const wrapper =
+    document.createElement(
+      "div"
+    );
+
+  wrapper.id =
+    "thinkingWrapper";
+
+
+  const message =
+    document.createElement(
+      "div"
+    );
+
+  message.className =
+    "message ai";
+
+
+  message.innerHTML = `
+
+    <div class="thinking">
+
+      <span></span>
+      <span></span>
+      <span></span>
+
+    </div>
+
+  `;
+
+
+  wrapper.appendChild(
+    message
+  );
+
+  chat.appendChild(
+    wrapper
+  );
+
+
+  scrollToBottom();
+}
+
+
+// ==========================================
+// REMOVE THINKING
+// ==========================================
+
+function removeThinking() {
+
+  const thinking =
+    document.getElementById(
+      "thinkingWrapper"
+    );
+
+  if (thinking) {
+
+    thinking.remove();
+
+  }
+}
+
+
+// ==========================================
+// SCROLL
+// ==========================================
+
+function scrollToBottom() {
+
+  chat.scrollTop =
+    chat.scrollHeight;
+}
+
+
+// ==========================================
+// SEND MESSAGE
+// ==========================================
+
+async function sendMessage() {
 
   const message =
     input.value.trim();
 
 
-  if(!message){
+  if (
+    !message ||
+    isGenerating
+  ) {
     return;
   }
 
 
-  /*
-    Stop any previous voice.
-  */
-
+  // Stop current speech
   stopVoice();
 
 
-  input.disabled = true;
-
-  sendBtn.disabled = true;
-
-  micBtn.disabled = true;
-
-
-  /*
-    Show user message.
-  */
-
-  addMessage(
-    "user",
-    message
-  );
-
-
-  /*
-    IMPORTANT:
-    Send only previous history.
-    Current message is sent separately.
-  */
-
+  // Save previous history
   const previousMessages =
     conversation
       .filter(
-        function(item){
-
-          return (
-            item.role === "user" ||
-            item.role === "assistant"
-          );
-
-        }
+        item =>
+          item.role === "user" ||
+          item.role === "assistant"
       )
       .slice(-20);
 
 
+  // Add user message
   conversation.push({
 
-    role:"user",
+    role: "user",
 
-    content:message
+    content: message
 
   });
 
@@ -1516,21 +1285,34 @@ async function sendMessage(){
   saveConversation();
 
 
+  addUserMessage(
+    message
+  );
+
+
   input.value = "";
+
+
+  isGenerating = true;
+
+  sendBtn.disabled = true;
+
+  micBtn.disabled = true;
 
 
   showThinking();
 
 
-  try{
+  try {
 
     const response =
       await fetch(
         API_URL,
         {
-          method:"POST",
 
-          headers:{
+          method: "POST",
+
+          headers: {
             "Content-Type":
               "application/json"
           },
@@ -1545,69 +1327,270 @@ async function sendMessage(){
                 previousMessages
 
             })
+
         }
       );
 
 
-    const data =
-      await response.json();
+    if (!response.ok) {
+
+      const errorText =
+        await response.text();
+
+      throw new Error(
+        errorText ||
+        "Request failed"
+      );
+    }
 
 
     removeThinking();
 
 
-    if(!response.ok){
+    // ======================================
+    // STREAM RESPONSE
+    // ======================================
 
-      console.error(
-        "API ERROR:",
-        data
+    const reader =
+      response.body.getReader();
+
+
+    const decoder =
+      new TextDecoder();
+
+
+    let buffer = "";
+
+    let fullReply = "";
+
+
+    // Create empty AI message
+    const wrapper =
+      document.createElement(
+        "div"
       );
 
 
-      throw new Error(
-        data?.error ||
-        "API request failed."
+    const aiMessage =
+      document.createElement(
+        "div"
       );
 
-    }
+    aiMessage.className =
+      "message ai";
 
+    aiMessage.innerHTML =
+      "";
 
-    const reply =
-      data?.reply;
-
-
-    if(
-      !reply ||
-      typeof reply !== "string"
-    ){
-
-      throw new Error(
-        "AI returned an empty response."
-      );
-
-    }
-
-
-    /*
-      Show AI response.
-    */
-
-    addMessage(
-      "assistant",
-      reply,
-      true
+    wrapper.appendChild(
+      aiMessage
     );
 
 
-    /*
-      Save AI response.
-    */
+    const actions =
+      document.createElement(
+        "div"
+      );
+
+    actions.className =
+      "actions";
+
+
+    const speakButton =
+      document.createElement(
+        "button"
+      );
+
+    speakButton.className =
+      "action-btn";
+
+    speakButton.textContent =
+      "🔊";
+
+    speakButton.title =
+      "Read aloud";
+
+
+    speakButton.onclick =
+      function() {
+
+        speak(fullReply);
+
+      };
+
+
+    const copyButton =
+      document.createElement(
+        "button"
+      );
+
+    copyButton.className =
+      "action-btn";
+
+    copyButton.textContent =
+      "📋";
+
+    copyButton.title =
+      "Copy";
+
+
+    copyButton.onclick =
+      async function() {
+
+        try {
+
+          await navigator.clipboard.writeText(
+            fullReply
+          );
+
+          copyButton.textContent =
+            "✓";
+
+          setTimeout(
+            function() {
+
+              copyButton.textContent =
+                "📋";
+
+            },
+            1000
+          );
+
+        } catch (error) {}
+
+      };
+
+
+    actions.appendChild(
+      speakButton
+    );
+
+    actions.appendChild(
+      copyButton
+    );
+
+
+    wrapper.appendChild(
+      actions
+    );
+
+
+    chat.appendChild(
+      wrapper
+    );
+
+
+    // ======================================
+    // READ STREAM
+    // ======================================
+
+    while (true) {
+
+      const {
+        done,
+        value
+      } =
+        await reader.read();
+
+
+      if (done) {
+        break;
+      }
+
+
+      buffer +=
+        decoder.decode(
+          value,
+          { stream: true }
+        );
+
+
+      const events =
+        buffer.split("\n\n");
+
+
+      buffer =
+        events.pop() || "";
+
+
+      for (
+        const event
+        of events
+      ) {
+
+        const line =
+          event
+            .split("\n")
+            .find(
+              line =>
+                line.startsWith(
+                  "data:"
+                )
+            );
+
+
+        if (!line) {
+          continue;
+        }
+
+
+        const json =
+          line
+            .slice(5)
+            .trim();
+
+
+        if (!json) {
+          continue;
+        }
+
+
+        try {
+
+          const data =
+            JSON.parse(json);
+
+
+          if (data.token) {
+
+            fullReply +=
+              data.token;
+
+
+            aiMessage.innerHTML =
+              renderMarkdown(
+                fullReply
+              );
+
+
+            scrollToBottom();
+
+          }
+
+        } catch (error) {
+
+          console.log(
+            "Stream parse error:",
+            error
+          );
+
+        }
+
+      }
+
+    }
+
+
+    // ======================================
+    // SAVE COMPLETE RESPONSE
+    // ======================================
 
     conversation.push({
 
-      role:"assistant",
+      role: "assistant",
 
-      content:reply
+      content:
+        fullReply
 
     });
 
@@ -1615,53 +1598,67 @@ async function sendMessage(){
     saveConversation();
 
 
-  }catch(error){
+    // Voice after complete response
+    if (
+      voiceEnabled &&
+      fullReply.trim()
+    ) {
+
+      speak(
+        fullReply
+      );
+
+    }
+
+
+  } catch (error) {
 
     removeThinking();
 
 
+    const errorMessage =
+      "Sorry, something went wrong. Please try again.";
+
+
+    addAIMessage(
+      errorMessage
+    );
+
+
     console.error(
-      "NEXORA ERROR:",
       error
     );
 
 
-    addMessage(
-      "assistant",
-      "Sorry, I couldn't connect to NEXORA AI right now. Please try again."
-    );
+  } finally {
+
+    isGenerating =
+      false;
+
+    sendBtn.disabled =
+      false;
+
+    micBtn.disabled =
+      false;
+
+    input.focus();
 
   }
-
-
-  input.disabled = false;
-
-  sendBtn.disabled = false;
-
-  micBtn.disabled = false;
-
-  input.focus();
-
 }
 
 
-/* ==========================================
-   SEND EVENTS
-========================================== */
-
-sendBtn.addEventListener(
-  "click",
-  sendMessage
-);
-
+// ==========================================
+// ENTER SEND
+// ==========================================
 
 input.addEventListener(
   "keydown",
-  function(event){
+  function(event) {
 
-    if(
-      event.key === "Enter"
-    ){
+    if (
+      event.key === "Enter" &&
+      !event.shiftKey
+    ) {
 
       event.preventDefault();
 
@@ -1673,61 +1670,174 @@ input.addEventListener(
 );
 
 
-/* ==========================================
-   CLEAR CHAT
-========================================== */
+// ==========================================
+// SEND BUTTON
+// ==========================================
 
-clearBtn.addEventListener(
+sendBtn.addEventListener(
   "click",
-  function(){
-
-    const ok =
-      confirm(
-        "Clear all NEXORA AI conversation history?"
-      );
+  sendMessage
+);
 
 
-    if(!ok){
-      return;
-    }
+// ==========================================
+// VOICE OUTPUT
+// ==========================================
+
+function speak(text) {
+
+  if (!voiceEnabled) {
+    return;
+  }
 
 
-    stopVoice();
+  if (
+    !("speechSynthesis" in window)
+  ) {
+    return;
+  }
 
 
-    conversation = [];
+  speechSynthesis.cancel();
 
 
-    localStorage.removeItem(
-      "nexoraConversation"
+  // Remove code blocks
+  text =
+    text.replace(
+      /```[\s\S]*?```/g,
+      ""
     );
 
 
-    loadConversation();
+  // Remove markdown
+  text =
+    text
+      .replace(
+        /[*_#>`]/g,
+        ""
+      )
+      .replace(
+        /\[([^\]]+)\]\([^)]+\)/g,
+        "$1"
+      );
+
+
+  const utterance =
+    new SpeechSynthesisUtterance(
+      text
+    );
+
+
+  utterance.rate =
+    1;
+
+  utterance.pitch =
+    1;
+
+  utterance.volume =
+    1;
+
+
+  const voices =
+    speechSynthesis.getVoices();
+
+
+  const englishVoice =
+    voices.find(
+      voice =>
+        voice.lang
+          .toLowerCase()
+          .startsWith("en")
+    );
+
+
+  if (englishVoice) {
+
+    utterance.voice =
+      englishVoice;
+
+  }
+
+
+  speechSynthesis.speak(
+    utterance
+  );
+}
+
+
+// ==========================================
+// STOP VOICE
+// ==========================================
+
+function stopVoice() {
+
+  if (
+    "speechSynthesis" in window
+  ) {
+
+    speechSynthesis.cancel();
+
+  }
+}
+
+
+// ==========================================
+// VOICE TOGGLE
+// ==========================================
+
+voiceToggle.addEventListener(
+  "click",
+  function() {
+
+    voiceEnabled =
+      !voiceEnabled;
+
+
+    if (!voiceEnabled) {
+
+      stopVoice();
+
+      voiceToggle.textContent =
+        "🔇 Voice OFF";
+
+      voiceToggle.classList.remove(
+        "active"
+      );
+
+    } else {
+
+      voiceToggle.textContent =
+        "🔊 Voice ON";
+
+      voiceToggle.classList.add(
+        "active"
+      );
+
+    }
 
   }
 );
 
 
-/* ==========================================
-   VOICE INPUT
-========================================== */
+voiceToggle.classList.add(
+  "active"
+);
+
+
+// ==========================================
+// SPEECH RECOGNITION
+// ==========================================
 
 const SpeechRecognition =
   window.SpeechRecognition ||
   window.webkitSpeechRecognition;
 
 
-if(SpeechRecognition){
+if (SpeechRecognition) {
 
   recognition =
     new SpeechRecognition();
 
-
-  /*
-    English voice recognition.
-    We can add Bangla mode later.
-  */
 
   recognition.lang =
     "en-US";
@@ -1741,97 +1851,75 @@ if(SpeechRecognition){
     true;
 
 
+  recognition.maxAlternatives =
+    1;
+
+
   recognition.onstart =
-    function(){
+    function() {
 
-      listening = true;
-
-
-      /*
-        Stop AI voice when user starts
-        speaking.
-      */
-
-      stopVoice();
-
+      isListening =
+        true;
 
       micBtn.classList.add(
         "listening"
       );
 
-
       micBtn.textContent =
-        "⏹";
+        "⏹️";
 
 
-      input.placeholder =
-        "Listening...";
+      // Stop AI voice
+      stopVoice();
 
     };
 
 
   recognition.onresult =
-    function(event){
+    function(event) {
 
-      let text = "";
+      let transcript = "";
 
 
-      for(
+      for (
         let i = event.resultIndex;
         i < event.results.length;
         i++
-      ){
+      ) {
 
-        text +=
-          event.results[i][0]
-            .transcript;
+        transcript +=
+          event.results[i][0].transcript;
 
       }
 
 
       input.value =
-        text;
+        transcript;
 
     };
 
 
   recognition.onend =
-    function(){
+    function() {
 
-      listening = false;
-
+      isListening =
+        false;
 
       micBtn.classList.remove(
         "listening"
       );
 
-
       micBtn.textContent =
-        "🎤";
+        "🎙️";
 
 
-      input.placeholder =
-        "Ask NEXORA anything...";
-
-
-      /*
-        Automatically send whatever
-        was recognized.
-      */
-
-      if(
+      // Automatically send
+      if (
         input.value.trim() &&
-        !input.disabled
-      ){
+        !isGenerating
+      ) {
 
-        setTimeout(
-          function(){
-
-            sendMessage();
-
-          },
-          200
-        );
+        sendMessage();
 
       }
 
@@ -1839,42 +1927,37 @@ if(SpeechRecognition){
 
 
   recognition.onerror =
-    function(event){
+    function(event) {
 
-      console.error(
+      console.log(
         "Speech recognition error:",
         event.error
       );
 
 
-      listening = false;
-
+      isListening =
+        false;
 
       micBtn.classList.remove(
         "listening"
       );
 
-
       micBtn.textContent =
-        "🎤";
-
-
-      input.placeholder =
-        "Ask NEXORA anything...";
+        "🎙️";
 
     };
 
 
   micBtn.addEventListener(
     "click",
-    function(){
+    function() {
 
-      if(input.disabled){
+      if (isGenerating) {
         return;
       }
 
 
-      if(listening){
+      if (isListening) {
 
         recognition.stop();
 
@@ -1883,14 +1966,13 @@ if(SpeechRecognition){
       }
 
 
-      try{
+      try {
 
         recognition.start();
 
-      }catch(error){
+      } catch (error) {
 
-        console.error(
-          "Recognition start error:",
+        console.log(
           error
         );
 
@@ -1900,27 +1982,118 @@ if(SpeechRecognition){
   );
 
 
-}else{
+} else {
 
-  micBtn.disabled = true;
+  micBtn.disabled =
+    true;
 
   micBtn.title =
-    "Voice input is not supported by this browser";
+    "Speech recognition is not supported in this browser.";
 
 }
 
 
-/* ==========================================
-   LOAD
-========================================== */
+// ==========================================
+// CLEAR CHAT
+// ==========================================
 
-updateVoiceButton();
+clearBtn.addEventListener(
+  "click",
+  function() {
 
-loadConversation();
+    const confirmed =
+      confirm(
+        "Clear the entire conversation?"
+      );
 
-input.focus();
+
+    if (!confirmed) {
+      return;
+    }
+
+
+    stopVoice();
+
+
+    conversation =
+      [];
+
+
+    localStorage.removeItem(
+      STORAGE_KEY
+    );
+
+
+    chat.innerHTML = "";
+
+
+    addInitialMessage();
+
+  }
+);
+
+
+// ==========================================
+// COPY CODE BUTTONS
+// ==========================================
+
+document.addEventListener(
+  "click",
+  async function(event) {
+
+    const button =
+      event.target.closest(
+        ".copy-code"
+      );
+
+
+    if (!button) {
+      return;
+    }
+
+
+    const code =
+      decodeURIComponent(
+        button.dataset.code
+      );
+
+
+    try {
+
+      await navigator.clipboard.writeText(
+        code
+      );
+
+
+      button.textContent =
+        "Copied!";
+
+
+      setTimeout(
+        function() {
+
+          button.textContent =
+            "Copy";
+
+        },
+        1200
+      );
+
+
+    } catch (error) {
+
+      console.log(
+        error
+      );
+
+    }
+
+  }
+);
+
 
 </script>
 
 </body>
+
 </html>
