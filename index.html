@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>NEXORA AI</title>
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -18,6 +21,7 @@
       background: #0b1020;
       color: white;
       min-height: 100vh;
+
       display: flex;
       justify-content: center;
       align-items: center;
@@ -27,18 +31,37 @@
       width: 95%;
       max-width: 900px;
       height: 90vh;
+
       background: #11182b;
+
       border: 1px solid #293451;
       border-radius: 20px;
+
       display: flex;
       flex-direction: column;
+
       overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.4);
     }
+
+
+    /* =========================
+       HEADER
+    ========================= */
 
     .header {
       padding: 20px 25px;
+
       border-bottom: 1px solid #293451;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
       display: flex;
       align-items: center;
       gap: 12px;
@@ -47,11 +70,20 @@
     .logo {
       width: 42px;
       height: 42px;
+
       border-radius: 12px;
-      background: linear-gradient(135deg, #7c3aed, #06b6d4);
+
+      background:
+        linear-gradient(
+          135deg,
+          #7c3aed,
+          #06b6d4
+        );
+
       display: flex;
       justify-content: center;
       align-items: center;
+
       font-weight: bold;
       font-size: 18px;
     }
@@ -66,115 +98,248 @@
       margin-top: 3px;
     }
 
+
+    /* =========================
+       CLEAR BUTTON
+    ========================= */
+
+    #clearBtn {
+      padding: 9px 13px;
+
+      border: 1px solid #33415f;
+
+      border-radius: 9px;
+
+      background: #0c1325;
+
+      color: #cbd5e1;
+
+      cursor: pointer;
+
+      font-size: 12px;
+    }
+
+    #clearBtn:hover {
+      border-color: #7c3aed;
+      color: white;
+    }
+
+
+    /* =========================
+       CHAT AREA
+    ========================= */
+
     .chat {
       flex: 1;
+
       padding: 25px;
+
       overflow-y: auto;
     }
 
+
+    /* =========================
+       MESSAGE
+    ========================= */
+
     .message {
       max-width: 75%;
+
       padding: 14px 17px;
+
       margin-bottom: 15px;
+
       border-radius: 15px;
+
       line-height: 1.5;
+
       white-space: pre-wrap;
+
       word-wrap: break-word;
     }
 
+
     .ai {
       background: #1b2540;
+
       border-top-left-radius: 4px;
+
+      margin-right: auto;
     }
 
+
     .user {
-      background: linear-gradient(135deg, #7c3aed, #2563eb);
+      background:
+        linear-gradient(
+          135deg,
+          #7c3aed,
+          #2563eb
+        );
+
       margin-left: auto;
+
       border-top-right-radius: 4px;
     }
 
+
+    /* =========================
+       INPUT AREA
+    ========================= */
+
     .input-area {
       padding: 18px;
+
       border-top: 1px solid #293451;
+
       display: flex;
+
       gap: 10px;
     }
 
+
     #userInput {
       flex: 1;
+
       padding: 15px;
+
       border: 1px solid #33415f;
+
       border-radius: 12px;
+
       outline: none;
+
       background: #0c1325;
+
       color: white;
+
       font-size: 15px;
     }
+
 
     #userInput:focus {
       border-color: #7c3aed;
     }
 
+
     #sendBtn {
       padding: 0 22px;
+
       border: none;
+
       border-radius: 12px;
-      background: linear-gradient(135deg, #7c3aed, #2563eb);
+
+      background:
+        linear-gradient(
+          135deg,
+          #7c3aed,
+          #2563eb
+        );
+
       color: white;
+
       font-weight: bold;
+
       cursor: pointer;
-      transition: opacity 0.2s ease;
     }
+
 
     #sendBtn:hover {
       opacity: 0.9;
     }
 
+
     #sendBtn:disabled {
       opacity: 0.6;
+
       cursor: not-allowed;
     }
 
+
+    /* =========================
+       MOBILE
+    ========================= */
+
     @media (max-width: 600px) {
+
       .app {
         width: 100%;
         height: 100vh;
+
         border-radius: 0;
       }
 
       .message {
         max-width: 90%;
       }
+
+      .header {
+        padding: 15px;
+      }
+
+      .chat {
+        padding: 15px;
+      }
+
+      .input-area {
+        padding: 12px;
+      }
+
     }
+
   </style>
+
 </head>
+
 
 <body>
 
+
   <div class="app">
+
+
+    <!-- HEADER -->
 
     <div class="header">
 
-      <div class="logo">
-        N
+      <div class="brand">
+
+        <div class="logo">
+          N
+        </div>
+
+        <div>
+
+          <h1>
+            NEXORA AI
+          </h1>
+
+          <p>
+            Your intelligent AI assistant
+          </p>
+
+        </div>
+
       </div>
 
-      <div>
-        <h1>NEXORA AI</h1>
-        <p>Your intelligent AI assistant</p>
-      </div>
+
+      <button id="clearBtn">
+        Clear Chat
+      </button>
 
     </div>
 
 
-    <div class="chat" id="chat">
 
-      <div class="message ai">
-        Hello! 👋 I'm NEXORA AI. How can I help you today?
-      </div>
+    <!-- CHAT -->
 
-    </div>
+    <div
+      class="chat"
+      id="chat"
+    ></div>
 
+
+
+    <!-- INPUT -->
 
     <div class="input-area">
 
@@ -191,22 +356,24 @@
 
     </div>
 
+
   </div>
+
 
 
   <script>
 
-    // ============================================
-    // NEXORA AI BACKEND
-    // ============================================
+    // =========================================
+    // NEXORA AI WORKER
+    // =========================================
 
     const API_URL =
       "https://nexora-ai-api.md-shadow777y.workers.dev/";
 
 
-    // ============================================
-    // DOM ELEMENTS
-    // ============================================
+    // =========================================
+    // ELEMENTS
+    // =========================================
 
     const input =
       document.getElementById("userInput");
@@ -214,36 +381,109 @@
     const sendBtn =
       document.getElementById("sendBtn");
 
+    const clearBtn =
+      document.getElementById("clearBtn");
+
     const chat =
       document.getElementById("chat");
 
 
-    // ============================================
-    // ADD MESSAGE TO CHAT
-    // ============================================
+    // =========================================
+    // MEMORY
+    // =========================================
 
-    function addMessage(text, type) {
+    let conversation =
+      JSON.parse(
+        localStorage.getItem("nexoraConversation")
+      ) || [];
+
+
+    // =========================================
+    // SAVE MEMORY
+    // =========================================
+
+    function saveConversation() {
+
+      localStorage.setItem(
+        "nexoraConversation",
+        JSON.stringify(conversation)
+      );
+
+    }
+
+
+    // =========================================
+    // ADD MESSAGE TO SCREEN
+    // =========================================
+
+    function addMessage(
+      role,
+      content
+    ) {
 
       const message =
         document.createElement("div");
 
-      message.className =
-        "message " + type;
 
-      message.textContent = text;
+      message.className =
+        "message " +
+        (role === "user"
+          ? "user"
+          : "ai");
+
+
+      message.textContent =
+        content;
+
 
       chat.appendChild(message);
+
 
       chat.scrollTop =
         chat.scrollHeight;
 
-      return message;
     }
 
 
-    // ============================================
-    // SEND MESSAGE TO NEXORA AI
-    // ============================================
+    // =========================================
+    // LOAD OLD CHAT
+    // =========================================
+
+    function loadConversation() {
+
+      chat.innerHTML = "";
+
+
+      if (
+        conversation.length === 0
+      ) {
+
+        addMessage(
+          "assistant",
+          "Hello! 👋 I'm NEXORA AI. How can I help you today?"
+        );
+
+        return;
+      }
+
+
+      conversation.forEach(
+        (message) => {
+
+          addMessage(
+            message.role,
+            message.content
+          );
+
+        }
+      );
+
+    }
+
+
+    // =========================================
+    // SEND MESSAGE
+    // =========================================
 
     async function sendMessage() {
 
@@ -251,51 +491,76 @@
         input.value.trim();
 
 
-      // Don't send empty messages
-
-      if (message === "") {
+      if (!message) {
         return;
       }
 
 
-      // Show user message
+      // Disable input
+      input.disabled = true;
+      sendBtn.disabled = true;
 
+
+      // Show user message
       addMessage(
-        message,
-        "user"
+        "user",
+        message
       );
 
 
-      // Clear input
+      // Save user message
+      conversation.push({
 
+        role: "user",
+
+        content: message
+
+      });
+
+
+      saveConversation();
+
+
+      // Clear input
       input.value = "";
 
 
-      // Disable button
+      // Thinking message
+      const thinking =
+        document.createElement("div");
 
-      sendBtn.disabled = true;
 
-      sendBtn.textContent =
+      thinking.className =
+        "message ai";
+
+
+      thinking.textContent =
         "Thinking...";
 
 
-      // Temporary AI message
+      thinking.id =
+        "thinkingMessage";
 
-      const aiMessage =
-        addMessage(
-          "NEXORA is thinking...",
-          "ai"
-        );
+
+      chat.appendChild(thinking);
+
+
+      chat.scrollTop =
+        chat.scrollHeight;
 
 
       try {
 
-        // Send request to Cloudflare Worker
+
+        // =========================================
+        // SEND MESSAGE + MEMORY TO WORKER
+        // =========================================
 
         const response =
           await fetch(
             API_URL,
             {
+
               method: "POST",
 
               headers: {
@@ -303,78 +568,158 @@
                   "application/json"
               },
 
-              body: JSON.stringify({
-                message: message
-              })
+              body:
+                JSON.stringify({
+
+                  message: message,
+
+                  messages:
+                    conversation.slice(-20)
+
+                })
+
             }
           );
 
-
-        // Read response
 
         const data =
           await response.json();
 
 
-        // Check server response
+        // Remove thinking
+        const thinkingMessage =
+          document.getElementById(
+            "thinkingMessage"
+          );
+
+
+        if (thinkingMessage) {
+
+          thinkingMessage.remove();
+
+        }
+
+
+        // =========================================
+        // ERROR
+        // =========================================
 
         if (!response.ok) {
 
           throw new Error(
             data?.error ||
-            "Something went wrong with the AI server."
+            "Something went wrong."
           );
 
         }
 
 
-        // Display AI response
+        // =========================================
+        // AI RESPONSE
+        // =========================================
 
-        aiMessage.textContent =
-          data.reply ||
+        const reply =
+          data?.reply ||
           "Sorry, I couldn't generate a response.";
+
+
+        // Show AI response
+        addMessage(
+          "assistant",
+          reply
+        );
+
+
+        // Save AI response
+        conversation.push({
+
+          role: "assistant",
+
+          content: reply
+
+        });
+
+
+        saveConversation();
 
 
       } catch (error) {
 
-        console.error(
-          "NEXORA AI Error:",
-          error
+
+        // Remove thinking
+        const thinkingMessage =
+          document.getElementById(
+            "thinkingMessage"
+          );
+
+
+        if (thinkingMessage) {
+
+          thinkingMessage.remove();
+
+        }
+
+
+        addMessage(
+          "assistant",
+          "Sorry, something went wrong. Please try again."
         );
 
 
-        // Display user-friendly error
-
-        aiMessage.textContent =
-          "Sorry, something went wrong. Please try again.";
+        console.error(
+          "NEXORA ERROR:",
+          error
+        );
 
       }
 
 
-      // Enable button again
+      // Enable input
+      input.disabled = false;
 
       sendBtn.disabled = false;
 
-      sendBtn.textContent =
-        "Send";
-
-
-      // Focus input
-
       input.focus();
-
-
-      // Scroll to bottom
-
-      chat.scrollTop =
-        chat.scrollHeight;
 
     }
 
 
-    // ============================================
+    // =========================================
+    // CLEAR CHAT
+    // =========================================
+
+    clearBtn.addEventListener(
+      "click",
+      function() {
+
+        const confirmed =
+          confirm(
+            "Clear all NEXORA AI conversation history?"
+          );
+
+
+        if (!confirmed) {
+          return;
+        }
+
+
+        conversation = [];
+
+
+        localStorage.removeItem(
+          "nexoraConversation"
+        );
+
+
+        loadConversation();
+
+      }
+    );
+
+
+    // =========================================
     // SEND BUTTON
-    // ============================================
+    // =========================================
 
     sendBtn.addEventListener(
       "click",
@@ -382,20 +727,17 @@
     );
 
 
-    // ============================================
+    // =========================================
     // ENTER KEY
-    // ============================================
+    // =========================================
 
     input.addEventListener(
       "keydown",
       function(event) {
 
         if (
-          event.key === "Enter" &&
-          !event.shiftKey
+          event.key === "Enter"
         ) {
-
-          event.preventDefault();
 
           sendMessage();
 
@@ -404,7 +746,18 @@
       }
     );
 
+
+    // =========================================
+    // START NEXORA
+    // =========================================
+
+    loadConversation();
+
+    input.focus();
+
   </script>
 
+
 </body>
+
 </html>
