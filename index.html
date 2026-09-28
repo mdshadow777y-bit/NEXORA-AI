@@ -1,7 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXORA AI</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#0b1020;
+  color:white;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.app{
+  width:95%;
+  max-width:900px;
+  height:90vh;
+  background:#11182b;
+  border:1px solid #293451;
+  border-radius:20px;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.4);
+}
+
+/* HEADER */
+
+.header{
+  padding:18px 22px;
+  border-bottom:1px solid #293451;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#7c3aed,#06b6d4);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:bold;
+  font-size:18px;
+}
+
+.header h1{
+  font-size:22px;
+}
+
+.header p{
+  font-size:12px;
+  color:#94a3b8;
+  margin-top:3px;
+}
+
+.header-buttons{
+  display:flex;
+  gap:8px;
+}
+
+.top-btn{
+  padding:9px 13px;
+  border:1px solid #33415f;
+  border-radius:9px;
+  background:#0c1325;
+  color:#cbd5e1;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.top-btn:hover{
+  border-color:#7c3aed;
+  color:white;
+}
+
+.top-btn.active{
+  border-color:#7c3aed;
+  background:#1e293b;
+}
+
+/* CHAT */
+
+.chat{
+  flex:1;
+  padding:25px;
+  overflow-y:auto;
+  scroll-behavior:smooth;
+}
+
+.message-row{
+  display:flex;
+  width:100%;
+  margin-bottom:18px;
+}
+
+.user-row{
+  justify-content:flex-end;
+}
+
+.ai-row{
+  justify-content:flex-start;
+}
+
+.message{
+  max-width:78%;
+  padding:14px 17px;
+  border-radius:15px;
+  line-height:1.6;
+  word-wrap:break-word;
+  overflow-wrap:anywhere;
+}
+
+.user-message{
+  background:linear-gradient(135deg,#7c3aed,#2563eb);
+  border-top-right-radius:4px;
+}
+
+.ai-container{
+  max-width:88%;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+
+.ai-message{
+  background:#1b2540;
+  border-top-left-radius:4px;
+}
+
+/* MARKDOWN */
+
+.ai-message p{
+  margin-bottom:12px;
+}
+
+.ai-message p:last-child{
+  margin-bottom:0;
+}
+
+.ai-message strong{
+  color:white;
+}
+
+.ai-message h1,
+.ai-message h2,
+.ai-message h3{
+  margin:12px 0 8px;
+}
+
+.ai-message h1{
+  font-size:22px;
+}
+
+.ai-message h2{
+  font-size:19px;
+}
+
+.ai-message h3{
+  font-size:17px;
+}
+
+.ai-message ul,
+.ai-message ol{
+  margin:8px 0 12px 22px;
+}
+
+.ai-message li{
+  margin-bottom:5px;
+}
+
+.inline-code{
+  background:#0b1222;
+  border:1px solid #33415f;
+  border-radius:5px;
+  padding:2px 6px;
+  font-family:Consolas,monospace;
+}
+
+/* CODE */
+
+.code-box{
+  width:100%;
+  margin:12px 0;
+  border:1px solid #33415f;
+  border-radius:10px;
+  overflow:hidden;
+  background:#080d18;
+}
+
+.code-top{
+  height:38px;
+  padding:0 10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#111827;
+  border-bottom:1px solid #33415f;
+}
+
+.code-language{
+  color:#94a3b8;
+  font-size:11px;
+}
+
+.code-copy{
+  border:1px solid #33415f;
+  background:#0c1325;
+  color:#cbd5e1;
+  border-radius:6px;
+  padding:5px 9px;
+  cursor:pointer;
+  font-size:11px;
+}
+
+.code-copy:hover{
+  border-color:#7c3aed;
+  color:white;
+}
+
+.code-box pre{
+  margin:0;
+  padding:15px;
+  overflow-x:auto;
+}
+
+.code-box code{
+  font-family:Consolas,"Courier New",monospace;
+  font-size:13px;
+  line-height:1.6;
+  white-space:pre;
+  color:#e2e8f0;
+}
+
+/* AI ACTIONS */
+
+.ai-actions{
+  display:flex;
+  gap:6px;
+  margin-top:6px;
+}
+
+.action-btn{
+  width:32px;
+  height:32px;
+  border:1px solid #33415f;
+  border-radius:8px;
+  background:#0c1325;
+  color:white;
+  cursor:pointer;
+}
+
+.action-btn:hover{
+  border-color:#7c3aed;
+}
+
+/* THINKING */
+
+.thinking{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:14px 17px;
+  background:#1b2540;
+  border-radius:15px;
+  border-top-left-radius:4px;
+  color:#94a3b8;
+}
+
+.dots{
+  display:flex;
+  gap:4px;
+}
+
+.dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#94a3b8;
+  animation:dotPulse 1.2s infinite;
+}
+
+.dot:nth-child(2){
+  animation-delay:.2s;
+}
+
+.dot:nth-child(3){
+  animation-delay:.4s;
+}
+
+@keyframes dotPulse{
+  0%,100%{
+    opacity:.3;
+    transform:translateY(0);
+  }
+  50%{
+    opacity:1;
+    transform:translateY(-3px);
+  }
+}
+
+/* INPUT */
+
+.input-area{
+  padding:17px;
+  border-top:1px solid #293451;
+  display:flex;
+  gap:9px;
+}
+
+#userInput{
+  flex:1;
+  min-width:0;
+  padding:15px;
+  border:1px solid #33415f;
+  border-radius:12px;
+  outline:none;
+  background:#0c1325;
+  color:white;
+  font-size:15px;
+}
+
+#userInput:focus{
+  border-color:#7c3aed;
+}
+
+#micBtn{
+  width:50px;
+  flex-shrink:0;
+  border:1px solid #33415f;
+  border-radius:12px;
+  background:#0c1325;
+  color:white;
+  font-size:19px;
+  cursor:pointer;
+}
+
+#micBtn:hover{
+  border-color:#7c3aed;
+}
+
+#micBtn.listening{
+  background:#dc2626;
+  border-color:#ef4444;
+  animation:micPulse 1s infinite;
+}
+
+@keyframes micPulse{
+  0%{
+    box-shadow:0 0 0 0 rgba(239,68,68,.5);
+  }
+  70%{
+    box-shadow:0 0 0 10px rgba(239,68,68,0);
+  }
+  100%{
+    box-shadow:0 0 0 0 rgba(239,68,68,0);
+  }
+}
+
+#sendBtn{
+  flex-shrink:0;
+  padding:0 22px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(135deg,#7c3aed,#2563eb);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+#sendBtn:hover{
+  opacity:.9;
+}
+
+#sendBtn:disabled,
+#micBtn:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+  .app{
+    width:100%;
+    height:100vh;
+    border-radius:0;
+  }
+
+  .header{
+    padding:14px;
+  }
+
+  .header p{
+    display:none;
+  }
+
+  .header h1{
+    font-size:19px;
+  }
+
+  .logo{
+    width:38px;
+    height:38px;
+  }
+
+  .header-buttons{
+    gap:5px;
+  }
+
+  .top-btn{
+    padding:8px 9px;
+  }
+
+  .chat{
+    padding:15px;
+  }
+
+  .message{
+    max-width:92%;
+  }
+
+  .ai-container{
+    max-width:96%;
+  }
+
+  .input-area{
+    padding:11px;
+  }
+
+  #sendBtn{
+    padding:0 15px;
+  }
+
+  #micBtn{
+    width:46px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="header">
+
+    <div class="brand">
+
+      <div class="logo">N</div>
+
+      <div>
+        <h1>NEXORA AI</h1>
+        <p>Your intelligent AI assistant</p>
+      </div>
+
+    </div>
+
+    <div class="header-buttons">
+
+      <button
+        id="voiceToggle"
+        class="top-btn active">
+        🔊 Voice ON
+      </button>
+
+      <button
+        id="clearBtn"
+        class="top-btn">
+        Clear Chat
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- CHAT -->
+  <div
+    id="chat"
+    class="chat">
+  </div>
+
+
+  <!-- INPUT -->
+  <div class="input-area">
+
+    <input
+      id="userInput"
+      type="text"
+      placeholder="Ask NEXORA anything..."
+      autocomplete="off"
+    >
+
+    <button
+      id="micBtn"
+      title="Voice Input">
+      🎤
+    </button>
+
+    <button
+      id="sendBtn">
+      Send
+    </button>
+
+  </div>
+
+</div>
+
+
 <script>
 
 /* ==========================================
-   NEXORA AI — CHATGPT STYLE VOICE SYSTEM
+   NEXORA CONFIG
 ========================================== */
 
 const API_URL =
@@ -15,11 +546,11 @@ const API_URL =
 const input =
 document.getElementById("userInput");
 
+const chat =
+document.getElementById("chat");
+
 const sendBtn =
 document.getElementById("sendBtn");
-
-const clearBtn =
-document.getElementById("clearBtn");
 
 const micBtn =
 document.getElementById("micBtn");
@@ -27,58 +558,68 @@ document.getElementById("micBtn");
 const voiceToggle =
 document.getElementById("voiceToggle");
 
-const chat =
-document.getElementById("chat");
+const clearBtn =
+document.getElementById("clearBtn");
 
 
 /* ==========================================
    MEMORY
 ========================================== */
 
-let conversation =
-JSON.parse(
-  localStorage.getItem("nexoraConversation")
-) || [];
+let conversation = [];
+
+try{
+
+  conversation =
+    JSON.parse(
+      localStorage.getItem(
+        "nexoraConversation"
+      )
+    ) || [];
+
+}catch(error){
+
+  conversation = [];
+
+}
 
 
 /* ==========================================
-   VOICE STATE
+   VOICE
 ========================================== */
 
 let voiceEnabled = true;
 
-let isListening = false;
-
-let isSpeaking = false;
+let speaking = false;
 
 let recognition = null;
 
-let speechQueue = [];
-
-let currentSpeechIndex = 0;
+let listening = false;
 
 
 /* ==========================================
-   SAVE MEMORY
+   SAVE
 ========================================== */
 
 function saveConversation(){
 
   localStorage.setItem(
     "nexoraConversation",
-    JSON.stringify(conversation)
+    JSON.stringify(
+      conversation
+    )
   );
 
 }
 
 
 /* ==========================================
-   HTML ESCAPE
+   ESCAPE HTML
 ========================================== */
 
 function escapeHTML(text){
 
-  return text
+  return String(text)
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
@@ -92,186 +633,152 @@ function escapeHTML(text){
    MARKDOWN
 ========================================== */
 
-function renderInlineMarkdown(text){
+function markdown(text){
 
-  let result =
+  /*
+    First protect code blocks.
+  */
+
+  const codeBlocks = [];
+
+
+  text = String(text).replace(
+    /```([a-zA-Z0-9_+#.-]*)\s*\n([\s\S]*?)```/g,
+    function(match,language,code){
+
+      const index =
+        codeBlocks.length;
+
+      codeBlocks.push({
+        language:
+          language || "code",
+        code:
+          code.trim()
+      });
+
+      return (
+        "\n\n@@CODE" +
+        index +
+        "@@\n\n"
+      );
+
+    }
+  );
+
+
+  let html =
     escapeHTML(text);
 
-  result =
-    result.replace(
+
+  /*
+    Headings
+  */
+
+  html =
+    html.replace(
+      /^### (.*)$/gm,
+      "<h3>$1</h3>"
+    );
+
+  html =
+    html.replace(
+      /^## (.*)$/gm,
+      "<h2>$1</h2>"
+    );
+
+  html =
+    html.replace(
+      /^# (.*)$/gm,
+      "<h1>$1</h1>"
+    );
+
+
+  /*
+    Bold
+  */
+
+  html =
+    html.replace(
       /\*\*(.*?)\*\*/g,
       "<strong>$1</strong>"
     );
 
-  result =
-    result.replace(
-      /(?<!\*)\*([^*]+)\*(?!\*)/g,
-      "<em>$1</em>"
-    );
 
-  result =
-    result.replace(
+  /*
+    Inline code
+  */
+
+  html =
+    html.replace(
       /`([^`]+)`/g,
       '<span class="inline-code">$1</span>'
     );
 
-  return result;
 
-}
+  /*
+    Bullet lists
+  */
 
-
-/* ==========================================
-   CODE BLOCKS
-========================================== */
-
-function parseCodeBlocks(text){
-
-  const blocks = [];
-
-  const regex =
-    /^(`{2,3})([a-zA-Z0-9_+#.-]*)[ \t]*\r?\n([\s\S]*?)^\1[ \t]*$/gm;
-
-  const cleaned =
-    text.replace(
-      regex,
-      function(
-        match,
-        fence,
-        language,
-        code
-      ){
-
-        const index =
-          blocks.length;
-
-        blocks.push({
-          language:
-            language || "code",
-          code:
-            code.replace(/\s+$/,"")
-        });
-
-        return (
-          "\n\n" +
-          `[[[NEXORA_CODE_${index}]]]` +
-          "\n\n"
-        );
-
-      }
+  html =
+    html.replace(
+      /^\s*[-*]\s+(.+)$/gm,
+      "<li>$1</li>"
     );
 
-  return {
-    text:cleaned,
-    blocks:blocks
-  };
 
-}
+  /*
+    Numbered lists
+  */
 
-
-/* ==========================================
-   MARKDOWN RENDER
-========================================== */
-
-function renderMarkdown(text){
-
-  const parsed =
-    parseCodeBlocks(text);
-
-  const blocks =
-    parsed.blocks;
-
-  const lines =
-    parsed.text.split(/\r?\n/);
-
-  let html = "";
-
-  let paragraph = [];
-
-  let listType = null;
+  html =
+    html.replace(
+      /^\s*\d+[.)]\s+(.+)$/gm,
+      "<li>$1</li>"
+    );
 
 
-  function closeParagraph(){
+  /*
+    Paragraph breaks
+  */
 
-    if(
-      paragraph.length === 0
-    ){
-      return;
-    }
-
-    html +=
-      `<p>${renderInlineMarkdown(
-        paragraph.join("<br>")
-      )}</p>`;
-
-    paragraph = [];
-
-  }
+  html =
+    html.replace(
+      /\n\n+/g,
+      "</p><p>"
+    );
 
 
-  function closeList(){
-
-    if(!listType){
-      return;
-    }
-
-    html +=
-      listType === "ul"
-      ? "</ul>"
-      : "</ol>";
-
-    listType = null;
-
-  }
+  html =
+    html.replace(
+      /\n/g,
+      "<br>"
+    );
 
 
-  for(
-    let i = 0;
-    i < lines.length;
-    i++
-  ){
-
-    const raw =
-      lines[i];
-
-    const line =
-      raw.trim();
+  html =
+    "<p>" +
+    html +
+    "</p>";
 
 
-    if(line === ""){
+  /*
+    Restore code blocks
+  */
 
-      closeParagraph();
-      closeList();
+  codeBlocks.forEach(
+    function(block,index){
 
-      continue;
-
-    }
-
-
-    const codeMatch =
-      line.match(
-        /^\[\[\[NEXORA_CODE_(\d+)\]\]\]$/
-      );
+      const safeCode =
+        escapeHTML(
+          block.code
+        );
 
 
-    if(codeMatch){
+      const codeHTML = `
 
-      closeParagraph();
-      closeList();
+        <div class="code-box">
 
-      const index =
-        Number(codeMatch[1]);
-
-      const block =
-        blocks[index];
-
-
-      if(block){
-
-        html += `
-
-        <div class="code-wrapper">
-
-          <div class="code-header">
+          <div class="code-top">
 
             <span class="code-language">
               ${escapeHTML(
@@ -281,158 +788,38 @@ function renderMarkdown(text){
 
             <button
               class="code-copy"
-              onclick="copyCode(this)"
-            >
+              onclick="copyCode(this)">
               Copy
             </button>
 
           </div>
 
-          <pre><code>${escapeHTML(
-            block.code
-          )}</code></pre>
+          <pre><code>${safeCode}</code></pre>
 
         </div>
 
-        `;
-
-      }
-
-      continue;
-
-    }
+      `;
 
 
-    if(line.startsWith("### ")){
-
-      closeParagraph();
-      closeList();
-
-      html +=
-        `<h3>${renderInlineMarkdown(
-          line.substring(4)
-        )}</h3>`;
-
-      continue;
-
-    }
+      html =
+        html.replace(
+          "<p>@@CODE" +
+          index +
+          "@@</p>",
+          codeHTML
+        );
 
 
-    if(line.startsWith("## ")){
-
-      closeParagraph();
-      closeList();
-
-      html +=
-        `<h2>${renderInlineMarkdown(
-          line.substring(3)
-        )}</h2>`;
-
-      continue;
+      html =
+        html.replace(
+          "@@CODE" +
+          index +
+          "@@",
+          codeHTML
+        );
 
     }
-
-
-    if(line.startsWith("# ")){
-
-      closeParagraph();
-      closeList();
-
-      html +=
-        `<h1>${renderInlineMarkdown(
-          line.substring(2)
-        )}</h1>`;
-
-      continue;
-
-    }
-
-
-    const unordered =
-      line.match(
-        /^[-*•]\s+(.*)$/
-      );
-
-
-    if(unordered){
-
-      closeParagraph();
-
-      if(listType !== "ul"){
-
-        closeList();
-
-        html += "<ul>";
-
-        listType = "ul";
-
-      }
-
-      html +=
-        `<li>${renderInlineMarkdown(
-          unordered[1]
-        )}</li>`;
-
-      continue;
-
-    }
-
-
-    const ordered =
-      line.match(
-        /^\d+[.)]\s+(.*)$/
-      );
-
-
-    if(ordered){
-
-      closeParagraph();
-
-      if(listType !== "ol"){
-
-        closeList();
-
-        html += "<ol>";
-
-        listType = "ol";
-
-      }
-
-      html +=
-        `<li>${renderInlineMarkdown(
-          ordered[1]
-        )}</li>`;
-
-      continue;
-
-    }
-
-
-    if(
-      line === "---" ||
-      line === "***" ||
-      line === "___"
-    ){
-
-      closeParagraph();
-      closeList();
-
-      html += "<hr>";
-
-      continue;
-
-    }
-
-
-    closeList();
-
-    paragraph.push(raw);
-
-  }
-
-
-  closeParagraph();
-  closeList();
+  );
 
 
   return html;
@@ -446,23 +833,26 @@ function renderMarkdown(text){
 
 async function copyCode(button){
 
-  const wrapper =
+  const box =
     button.closest(
-      ".code-wrapper"
+      ".code-box"
     );
 
-  if(!wrapper){
+  if(!box){
     return;
   }
 
+
   const code =
-    wrapper.querySelector(
+    box.querySelector(
       "code"
     );
+
 
   if(!code){
     return;
   }
+
 
   try{
 
@@ -474,9 +864,11 @@ async function copyCode(button){
       "Copied!";
 
     setTimeout(
-      ()=>{
+      function(){
+
         button.textContent =
           "Copy";
+
       },
       1500
     );
@@ -484,7 +876,7 @@ async function copyCode(button){
   }catch(error){
 
     console.error(
-      "Copy error:",
+      "Copy failed:",
       error
     );
 
@@ -508,28 +900,32 @@ async function copyResponse(button){
     return;
   }
 
-  const content =
+
+  const message =
     container.querySelector(
-      ".ai-content"
+      ".ai-message"
     );
 
-  if(!content){
+  if(!message){
     return;
   }
+
 
   try{
 
     await navigator.clipboard.writeText(
-      content.innerText
+      message.innerText
     );
 
     button.textContent =
       "✓";
 
     setTimeout(
-      ()=>{
+      function(){
+
         button.textContent =
           "📋";
+
       },
       1500
     );
@@ -537,7 +933,7 @@ async function copyResponse(button){
   }catch(error){
 
     console.error(
-      "Copy response error:",
+      "Copy failed:",
       error
     );
 
@@ -547,115 +943,31 @@ async function copyResponse(button){
 
 
 /* ==========================================
-   CHATGPT STYLE VOICE
+   SPEECH OUTPUT
 ========================================== */
 
-/*
-  Split long AI response into natural
-  speech chunks.
+function stopVoice(){
 
-  Example:
+  if(
+    "speechSynthesis" in window
+  ){
 
-  "Hello Fahim. How are you?
-   I can help you with coding."
+    window.speechSynthesis.cancel();
 
-  becomes:
-
-  1. Hello Fahim.
-  2. How are you?
-  3. I can help you with coding.
-*/
-
-function createSpeechChunks(text){
-
-  let cleanText =
-    text
-      .replace(/```[\s\S]*?```/g,"")
-      .replace(/`([^`]+)`/g,"$1")
-      .replace(/\*\*(.*?)\*\*/g,"$1")
-      .replace(/\*(.*?)\*/g,"$1")
-      .replace(/#+\s/g,"")
-      .trim();
-
-
-  if(!cleanText){
-    return [];
   }
 
+  speaking = false;
 
-  /*
-    Split after sentences.
-  */
-
-  const sentences =
-    cleanText.match(
-      /[^.!?।]+[.!?।]+|[^.!?।]+$/g
-    );
-
-
-  if(!sentences){
-    return [cleanText];
-  }
-
-
-  const chunks = [];
-
-  let current = "";
-
-
-  sentences.forEach(
-    sentence => {
-
-      const next =
-        (current + " " + sentence)
-          .trim();
-
-
-      /*
-        Keep chunks reasonably short
-        for natural voice.
-      */
-
-      if(next.length > 180){
-
-        if(current){
-          chunks.push(current);
-        }
-
-        current =
-          sentence.trim();
-
-      }else{
-
-        current =
-          next;
-
-      }
-
-    }
-  );
-
-
-  if(current){
-    chunks.push(current);
-  }
-
-
-  return chunks;
+  updateVoiceButton();
 
 }
 
 
-/* ==========================================
-   START SPEECH QUEUE
-========================================== */
-
-function speakResponse(text){
+function speak(text){
 
   if(!voiceEnabled){
     return;
   }
-
 
   if(
     !("speechSynthesis" in window)
@@ -664,125 +976,77 @@ function speakResponse(text){
   }
 
 
-  stopSpeaking();
+  stopVoice();
 
 
-  speechQueue =
-    createSpeechChunks(text);
+  const cleanText =
+    String(text)
+      .replace(/```[\s\S]*?```/g,"")
+      .replace(/`([^`]+)`/g,"$1")
+      .replace(/\*\*(.*?)\*\*/g,"$1")
+      .replace(/\n+/g," ")
+      .trim();
 
 
-  currentSpeechIndex = 0;
-
-
-  if(
-    speechQueue.length === 0
-  ){
+  if(!cleanText){
     return;
   }
-
-
-  speakNextChunk();
-
-}
-
-
-/* ==========================================
-   SPEAK NEXT CHUNK
-========================================== */
-
-function speakNextChunk(){
-
-  if(!voiceEnabled){
-    stopSpeaking();
-    return;
-  }
-
-
-  if(
-    currentSpeechIndex >=
-    speechQueue.length
-  ){
-
-    isSpeaking = false;
-
-    updateVoiceButton();
-
-    return;
-
-  }
-
-
-  isSpeaking = true;
-
-  updateVoiceButton();
-
-
-  const text =
-    speechQueue[
-      currentSpeechIndex
-    ];
 
 
   const utterance =
     new SpeechSynthesisUtterance(
-      text
+      cleanText
     );
 
 
-  utterance.rate = 1.02;
+  utterance.rate = 1;
 
   utterance.pitch = 1;
 
   utterance.volume = 1;
 
 
-  /*
-    Pick a natural English voice
-    when available.
-  */
-
   const voices =
     window.speechSynthesis
       .getVoices();
 
 
-  const preferredVoice =
+  const voice =
     voices.find(
-      voice =>
-        voice.lang &&
-        (
-          voice.lang
+      function(v){
+
+        return (
+          v.lang &&
+          v.lang
             .toLowerCase()
-            .startsWith("en-us") ||
-          voice.lang
-            .toLowerCase()
-            .startsWith("en-gb")
-        )
+            .startsWith("en")
+        );
+
+      }
     );
 
 
-  if(preferredVoice){
-
-    utterance.voice =
-      preferredVoice;
-
+  if(voice){
+    utterance.voice = voice;
   }
+
+
+  utterance.onstart =
+    function(){
+
+      speaking = true;
+
+      updateVoiceButton();
+
+    };
 
 
   utterance.onend =
     function(){
 
-      currentSpeechIndex++;
+      speaking = false;
 
-      /*
-        Small pause between sentences
-        makes it sound more natural.
-      */
-
-      setTimeout(
-        speakNextChunk,
-        80
-      );
+      updateVoiceButton();
 
     };
 
@@ -790,7 +1054,7 @@ function speakNextChunk(){
   utterance.onerror =
     function(){
 
-      isSpeaking = false;
+      speaking = false;
 
       updateVoiceButton();
 
@@ -805,40 +1069,12 @@ function speakNextChunk(){
 
 
 /* ==========================================
-   STOP SPEAKING
-========================================== */
-
-function stopSpeaking(){
-
-  if(
-    "speechSynthesis" in window
-  ){
-
-    window.speechSynthesis.cancel();
-
-  }
-
-
-  speechQueue = [];
-
-  currentSpeechIndex = 0;
-
-  isSpeaking = false;
-
-  updateVoiceButton();
-
-}
-
-
-/* ==========================================
-   VOICE BUTTON STATE
+   VOICE BUTTON
 ========================================== */
 
 function updateVoiceButton(){
 
-  if(
-    isSpeaking
-  ){
+  if(speaking){
 
     voiceToggle.textContent =
       "⏹ Stop Voice";
@@ -847,14 +1083,7 @@ function updateVoiceButton(){
       "active"
     );
 
-    return;
-
-  }
-
-
-  if(
-    voiceEnabled
-  ){
+  }else if(voiceEnabled){
 
     voiceToggle.textContent =
       "🔊 Voice ON";
@@ -877,6 +1106,36 @@ function updateVoiceButton(){
 }
 
 
+voiceToggle.addEventListener(
+  "click",
+  function(){
+
+    if(speaking){
+
+      stopVoice();
+
+      return;
+
+    }
+
+
+    voiceEnabled =
+      !voiceEnabled;
+
+
+    if(!voiceEnabled){
+
+      stopVoice();
+
+    }
+
+
+    updateVoiceButton();
+
+  }
+);
+
+
 /* ==========================================
    ADD MESSAGE
 ========================================== */
@@ -884,7 +1143,7 @@ function updateVoiceButton(){
 function addMessage(
   role,
   content,
-  speak = false
+  autoVoice = false
 ){
 
   const row =
@@ -909,11 +1168,14 @@ function addMessage(
         "div"
       );
 
+
     message.className =
-      "message user";
+      "message user-message";
+
 
     message.textContent =
       content;
+
 
     row.appendChild(
       message
@@ -926,6 +1188,7 @@ function addMessage(
         "div"
       );
 
+
     container.className =
       "ai-container";
 
@@ -935,11 +1198,13 @@ function addMessage(
         "div"
       );
 
+
     message.className =
-      "message ai ai-content";
+      "message ai-message";
+
 
     message.innerHTML =
-      renderMarkdown(
+      markdown(
         content
       );
 
@@ -949,6 +1214,7 @@ function addMessage(
         "div"
       );
 
+
     actions.className =
       "ai-actions";
 
@@ -957,6 +1223,7 @@ function addMessage(
       document.createElement(
         "button"
       );
+
 
     speaker.className =
       "action-btn";
@@ -968,20 +1235,21 @@ function addMessage(
       "Read response";
 
 
-    speaker.addEventListener(
-      "click",
-      ()=>{
-        speakResponse(
+    speaker.onclick =
+      function(){
+
+        speak(
           content
         );
-      }
-    );
+
+      };
 
 
     const copy =
       document.createElement(
         "button"
       );
+
 
     copy.className =
       "action-btn";
@@ -993,14 +1261,14 @@ function addMessage(
       "Copy response";
 
 
-    copy.addEventListener(
-      "click",
-      ()=>{
+    copy.onclick =
+      function(){
+
         copyResponse(
           copy
         );
-      }
-    );
+
+      };
 
 
     actions.appendChild(
@@ -1026,15 +1294,22 @@ function addMessage(
     );
 
 
-    if(speak){
+    if(autoVoice){
 
       /*
-        Start voice immediately after
-        the AI response is rendered.
+        Start voice after the AI message
+        has been placed on the screen.
       */
 
-      speakResponse(
-        content
+      setTimeout(
+        function(){
+
+          speak(
+            content
+          );
+
+        },
+        80
       );
 
     }
@@ -1064,16 +1339,18 @@ function showThinking(){
       "div"
     );
 
-  row.className =
-    "message-row ai-row";
 
   row.id =
     "thinkingMessage";
 
 
+  row.className =
+    "message-row ai-row";
+
+
   row.innerHTML = `
 
-    <div class="thinking-box">
+    <div class="thinking">
 
       <span>Thinking</span>
 
@@ -1103,15 +1380,15 @@ function showThinking(){
 
 function removeThinking(){
 
-  const thinking =
+  const element =
     document.getElementById(
       "thinkingMessage"
     );
 
 
-  if(thinking){
+  if(element){
 
-    thinking.remove();
+    element.remove();
 
   }
 
@@ -1119,7 +1396,7 @@ function removeThinking(){
 
 
 /* ==========================================
-   LOAD CHAT
+   LOAD MEMORY
 ========================================== */
 
 function loadConversation(){
@@ -1142,13 +1419,24 @@ function loadConversation(){
 
 
   conversation.forEach(
-    message => {
+    function(item){
 
-      addMessage(
-        message.role,
-        message.content,
-        false
-      );
+      if(
+        item &&
+        (
+          item.role === "user" ||
+          item.role === "assistant"
+        ) &&
+        typeof item.content === "string"
+      ){
+
+        addMessage(
+          item.role,
+          item.content,
+          false
+        );
+
+      }
 
     }
   );
@@ -1171,7 +1459,11 @@ async function sendMessage(){
   }
 
 
-  stopSpeaking();
+  /*
+    Stop any previous voice.
+  */
+
+  stopVoice();
 
 
   input.disabled = true;
@@ -1181,6 +1473,10 @@ async function sendMessage(){
   micBtn.disabled = true;
 
 
+  /*
+    Show user message.
+  */
+
   addMessage(
     "user",
     message
@@ -1188,17 +1484,32 @@ async function sendMessage(){
 
 
   /*
-    Send previous messages only.
+    IMPORTANT:
+    Send only previous history.
     Current message is sent separately.
   */
 
   const previousMessages =
-    conversation.slice(-20);
+    conversation
+      .filter(
+        function(item){
+
+          return (
+            item.role === "user" ||
+            item.role === "assistant"
+          );
+
+        }
+      )
+      .slice(-20);
 
 
   conversation.push({
+
     role:"user",
+
     content:message
+
   });
 
 
@@ -1217,7 +1528,6 @@ async function sendMessage(){
       await fetch(
         API_URL,
         {
-
           method:"POST",
 
           headers:{
@@ -1235,7 +1545,6 @@ async function sendMessage(){
                 previousMessages
 
             })
-
         }
       );
 
@@ -1249,22 +1558,38 @@ async function sendMessage(){
 
     if(!response.ok){
 
+      console.error(
+        "API ERROR:",
+        data
+      );
+
+
       throw new Error(
         data?.error ||
-        "Something went wrong."
+        "API request failed."
       );
 
     }
 
 
     const reply =
-      data?.reply ||
-      "Sorry, I couldn't generate a response.";
+      data?.reply;
+
+
+    if(
+      !reply ||
+      typeof reply !== "string"
+    ){
+
+      throw new Error(
+        "AI returned an empty response."
+      );
+
+    }
 
 
     /*
-      Text appears immediately,
-      then voice starts right away.
+      Show AI response.
     */
 
     addMessage(
@@ -1274,9 +1599,16 @@ async function sendMessage(){
     );
 
 
+    /*
+      Save AI response.
+    */
+
     conversation.push({
+
       role:"assistant",
+
       content:reply
+
     });
 
 
@@ -1288,15 +1620,15 @@ async function sendMessage(){
     removeThinking();
 
 
-    addMessage(
-      "assistant",
-      "Sorry, something went wrong. Please try again."
-    );
-
-
     console.error(
       "NEXORA ERROR:",
       error
+    );
+
+
+    addMessage(
+      "assistant",
+      "Sorry, I couldn't connect to NEXORA AI right now. Please try again."
     );
 
   }
@@ -1314,85 +1646,7 @@ async function sendMessage(){
 
 
 /* ==========================================
-   CLEAR CHAT
-========================================== */
-
-clearBtn.addEventListener(
-  "click",
-  function(){
-
-    const confirmed =
-      confirm(
-        "Clear all NEXORA AI conversation history?"
-      );
-
-
-    if(!confirmed){
-      return;
-    }
-
-
-    stopSpeaking();
-
-
-    conversation = [];
-
-
-    localStorage.removeItem(
-      "nexoraConversation"
-    );
-
-
-    loadConversation();
-
-  }
-);
-
-
-/* ==========================================
-   VOICE TOGGLE
-========================================== */
-
-voiceToggle.addEventListener(
-  "click",
-  function(){
-
-    /*
-      If currently speaking,
-      clicking button stops voice.
-    */
-
-    if(isSpeaking){
-
-      stopSpeaking();
-
-      return;
-
-    }
-
-
-    voiceEnabled =
-      !voiceEnabled;
-
-
-    if(!voiceEnabled){
-
-      stopSpeaking();
-
-    }
-
-
-    updateVoiceButton();
-
-  }
-);
-
-
-updateVoiceButton();
-
-
-/* ==========================================
-   SEND BUTTON
+   SEND EVENTS
 ========================================== */
 
 sendBtn.addEventListener(
@@ -1400,10 +1654,6 @@ sendBtn.addEventListener(
   sendMessage
 );
 
-
-/* ==========================================
-   ENTER
-========================================== */
 
 input.addEventListener(
   "keydown",
@@ -1424,7 +1674,43 @@ input.addEventListener(
 
 
 /* ==========================================
-   SPEECH RECOGNITION
+   CLEAR CHAT
+========================================== */
+
+clearBtn.addEventListener(
+  "click",
+  function(){
+
+    const ok =
+      confirm(
+        "Clear all NEXORA AI conversation history?"
+      );
+
+
+    if(!ok){
+      return;
+    }
+
+
+    stopVoice();
+
+
+    conversation = [];
+
+
+    localStorage.removeItem(
+      "nexoraConversation"
+    );
+
+
+    loadConversation();
+
+  }
+);
+
+
+/* ==========================================
+   VOICE INPUT
 ========================================== */
 
 const SpeechRecognition =
@@ -1439,9 +1725,8 @@ if(SpeechRecognition){
 
 
   /*
-    English + Bangla mixed speech
-    can work depending on browser.
-    Change to bn-BD if you mainly speak Bangla.
+    English voice recognition.
+    We can add Bangla mode later.
   */
 
   recognition.lang =
@@ -1459,10 +1744,15 @@ if(SpeechRecognition){
   recognition.onstart =
     function(){
 
-      isListening = true;
+      listening = true;
 
 
-      stopSpeaking();
+      /*
+        Stop AI voice when user starts
+        speaking.
+      */
+
+      stopVoice();
 
 
       micBtn.classList.add(
@@ -1471,7 +1761,7 @@ if(SpeechRecognition){
 
 
       micBtn.textContent =
-        "⏹️";
+        "⏹";
 
 
       input.placeholder =
@@ -1483,7 +1773,7 @@ if(SpeechRecognition){
   recognition.onresult =
     function(event){
 
-      let transcript = "";
+      let text = "";
 
 
       for(
@@ -1492,7 +1782,7 @@ if(SpeechRecognition){
         i++
       ){
 
-        transcript +=
+        text +=
           event.results[i][0]
             .transcript;
 
@@ -1500,41 +1790,7 @@ if(SpeechRecognition){
 
 
       input.value =
-        transcript;
-
-
-      /*
-        If browser marks speech as final,
-        prepare for automatic sending.
-      */
-
-      const lastResult =
-        event.results[
-          event.results.length - 1
-        ];
-
-
-      if(
-        lastResult &&
-        lastResult.isFinal
-      ){
-
-        setTimeout(
-          function(){
-
-            if(
-              input.value.trim()
-            ){
-
-              sendMessage();
-
-            }
-
-          },
-          300
-        );
-
-      }
+        text;
 
     };
 
@@ -1542,7 +1798,7 @@ if(SpeechRecognition){
   recognition.onend =
     function(){
 
-      isListening = false;
+      listening = false;
 
 
       micBtn.classList.remove(
@@ -1557,6 +1813,28 @@ if(SpeechRecognition){
       input.placeholder =
         "Ask NEXORA anything...";
 
+
+      /*
+        Automatically send whatever
+        was recognized.
+      */
+
+      if(
+        input.value.trim() &&
+        !input.disabled
+      ){
+
+        setTimeout(
+          function(){
+
+            sendMessage();
+
+          },
+          200
+        );
+
+      }
+
     };
 
 
@@ -1564,12 +1842,12 @@ if(SpeechRecognition){
     function(event){
 
       console.error(
-        "Voice recognition error:",
+        "Speech recognition error:",
         event.error
       );
 
 
-      isListening = false;
+      listening = false;
 
 
       micBtn.classList.remove(
@@ -1591,19 +1869,17 @@ if(SpeechRecognition){
     "click",
     function(){
 
-      if(isListening){
+      if(input.disabled){
+        return;
+      }
+
+
+      if(listening){
 
         recognition.stop();
 
         return;
 
-      }
-
-
-      if(
-        input.disabled
-      ){
-        return;
       }
 
 
@@ -1614,7 +1890,7 @@ if(SpeechRecognition){
       }catch(error){
 
         console.error(
-          "Microphone error:",
+          "Recognition start error:",
           error
         );
 
@@ -1629,17 +1905,22 @@ if(SpeechRecognition){
   micBtn.disabled = true;
 
   micBtn.title =
-    "Voice input is not supported in this browser";
+    "Voice input is not supported by this browser";
 
 }
 
 
 /* ==========================================
-   START
+   LOAD
 ========================================== */
+
+updateVoiceButton();
 
 loadConversation();
 
 input.focus();
 
 </script>
+
+</body>
+</html>
