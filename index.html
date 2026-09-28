@@ -3,7 +3,6 @@
 
 <head>
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>NEXORA AI</title>
@@ -33,27 +32,20 @@
       height: 90vh;
 
       background: #11182b;
-
       border: 1px solid #293451;
       border-radius: 20px;
 
       display: flex;
       flex-direction: column;
-
       overflow: hidden;
 
-      box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
     }
 
-
-    /* =========================
-       HEADER
-    ========================= */
+    /* HEADER */
 
     .header {
       padding: 20px 25px;
-
       border-bottom: 1px solid #293451;
 
       display: flex;
@@ -73,12 +65,11 @@
 
       border-radius: 12px;
 
-      background:
-        linear-gradient(
-          135deg,
-          #7c3aed,
-          #06b6d4
-        );
+      background: linear-gradient(
+        135deg,
+        #7c3aed,
+        #06b6d4
+      );
 
       display: flex;
       justify-content: center;
@@ -98,24 +89,18 @@
       margin-top: 3px;
     }
 
-
-    /* =========================
-       CLEAR BUTTON
-    ========================= */
+    /* CLEAR BUTTON */
 
     #clearBtn {
       padding: 9px 13px;
 
       border: 1px solid #33415f;
-
       border-radius: 9px;
 
       background: #0c1325;
-
       color: #cbd5e1;
 
       cursor: pointer;
-
       font-size: 12px;
     }
 
@@ -124,29 +109,18 @@
       color: white;
     }
 
-
-    /* =========================
-       CHAT AREA
-    ========================= */
+    /* CHAT */
 
     .chat {
       flex: 1;
-
       padding: 25px;
-
       overflow-y: auto;
     }
-
-
-    /* =========================
-       MESSAGE
-    ========================= */
 
     .message {
       max-width: 75%;
 
       padding: 14px 17px;
-
       margin-bottom: 15px;
 
       border-radius: 15px;
@@ -154,37 +128,27 @@
       line-height: 1.5;
 
       white-space: pre-wrap;
-
       word-wrap: break-word;
     }
 
-
     .ai {
       background: #1b2540;
-
       border-top-left-radius: 4px;
-
       margin-right: auto;
     }
 
-
     .user {
-      background:
-        linear-gradient(
-          135deg,
-          #7c3aed,
-          #2563eb
-        );
+      background: linear-gradient(
+        135deg,
+        #7c3aed,
+        #2563eb
+      );
 
       margin-left: auto;
-
       border-top-right-radius: 4px;
     }
 
-
-    /* =========================
-       INPUT AREA
-    ========================= */
+    /* INPUT AREA */
 
     .input-area {
       padding: 18px;
@@ -192,10 +156,8 @@
       border-top: 1px solid #293451;
 
       display: flex;
-
       gap: 10px;
     }
-
 
     #userInput {
       flex: 1;
@@ -203,37 +165,81 @@
       padding: 15px;
 
       border: 1px solid #33415f;
-
       border-radius: 12px;
 
       outline: none;
 
       background: #0c1325;
-
       color: white;
 
       font-size: 15px;
     }
 
-
     #userInput:focus {
       border-color: #7c3aed;
     }
 
+    /* MIC BUTTON */
+
+    #micBtn {
+      width: 50px;
+
+      border: 1px solid #33415f;
+      border-radius: 12px;
+
+      background: #0c1325;
+      color: white;
+
+      font-size: 20px;
+
+      cursor: pointer;
+    }
+
+    #micBtn:hover {
+      border-color: #7c3aed;
+    }
+
+    #micBtn.listening {
+      background: linear-gradient(
+        135deg,
+        #ef4444,
+        #dc2626
+      );
+
+      border-color: #ef4444;
+
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+
+      0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+      }
+
+    }
+
+    /* SEND BUTTON */
 
     #sendBtn {
       padding: 0 22px;
 
       border: none;
-
       border-radius: 12px;
 
-      background:
-        linear-gradient(
-          135deg,
-          #7c3aed,
-          #2563eb
-        );
+      background: linear-gradient(
+        135deg,
+        #7c3aed,
+        #2563eb
+      );
 
       color: white;
 
@@ -242,29 +248,22 @@
       cursor: pointer;
     }
 
-
     #sendBtn:hover {
       opacity: 0.9;
     }
 
-
     #sendBtn:disabled {
       opacity: 0.6;
-
       cursor: not-allowed;
     }
 
-
-    /* =========================
-       MOBILE
-    ========================= */
+    /* MOBILE */
 
     @media (max-width: 600px) {
 
       .app {
         width: 100%;
         height: 100vh;
-
         border-radius: 0;
       }
 
@@ -284,6 +283,10 @@
         padding: 12px;
       }
 
+      #sendBtn {
+        padding: 0 16px;
+      }
+
     }
 
   </style>
@@ -293,9 +296,7 @@
 
 <body>
 
-
   <div class="app">
-
 
     <!-- HEADER -->
 
@@ -329,14 +330,12 @@
     </div>
 
 
-
     <!-- CHAT -->
 
     <div
       class="chat"
       id="chat"
     ></div>
-
 
 
     <!-- INPUT -->
@@ -350,15 +349,20 @@
         autocomplete="off"
       >
 
+      <button
+        id="micBtn"
+        title="Voice Input"
+      >
+        🎤
+      </button>
+
       <button id="sendBtn">
         Send
       </button>
 
     </div>
 
-
   </div>
-
 
 
   <script>
@@ -383,6 +387,9 @@
 
     const clearBtn =
       document.getElementById("clearBtn");
+
+    const micBtn =
+      document.getElementById("micBtn");
 
     const chat =
       document.getElementById("chat");
@@ -413,7 +420,7 @@
 
 
     // =========================================
-    // ADD MESSAGE TO SCREEN
+    // ADD MESSAGE
     // =========================================
 
     function addMessage(
@@ -424,20 +431,16 @@
       const message =
         document.createElement("div");
 
-
       message.className =
         "message " +
         (role === "user"
           ? "user"
           : "ai");
 
-
       message.textContent =
         content;
 
-
       chat.appendChild(message);
-
 
       chat.scrollTop =
         chat.scrollHeight;
@@ -446,13 +449,12 @@
 
 
     // =========================================
-    // LOAD OLD CHAT
+    // LOAD CONVERSATION
     // =========================================
 
     function loadConversation() {
 
       chat.innerHTML = "";
-
 
       if (
         conversation.length === 0
@@ -465,7 +467,6 @@
 
         return;
       }
-
 
       conversation.forEach(
         (message) => {
@@ -490,18 +491,20 @@
       const message =
         input.value.trim();
 
-
       if (!message) {
         return;
       }
 
 
-      // Disable input
+      // Disable controls
+
       input.disabled = true;
       sendBtn.disabled = true;
+      micBtn.disabled = true;
 
 
       // Show user message
+
       addMessage(
         "user",
         message
@@ -509,6 +512,7 @@
 
 
       // Save user message
+
       conversation.push({
 
         role: "user",
@@ -517,33 +521,29 @@
 
       });
 
-
       saveConversation();
 
 
       // Clear input
+
       input.value = "";
 
 
-      // Thinking message
+      // Thinking
+
       const thinking =
         document.createElement("div");
-
 
       thinking.className =
         "message ai";
 
-
       thinking.textContent =
         "Thinking...";
-
 
       thinking.id =
         "thinkingMessage";
 
-
       chat.appendChild(thinking);
-
 
       chat.scrollTop =
         chat.scrollHeight;
@@ -551,9 +551,8 @@
 
       try {
 
-
         // =========================================
-        // SEND MESSAGE + MEMORY TO WORKER
+        // SEND TO CLOUDFLARE
         // =========================================
 
         const response =
@@ -587,22 +586,18 @@
 
 
         // Remove thinking
+
         const thinkingMessage =
           document.getElementById(
             "thinkingMessage"
           );
 
-
         if (thinkingMessage) {
-
           thinkingMessage.remove();
-
         }
 
 
-        // =========================================
-        // ERROR
-        // =========================================
+        // API ERROR
 
         if (!response.ok) {
 
@@ -614,9 +609,7 @@
         }
 
 
-        // =========================================
         // AI RESPONSE
-        // =========================================
 
         const reply =
           data?.reply ||
@@ -624,6 +617,7 @@
 
 
         // Show AI response
+
         addMessage(
           "assistant",
           reply
@@ -631,6 +625,7 @@
 
 
         // Save AI response
+
         conversation.push({
 
           role: "assistant",
@@ -639,24 +634,18 @@
 
         });
 
-
         saveConversation();
 
 
       } catch (error) {
 
-
-        // Remove thinking
         const thinkingMessage =
           document.getElementById(
             "thinkingMessage"
           );
 
-
         if (thinkingMessage) {
-
           thinkingMessage.remove();
-
         }
 
 
@@ -674,10 +663,11 @@
       }
 
 
-      // Enable input
-      input.disabled = false;
+      // Enable controls
 
+      input.disabled = false;
       sendBtn.disabled = false;
+      micBtn.disabled = false;
 
       input.focus();
 
@@ -697,19 +687,15 @@
             "Clear all NEXORA AI conversation history?"
           );
 
-
         if (!confirmed) {
           return;
         }
 
-
         conversation = [];
-
 
         localStorage.removeItem(
           "nexoraConversation"
         );
-
 
         loadConversation();
 
@@ -748,6 +734,185 @@
 
 
     // =========================================
+    // VOICE RECOGNITION
+    // =========================================
+
+    const SpeechRecognition =
+      window.SpeechRecognition ||
+      window.webkitSpeechRecognition;
+
+
+    let recognition = null;
+
+    let isListening = false;
+
+
+    if (SpeechRecognition) {
+
+      recognition =
+        new SpeechRecognition();
+
+
+      // Language
+
+      recognition.lang =
+        "en-US";
+
+
+      // One sentence at a time
+
+      recognition.continuous =
+        false;
+
+
+      recognition.interimResults =
+        true;
+
+
+      // =========================================
+      // VOICE START
+      // =========================================
+
+      recognition.onstart =
+        function() {
+
+          isListening = true;
+
+          micBtn.classList.add(
+            "listening"
+          );
+
+          micBtn.textContent =
+            "⏹️";
+
+          input.placeholder =
+            "Listening...";
+
+        };
+
+
+      // =========================================
+      // VOICE RESULT
+      // =========================================
+
+      recognition.onresult =
+        function(event) {
+
+          let transcript = "";
+
+
+          for (
+            let i = event.resultIndex;
+            i < event.results.length;
+            i++
+          ) {
+
+            transcript +=
+              event.results[i][0].transcript;
+
+          }
+
+
+          input.value =
+            transcript;
+
+        };
+
+
+      // =========================================
+      // VOICE END
+      // =========================================
+
+      recognition.onend =
+        function() {
+
+          isListening = false;
+
+          micBtn.classList.remove(
+            "listening"
+          );
+
+          micBtn.textContent =
+            "🎤";
+
+          input.placeholder =
+            "Ask NEXORA anything...";
+
+        };
+
+
+      // =========================================
+      // VOICE ERROR
+      // =========================================
+
+      recognition.onerror =
+        function(event) {
+
+          console.error(
+            "Voice recognition error:",
+            event.error
+          );
+
+          isListening = false;
+
+          micBtn.classList.remove(
+            "listening"
+          );
+
+          micBtn.textContent =
+            "🎤";
+
+          input.placeholder =
+            "Ask NEXORA anything...";
+
+        };
+
+
+      // =========================================
+      // MIC BUTTON
+      // =========================================
+
+      micBtn.addEventListener(
+        "click",
+        function() {
+
+          if (isListening) {
+
+            recognition.stop();
+
+            return;
+          }
+
+
+          try {
+
+            recognition.start();
+
+          } catch (error) {
+
+            console.error(
+              "Microphone error:",
+              error
+            );
+
+          }
+
+        }
+      );
+
+    } else {
+
+      // Browser doesn't support Speech Recognition
+
+      micBtn.disabled = true;
+
+      micBtn.title =
+        "Voice input is not supported in this browser";
+
+    }
+
+
+    // =========================================
     // START NEXORA
     // =========================================
 
@@ -756,7 +921,6 @@
     input.focus();
 
   </script>
-
 
 </body>
 
