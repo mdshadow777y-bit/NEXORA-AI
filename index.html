@@ -42,10 +42,14 @@
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
     }
 
-    /* HEADER */
+
+    /* =========================
+       HEADER
+    ========================= */
 
     .header {
       padding: 20px 25px;
+
       border-bottom: 1px solid #293451;
 
       display: flex;
@@ -89,8 +93,17 @@
       margin-top: 3px;
     }
 
-    /* CLEAR BUTTON */
 
+    /* =========================
+       HEADER BUTTONS
+    ========================= */
+
+    .header-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    #voiceToggle,
     #clearBtn {
       padding: 9px 13px;
 
@@ -104,51 +117,129 @@
       font-size: 12px;
     }
 
+    #voiceToggle:hover,
     #clearBtn:hover {
       border-color: #7c3aed;
       color: white;
     }
 
-    /* CHAT */
+    #voiceToggle.active {
+      background: #1e293b;
+      border-color: #7c3aed;
+      color: white;
+    }
+
+
+    /* =========================
+       CHAT
+    ========================= */
 
     .chat {
       flex: 1;
+
       padding: 25px;
+
       overflow-y: auto;
     }
+
+
+    /* =========================
+       MESSAGE ROW
+    ========================= */
+
+    .message-row {
+      display: flex;
+
+      width: 100%;
+
+      margin-bottom: 15px;
+    }
+
+    .message-row.user-row {
+      justify-content: flex-end;
+    }
+
+    .message-row.ai-row {
+      justify-content: flex-start;
+    }
+
+
+    /* =========================
+       MESSAGE
+    ========================= */
 
     .message {
       max-width: 75%;
 
       padding: 14px 17px;
-      margin-bottom: 15px;
 
       border-radius: 15px;
 
       line-height: 1.5;
 
       white-space: pre-wrap;
+
       word-wrap: break-word;
     }
 
-    .ai {
+    .message.ai {
       background: #1b2540;
+
       border-top-left-radius: 4px;
-      margin-right: auto;
     }
 
-    .user {
+    .message.user {
       background: linear-gradient(
         135deg,
         #7c3aed,
         #2563eb
       );
 
-      margin-left: auto;
       border-top-right-radius: 4px;
     }
 
-    /* INPUT AREA */
+
+    /* =========================
+       AI MESSAGE CONTROLS
+    ========================= */
+
+    .ai-container {
+      display: flex;
+
+      align-items: flex-start;
+
+      gap: 7px;
+
+      max-width: 80%;
+    }
+
+    .speaker-btn {
+      width: 32px;
+      height: 32px;
+
+      flex-shrink: 0;
+
+      border: 1px solid #33415f;
+
+      border-radius: 8px;
+
+      background: #0c1325;
+
+      color: white;
+
+      cursor: pointer;
+
+      font-size: 14px;
+    }
+
+    .speaker-btn:hover {
+      border-color: #7c3aed;
+    }
+
+
+    /* =========================
+       INPUT AREA
+    ========================= */
 
     .input-area {
       padding: 18px;
@@ -156,6 +247,7 @@
       border-top: 1px solid #293451;
 
       display: flex;
+
       gap: 10px;
     }
 
@@ -165,11 +257,13 @@
       padding: 15px;
 
       border: 1px solid #33415f;
+
       border-radius: 12px;
 
       outline: none;
 
       background: #0c1325;
+
       color: white;
 
       font-size: 15px;
@@ -179,15 +273,20 @@
       border-color: #7c3aed;
     }
 
-    /* MIC BUTTON */
+
+    /* =========================
+       MIC BUTTON
+    ========================= */
 
     #micBtn {
       width: 50px;
 
       border: 1px solid #33415f;
+
       border-radius: 12px;
 
       background: #0c1325;
+
       color: white;
 
       font-size: 20px;
@@ -211,28 +310,39 @@
       animation: pulse 1s infinite;
     }
 
+
     @keyframes pulse {
 
       0% {
-        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
+        box-shadow:
+          0 0 0 0
+          rgba(239, 68, 68, 0.5);
       }
 
       70% {
-        box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+        box-shadow:
+          0 0 0 10px
+          rgba(239, 68, 68, 0);
       }
 
       100% {
-        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+        box-shadow:
+          0 0 0 0
+          rgba(239, 68, 68, 0);
       }
 
     }
 
-    /* SEND BUTTON */
+
+    /* =========================
+       SEND BUTTON
+    ========================= */
 
     #sendBtn {
       padding: 0 22px;
 
       border: none;
+
       border-radius: 12px;
 
       background: linear-gradient(
@@ -254,16 +364,21 @@
 
     #sendBtn:disabled {
       opacity: 0.6;
+
       cursor: not-allowed;
     }
 
-    /* MOBILE */
+
+    /* =========================
+       MOBILE
+    ========================= */
 
     @media (max-width: 600px) {
 
       .app {
         width: 100%;
         height: 100vh;
+
         border-radius: 0;
       }
 
@@ -271,8 +386,25 @@
         max-width: 90%;
       }
 
+      .ai-container {
+        max-width: 95%;
+      }
+
       .header {
         padding: 15px;
+      }
+
+      .header p {
+        display: none;
+      }
+
+      .header-buttons {
+        gap: 5px;
+      }
+
+      #voiceToggle,
+      #clearBtn {
+        padding: 8px 9px;
       }
 
       .chat {
@@ -298,7 +430,10 @@
 
   <div class="app">
 
-    <!-- HEADER -->
+
+    <!-- =========================
+         HEADER
+    ========================= -->
 
     <div class="header">
 
@@ -323,14 +458,24 @@
       </div>
 
 
-      <button id="clearBtn">
-        Clear Chat
-      </button>
+      <div class="header-buttons">
+
+        <button id="voiceToggle">
+          🔊 Voice ON
+        </button>
+
+        <button id="clearBtn">
+          Clear Chat
+        </button>
+
+      </div>
 
     </div>
 
 
-    <!-- CHAT -->
+    <!-- =========================
+         CHAT
+    ========================= -->
 
     <div
       class="chat"
@@ -338,7 +483,9 @@
     ></div>
 
 
-    <!-- INPUT -->
+    <!-- =========================
+         INPUT
+    ========================= -->
 
     <div class="input-area">
 
@@ -349,12 +496,14 @@
         autocomplete="off"
       >
 
+
       <button
         id="micBtn"
         title="Voice Input"
       >
         🎤
       </button>
+
 
       <button id="sendBtn">
         Send
@@ -366,6 +515,7 @@
 
 
   <script>
+
 
     // =========================================
     // NEXORA AI WORKER
@@ -391,6 +541,9 @@
     const micBtn =
       document.getElementById("micBtn");
 
+    const voiceToggle =
+      document.getElementById("voiceToggle");
+
     const chat =
       document.getElementById("chat");
 
@@ -401,20 +554,124 @@
 
     let conversation =
       JSON.parse(
-        localStorage.getItem("nexoraConversation")
+        localStorage.getItem(
+          "nexoraConversation"
+        )
       ) || [];
 
 
     // =========================================
-    // SAVE MEMORY
+    // VOICE OUTPUT STATE
+    // =========================================
+
+    let voiceEnabled = true;
+
+
+    // =========================================
+    // SAVE CONVERSATION
     // =========================================
 
     function saveConversation() {
 
       localStorage.setItem(
         "nexoraConversation",
-        JSON.stringify(conversation)
+        JSON.stringify(
+          conversation
+        )
       );
+
+    }
+
+
+    // =========================================
+    // SPEAK TEXT
+    // =========================================
+
+    function speakText(text) {
+
+      if (
+        !voiceEnabled
+      ) {
+        return;
+      }
+
+
+      if (
+        !("speechSynthesis" in window)
+      ) {
+        return;
+      }
+
+
+      // Stop previous speech
+
+      window.speechSynthesis.cancel();
+
+
+      // Create speech
+
+      const speech =
+        new SpeechSynthesisUtterance(
+          text
+        );
+
+
+      // Voice settings
+
+      speech.rate = 1;
+
+      speech.pitch = 1;
+
+      speech.volume = 1;
+
+
+      // Try English voice
+
+      const voices =
+        window.speechSynthesis
+          .getVoices();
+
+
+      const englishVoice =
+        voices.find(
+          voice =>
+            voice.lang &&
+            voice.lang
+              .toLowerCase()
+              .startsWith("en")
+        );
+
+
+      if (englishVoice) {
+
+        speech.voice =
+          englishVoice;
+
+      }
+
+
+      // Speak
+
+      window.speechSynthesis.speak(
+        speech
+      );
+
+    }
+
+
+    // =========================================
+    // STOP SPEAKING
+    // =========================================
+
+    function stopSpeaking() {
+
+      if (
+        "speechSynthesis" in window
+      ) {
+
+        window.speechSynthesis.cancel();
+
+      }
 
     }
 
@@ -425,22 +682,147 @@
 
     function addMessage(
       role,
-      content
+      content,
+      speak = false
     ) {
 
-      const message =
-        document.createElement("div");
+      const row =
+        document.createElement(
+          "div"
+        );
 
-      message.className =
-        "message " +
-        (role === "user"
-          ? "user"
-          : "ai");
 
-      message.textContent =
-        content;
+      row.className =
+        "message-row " +
+        (
+          role === "user"
+            ? "user-row"
+            : "ai-row"
+        );
 
-      chat.appendChild(message);
+
+      // =========================================
+      // USER MESSAGE
+      // =========================================
+
+      if (
+        role === "user"
+      ) {
+
+        const message =
+          document.createElement(
+            "div"
+          );
+
+
+        message.className =
+          "message user";
+
+
+        message.textContent =
+          content;
+
+
+        row.appendChild(
+          message
+        );
+
+      }
+
+
+      // =========================================
+      // AI MESSAGE
+      // =========================================
+
+      else {
+
+        const container =
+          document.createElement(
+            "div"
+          );
+
+
+        container.className =
+          "ai-container";
+
+
+        const message =
+          document.createElement(
+            "div"
+          );
+
+
+        message.className =
+          "message ai";
+
+
+        message.textContent =
+          content;
+
+
+        // Speaker button
+
+        const speaker =
+          document.createElement(
+            "button"
+          );
+
+
+        speaker.className =
+          "speaker-btn";
+
+
+        speaker.textContent =
+          "🔊";
+
+
+        speaker.title =
+          "Read this response";
+
+
+        speaker.addEventListener(
+          "click",
+          function() {
+
+            speakText(
+              content
+            );
+
+          }
+        );
+
+
+        container.appendChild(
+          message
+        );
+
+        container.appendChild(
+          speaker
+        );
+
+
+        row.appendChild(
+          container
+        );
+
+
+        // Auto voice
+
+        if (speak) {
+
+          speakText(
+            content
+          );
+
+        }
+
+      }
+
+
+      chat.appendChild(
+        row
+      );
+
 
       chat.scrollTop =
         chat.scrollHeight;
@@ -456,6 +838,7 @@
 
       chat.innerHTML = "";
 
+
       if (
         conversation.length === 0
       ) {
@@ -466,14 +849,17 @@
         );
 
         return;
+
       }
 
+
       conversation.forEach(
-        (message) => {
+        message => {
 
           addMessage(
             message.role,
-            message.content
+            message.content,
+            false
           );
 
         }
@@ -491,19 +877,27 @@
       const message =
         input.value.trim();
 
+
       if (!message) {
         return;
       }
 
 
+      // Stop current speech
+
+      stopSpeaking();
+
+
       // Disable controls
 
       input.disabled = true;
+
       sendBtn.disabled = true;
+
       micBtn.disabled = true;
 
 
-      // Show user message
+      // Show user
 
       addMessage(
         "user",
@@ -511,7 +905,7 @@
       );
 
 
-      // Save user message
+      // Save user
 
       conversation.push({
 
@@ -520,6 +914,7 @@
         content: message
 
       });
+
 
       saveConversation();
 
@@ -532,24 +927,49 @@
       // Thinking
 
       const thinking =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       thinking.className =
-        "message ai";
+        "message-row ai-row";
 
-      thinking.textContent =
-        "Thinking...";
 
       thinking.id =
         "thinkingMessage";
 
-      chat.appendChild(thinking);
+
+      const thinkingBox =
+        document.createElement(
+          "div"
+        );
+
+
+      thinkingBox.className =
+        "message ai";
+
+
+      thinkingBox.textContent =
+        "Thinking...";
+
+
+      thinking.appendChild(
+        thinkingBox
+      );
+
+
+      chat.appendChild(
+        thinking
+      );
+
 
       chat.scrollTop =
         chat.scrollHeight;
 
 
       try {
+
 
         // =========================================
         // SEND TO CLOUDFLARE
@@ -563,17 +983,22 @@
               method: "POST",
 
               headers: {
+
                 "Content-Type":
                   "application/json"
+
               },
 
               body:
                 JSON.stringify({
 
-                  message: message,
+                  message:
+                    message,
 
                   messages:
-                    conversation.slice(-20)
+                    conversation.slice(
+                      -20
+                    )
 
                 })
 
@@ -592,14 +1017,21 @@
             "thinkingMessage"
           );
 
-        if (thinkingMessage) {
+
+        if (
+          thinkingMessage
+        ) {
+
           thinkingMessage.remove();
+
         }
 
 
-        // API ERROR
+        // API error
 
-        if (!response.ok) {
+        if (
+          !response.ok
+        ) {
 
           throw new Error(
             data?.error ||
@@ -609,43 +1041,58 @@
         }
 
 
-        // AI RESPONSE
+        // AI reply
 
         const reply =
           data?.reply ||
           "Sorry, I couldn't generate a response.";
 
 
-        // Show AI response
+        // Show AI
 
         addMessage(
           "assistant",
-          reply
+          reply,
+          true
         );
 
 
-        // Save AI response
+        // Save AI
 
         conversation.push({
 
-          role: "assistant",
+          role:
+            "assistant",
 
-          content: reply
+          content:
+            reply
 
         });
+
 
         saveConversation();
 
 
-      } catch (error) {
+      }
+
+
+      catch (error) {
+
+
+        // Remove thinking
 
         const thinkingMessage =
           document.getElementById(
             "thinkingMessage"
           );
 
-        if (thinkingMessage) {
+
+        if (
+          thinkingMessage
+        ) {
+
           thinkingMessage.remove();
+
         }
 
 
@@ -666,7 +1113,9 @@
       // Enable controls
 
       input.disabled = false;
+
       sendBtn.disabled = false;
+
       micBtn.disabled = false;
 
       input.focus();
@@ -687,19 +1136,75 @@
             "Clear all NEXORA AI conversation history?"
           );
 
+
         if (!confirmed) {
           return;
         }
 
+
+        stopSpeaking();
+
+
         conversation = [];
+
 
         localStorage.removeItem(
           "nexoraConversation"
         );
 
+
         loadConversation();
 
       }
+    );
+
+
+    // =========================================
+    // VOICE TOGGLE
+    // =========================================
+
+    voiceToggle.addEventListener(
+      "click",
+      function() {
+
+        voiceEnabled =
+          !voiceEnabled;
+
+
+        if (
+          voiceEnabled
+        ) {
+
+          voiceToggle.textContent =
+            "🔊 Voice ON";
+
+          voiceToggle.classList.add(
+            "active"
+          );
+
+        }
+
+        else {
+
+          voiceToggle.textContent =
+            "🔇 Voice OFF";
+
+          voiceToggle.classList.remove(
+            "active"
+          );
+
+          stopSpeaking();
+
+        }
+
+      }
+    );
+
+
+    // Initial voice state
+
+    voiceToggle.classList.add(
+      "active"
     );
 
 
@@ -734,7 +1239,7 @@
 
 
     // =========================================
-    // VOICE RECOGNITION
+    // VOICE INPUT
     // =========================================
 
     const SpeechRecognition =
@@ -747,19 +1252,17 @@
     let isListening = false;
 
 
-    if (SpeechRecognition) {
+    if (
+      SpeechRecognition
+    ) {
 
       recognition =
         new SpeechRecognition();
 
 
-      // Language
-
       recognition.lang =
         "en-US";
 
-
-      // One sentence at a time
 
       recognition.continuous =
         false;
@@ -769,21 +1272,23 @@
         true;
 
 
-      // =========================================
-      // VOICE START
-      // =========================================
+      // Voice started
 
       recognition.onstart =
         function() {
 
-          isListening = true;
+          isListening =
+            true;
+
 
           micBtn.classList.add(
             "listening"
           );
 
+
           micBtn.textContent =
             "⏹️";
+
 
           input.placeholder =
             "Listening...";
@@ -791,24 +1296,28 @@
         };
 
 
-      // =========================================
-      // VOICE RESULT
-      // =========================================
+      // Voice result
 
       recognition.onresult =
         function(event) {
 
-          let transcript = "";
+          let transcript =
+            "";
 
 
           for (
-            let i = event.resultIndex;
-            i < event.results.length;
+            let i =
+              event.resultIndex;
+
+            i <
+              event.results.length;
+
             i++
           ) {
 
             transcript +=
-              event.results[i][0].transcript;
+              event.results[i][0]
+                .transcript;
 
           }
 
@@ -819,21 +1328,23 @@
         };
 
 
-      // =========================================
-      // VOICE END
-      // =========================================
+      // Voice ended
 
       recognition.onend =
         function() {
 
-          isListening = false;
+          isListening =
+            false;
+
 
           micBtn.classList.remove(
             "listening"
           );
 
+
           micBtn.textContent =
             "🎤";
+
 
           input.placeholder =
             "Ask NEXORA anything...";
@@ -841,9 +1352,7 @@
         };
 
 
-      // =========================================
-      // VOICE ERROR
-      // =========================================
+      // Voice error
 
       recognition.onerror =
         function(event) {
@@ -853,14 +1362,19 @@
             event.error
           );
 
-          isListening = false;
+
+          isListening =
+            false;
+
 
           micBtn.classList.remove(
             "listening"
           );
 
+
           micBtn.textContent =
             "🎤";
+
 
           input.placeholder =
             "Ask NEXORA anything...";
@@ -868,19 +1382,20 @@
         };
 
 
-      // =========================================
-      // MIC BUTTON
-      // =========================================
+      // Mic click
 
       micBtn.addEventListener(
         "click",
         function() {
 
-          if (isListening) {
+          if (
+            isListening
+          ) {
 
             recognition.stop();
 
             return;
+
           }
 
 
@@ -888,7 +1403,9 @@
 
             recognition.start();
 
-          } catch (error) {
+          }
+
+          catch (error) {
 
             console.error(
               "Microphone error:",
@@ -900,11 +1417,13 @@
         }
       );
 
-    } else {
+    }
 
-      // Browser doesn't support Speech Recognition
 
-      micBtn.disabled = true;
+    else {
+
+      micBtn.disabled =
+        true;
 
       micBtn.title =
         "Voice input is not supported in this browser";
