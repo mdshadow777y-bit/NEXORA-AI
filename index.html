@@ -7,6 +7,7 @@
 <title>NEXORA AI</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -36,7 +37,10 @@ body{
   box-shadow:0 20px 60px rgba(0,0,0,.4);
 }
 
-/* HEADER */
+
+/* =========================
+   HEADER
+========================= */
 
 .header{
   padding:20px 25px;
@@ -102,7 +106,10 @@ body{
   color:white;
 }
 
-/* CHAT */
+
+/* =========================
+   CHAT
+========================= */
 
 .chat{
   flex:1;
@@ -144,21 +151,24 @@ body{
   border-top-left-radius:4px;
 }
 
-/* AI CONTENT */
+
+/* =========================
+   AI CONTENT
+========================= */
 
 .ai-container{
   display:flex;
+  flex-direction:column;
   align-items:flex-start;
-  gap:7px;
   max-width:85%;
 }
 
 .ai-content{
-  max-width:calc(100% - 40px);
+  max-width:100%;
 }
 
 .ai-content p{
-  margin-bottom:10px;
+  margin:0 0 12px 0;
 }
 
 .ai-content p:last-child{
@@ -167,22 +177,17 @@ body{
 
 .ai-content strong{
   font-weight:700;
-  color:#fff;
+  color:#ffffff;
 }
 
-.ai-content ul,
-.ai-content ol{
-  margin:8px 0 8px 22px;
-}
-
-.ai-content li{
-  margin-bottom:5px;
+.ai-content em{
+  font-style:italic;
 }
 
 .ai-content h1,
 .ai-content h2,
 .ai-content h3{
-  margin:10px 0 8px;
+  margin:12px 0 8px;
 }
 
 .ai-content h1{
@@ -197,20 +202,36 @@ body{
   font-size:17px;
 }
 
-/* INLINE CODE */
+.ai-content ul,
+.ai-content ol{
+  margin:8px 0 12px 22px;
+}
+
+.ai-content li{
+  margin-bottom:5px;
+}
+
+
+/* =========================
+   INLINE CODE
+========================= */
 
 .inline-code{
   background:#0b1222;
   border:1px solid #33415f;
   padding:2px 6px;
   border-radius:5px;
-  font-family:Consolas,monospace;
+  font-family:Consolas,"Courier New",monospace;
   font-size:13px;
 }
 
-/* CODE BLOCK */
+
+/* =========================
+   CODE BLOCK
+========================= */
 
 .code-wrapper{
+  width:100%;
   margin:12px 0;
   border:1px solid #33415f;
   border-radius:10px;
@@ -219,8 +240,8 @@ body{
 }
 
 .code-header{
-  height:36px;
-  padding:0 10px;
+  min-height:36px;
+  padding:6px 10px;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -230,12 +251,17 @@ body{
   font-size:11px;
 }
 
+.code-language{
+  font-family:Arial,sans-serif;
+  text-transform:lowercase;
+}
+
 .code-copy{
   border:1px solid #33415f;
   background:#0c1325;
   color:#cbd5e1;
   border-radius:6px;
-  padding:5px 8px;
+  padding:5px 9px;
   cursor:pointer;
   font-size:11px;
 }
@@ -247,7 +273,7 @@ body{
 
 .code-wrapper pre{
   margin:0;
-  padding:14px;
+  padding:15px;
   overflow-x:auto;
 }
 
@@ -259,7 +285,10 @@ body{
   white-space:pre;
 }
 
-/* AI BUTTONS */
+
+/* =========================
+   AI ACTIONS
+========================= */
 
 .ai-actions{
   display:flex;
@@ -282,12 +311,15 @@ body{
   border-color:#7c3aed;
 }
 
-/* THINKING */
+
+/* =========================
+   THINKING
+========================= */
 
 .thinking-box{
   display:flex;
   align-items:center;
-  gap:7px;
+  gap:8px;
   padding:14px 17px;
   background:#1b2540;
   border-radius:15px;
@@ -317,6 +349,7 @@ body{
 }
 
 @keyframes thinking{
+
   0%,60%,100%{
     opacity:.3;
     transform:translateY(0);
@@ -326,9 +359,13 @@ body{
     opacity:1;
     transform:translateY(-3px);
   }
+
 }
 
-/* INPUT */
+
+/* =========================
+   INPUT
+========================= */
 
 .input-area{
   padding:18px;
@@ -373,17 +410,19 @@ body{
 }
 
 @keyframes pulse{
+
   0%{
-    box-shadow:0 0 0 0 rgba(239,68,68,.5)
+    box-shadow:0 0 0 0 rgba(239,68,68,.5);
   }
 
   70%{
-    box-shadow:0 0 0 10px rgba(239,68,68,0)
+    box-shadow:0 0 0 10px rgba(239,68,68,0);
   }
 
   100%{
-    box-shadow:0 0 0 0 rgba(239,68,68,0)
+    box-shadow:0 0 0 0 rgba(239,68,68,0);
   }
+
 }
 
 #sendBtn{
@@ -405,7 +444,10 @@ body{
   cursor:not-allowed;
 }
 
-/* MOBILE */
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:600px){
 
@@ -451,9 +493,12 @@ body{
   #sendBtn{
     padding:0 16px;
   }
+
 }
+
 </style>
 </head>
+
 
 <body>
 
@@ -463,7 +508,9 @@ body{
 
     <div class="brand">
 
-      <div class="logo">N</div>
+      <div class="logo">
+        N
+      </div>
 
       <div>
         <h1>NEXORA AI</h1>
@@ -471,6 +518,7 @@ body{
       </div>
 
     </div>
+
 
     <div class="header-buttons">
 
@@ -487,7 +535,10 @@ body{
   </div>
 
 
-  <div class="chat" id="chat"></div>
+  <div
+    class="chat"
+    id="chat">
+  </div>
 
 
   <div class="input-area">
@@ -501,8 +552,7 @@ body{
 
     <button
       id="micBtn"
-      title="Voice Input"
-    >
+      title="Voice Input">
       🎤
     </button>
 
@@ -517,17 +567,17 @@ body{
 
 <script>
 
-/* ==============================
-   NEXORA CONFIG
-============================== */
+/* ==========================================
+   NEXORA API
+========================================== */
 
 const API_URL =
 "https://nexora-ai-api.md-shadow777y.workers.dev/";
 
 
-/* ==============================
+/* ==========================================
    ELEMENTS
-============================== */
+========================================== */
 
 const input =
 document.getElementById("userInput");
@@ -548,22 +598,21 @@ const chat =
 document.getElementById("chat");
 
 
-/* ==============================
+/* ==========================================
    MEMORY
-============================== */
+========================================== */
 
 let conversation =
 JSON.parse(
   localStorage.getItem("nexoraConversation")
 ) || [];
 
-
 let voiceEnabled = true;
 
 
-/* ==============================
-   SAVE MEMORY
-============================== */
+/* ==========================================
+   SAVE
+========================================== */
 
 function saveConversation(){
 
@@ -575,58 +624,9 @@ function saveConversation(){
 }
 
 
-/* ==============================
-   VOICE OUTPUT
-============================== */
-
-function speakText(text){
-
-  if(!voiceEnabled) return;
-
-  if(!("speechSynthesis" in window)) return;
-
-  window.speechSynthesis.cancel();
-
-  const speech =
-    new SpeechSynthesisUtterance(text);
-
-  speech.rate = 1;
-  speech.pitch = 1;
-  speech.volume = 1;
-
-  const voices =
-    window.speechSynthesis.getVoices();
-
-  const englishVoice =
-    voices.find(
-      voice =>
-        voice.lang &&
-        voice.lang
-          .toLowerCase()
-          .startsWith("en")
-    );
-
-  if(englishVoice){
-    speech.voice = englishVoice;
-  }
-
-  window.speechSynthesis.speak(speech);
-
-}
-
-
-function stopSpeaking(){
-
-  if("speechSynthesis" in window){
-    window.speechSynthesis.cancel();
-  }
-
-}
-
-
-/* ==============================
+/* ==========================================
    ESCAPE HTML
-============================== */
+========================================== */
 
 function escapeHTML(text){
 
@@ -640,62 +640,20 @@ function escapeHTML(text){
 }
 
 
-/* ==============================
-   MARKDOWN RENDERER
-============================== */
+/* ==========================================
+   MARKDOWN INLINE
+========================================== */
 
-function renderMarkdown(text){
+function renderInlineMarkdown(text){
 
-  const codeBlocks = [];
-
-  text = text.replace(
-    /```(\w*)\n?([\s\S]*?)```/g,
-    function(match, language, code){
-
-      const index = codeBlocks.length;
-
-      codeBlocks.push({
-        language:
-          language || "code",
-        code:
-          code.trim()
-      });
-
-      return `___CODE_BLOCK_${index}___`;
-
-    }
-  );
-
-
-  let html =
+  let result =
     escapeHTML(text);
-
-
-  /* headings */
-
-  html =
-    html.replace(
-      /^### (.*)$/gm,
-      "<h3>$1</h3>"
-    );
-
-  html =
-    html.replace(
-      /^## (.*)$/gm,
-      "<h2>$1</h2>"
-    );
-
-  html =
-    html.replace(
-      /^# (.*)$/gm,
-      "<h1>$1</h1>"
-    );
 
 
   /* bold */
 
-  html =
-    html.replace(
+  result =
+    result.replace(
       /\*\*(.*?)\*\*/g,
       "<strong>$1</strong>"
     );
@@ -703,8 +661,8 @@ function renderMarkdown(text){
 
   /* italic */
 
-  html =
-    html.replace(
+  result =
+    result.replace(
       /(?<!\*)\*([^*]+)\*(?!\*)/g,
       "<em>$1</em>"
     );
@@ -712,95 +670,368 @@ function renderMarkdown(text){
 
   /* inline code */
 
-  html =
-    html.replace(
+  result =
+    result.replace(
       /`([^`]+)`/g,
       '<span class="inline-code">$1</span>'
     );
 
 
-  /* unordered list */
+  return result;
 
-  html =
-    html.replace(
-      /^\s*[-*] (.*)$/gm,
-      "<li>$1</li>"
+}
+
+
+/* ==========================================
+   CODE BLOCK PARSER
+========================================== */
+
+function parseCodeBlocks(text){
+
+  const blocks = [];
+
+  /*
+    Accept normal 3-backtick fences,
+    and also tolerate 2-backtick fences
+    because some AI responses occasionally
+    produce malformed Markdown.
+  */
+
+  const regex =
+    /^(`{2,3})([a-zA-Z0-9_+#.-]*)[ \t]*\r?\n([\s\S]*?)^\1[ \t]*$/gm;
+
+
+  const cleaned =
+    text.replace(
+      regex,
+      function(
+        match,
+        fence,
+        language,
+        code
+      ){
+
+        const index =
+          blocks.length;
+
+        blocks.push({
+
+          language:
+            language || "code",
+
+          code:
+            code.replace(/\s+$/,"")
+
+        });
+
+
+        return (
+          "\n\n" +
+          `[[[NEXORA_CODE_${index}]]]` +
+          "\n\n"
+        );
+
+      }
     );
 
 
-  /* ordered list */
+  return {
+    text:cleaned,
+    blocks:blocks
+  };
 
-  html =
-    html.replace(
-      /^\s*\d+\.\s+(.*)$/gm,
-      "<li>$1</li>"
-    );
-
-
-  /* line breaks */
-
-  html =
-    html.replace(
-      /\n\n/g,
-      "</p><p>"
-    );
-
-  html =
-    html.replace(
-      /\n/g,
-      "<br>"
-    );
+}
 
 
-  html =
-    "<p>" + html + "</p>";
+/* ==========================================
+   MARKDOWN BLOCK PARSER
+========================================== */
+
+function renderMarkdown(text){
+
+  const parsed =
+    parseCodeBlocks(text);
 
 
-  /* restore code blocks */
+  const blocks =
+    parsed.blocks;
 
-  codeBlocks.forEach(
-    (block,index)=>{
 
-      const safeCode =
-        escapeHTML(block.code);
+  const lines =
+    parsed.text.split(/\r?\n/);
 
-      const codeHTML = `
-        <div class="code-wrapper">
 
-          <div class="code-header">
+  let html = "";
 
-            <span>
-              ${escapeHTML(block.language)}
-            </span>
+  let paragraph = [];
 
-            <button
-              class="code-copy"
-              onclick="copyCode(this)"
-            >
-              Copy
-            </button>
+  let listType = null;
+
+
+  function closeParagraph(){
+
+    if(paragraph.length === 0){
+      return;
+    }
+
+
+    const content =
+      paragraph.join("<br>");
+
+
+    html +=
+      `<p>${renderInlineMarkdown(content)}</p>`;
+
+
+    paragraph = [];
+
+  }
+
+
+  function closeList(){
+
+    if(!listType){
+      return;
+    }
+
+
+    html +=
+      listType === "ul"
+      ? "</ul>"
+      : "</ol>";
+
+
+    listType = null;
+
+  }
+
+
+  for(let i=0;i<lines.length;i++){
+
+    const raw =
+      lines[i];
+
+    const line =
+      raw.trim();
+
+
+    /* empty line */
+
+    if(line === ""){
+
+      closeParagraph();
+      closeList();
+
+      continue;
+
+    }
+
+
+    /* code placeholder */
+
+    const codeMatch =
+      line.match(
+        /^\[\[\[NEXORA_CODE_(\d+)\]\]\]$/
+      );
+
+
+    if(codeMatch){
+
+      closeParagraph();
+      closeList();
+
+      const index =
+        Number(codeMatch[1]);
+
+      const block =
+        blocks[index];
+
+
+      if(block){
+
+        const safeCode =
+          escapeHTML(block.code);
+
+
+        html += `
+
+          <div class="code-wrapper">
+
+            <div class="code-header">
+
+              <span class="code-language">
+                ${escapeHTML(block.language)}
+              </span>
+
+              <button
+                class="code-copy"
+                onclick="copyCode(this)"
+              >
+                Copy
+              </button>
+
+            </div>
+
+            <pre><code>${safeCode}</code></pre>
 
           </div>
 
-          <pre><code>${safeCode}</code></pre>
+        `;
 
-        </div>
-      `;
+      }
 
-      html =
-        html.replace(
-          `<p>___CODE_BLOCK_${index}___</p>`,
-          codeHTML
-        );
-
-      html =
-        html.replace(
-          `___CODE_BLOCK_${index}___`,
-          codeHTML
-        );
+      continue;
 
     }
-  );
+
+
+    /* headings */
+
+    if(line.startsWith("### ")){
+
+      closeParagraph();
+      closeList();
+
+      html +=
+        `<h3>${renderInlineMarkdown(
+          line.substring(4)
+        )}</h3>`;
+
+      continue;
+
+    }
+
+
+    if(line.startsWith("## ")){
+
+      closeParagraph();
+      closeList();
+
+      html +=
+        `<h2>${renderInlineMarkdown(
+          line.substring(3)
+        )}</h2>`;
+
+      continue;
+
+    }
+
+
+    if(line.startsWith("# ")){
+
+      closeParagraph();
+      closeList();
+
+      html +=
+        `<h1>${renderInlineMarkdown(
+          line.substring(2)
+        )}</h1>`;
+
+      continue;
+
+    }
+
+
+    /* unordered list */
+
+    const unordered =
+      line.match(
+        /^[-*•]\s+(.*)$/
+      );
+
+
+    if(unordered){
+
+      closeParagraph();
+
+
+      if(listType !== "ul"){
+
+        closeList();
+
+        html += "<ul>";
+
+        listType = "ul";
+
+      }
+
+
+      html +=
+        `<li>${renderInlineMarkdown(
+          unordered[1]
+        )}</li>`;
+
+
+      continue;
+
+    }
+
+
+    /* ordered list */
+
+    const ordered =
+      line.match(
+        /^\d+[.)]\s+(.*)$/
+      );
+
+
+    if(ordered){
+
+      closeParagraph();
+
+
+      if(listType !== "ol"){
+
+        closeList();
+
+        html += "<ol>";
+
+        listType = "ol";
+
+      }
+
+
+      html +=
+        `<li>${renderInlineMarkdown(
+          ordered[1]
+        )}` +
+        `</li>`;
+
+
+      continue;
+
+    }
+
+
+    /* horizontal line */
+
+    if(
+      line === "---" ||
+      line === "***" ||
+      line === "___"
+    ){
+
+      closeParagraph();
+      closeList();
+
+      html += "<hr>";
+
+      continue;
+
+    }
+
+
+    /* normal text */
+
+    closeList();
+
+    paragraph.push(raw);
+
+  }
+
+
+  closeParagraph();
+  closeList();
 
 
   return html;
@@ -808,35 +1039,56 @@ function renderMarkdown(text){
 }
 
 
-/* ==============================
+/* ==========================================
    COPY CODE
-============================== */
+========================================== */
 
 async function copyCode(button){
 
   const wrapper =
-    button.closest(".code-wrapper");
+    button.closest(
+      ".code-wrapper"
+    );
+
+
+  if(!wrapper) return;
+
 
   const code =
-    wrapper.querySelector("code").innerText;
+    wrapper.querySelector(
+      "code"
+    );
+
+
+  if(!code) return;
+
 
   try{
 
-    await navigator.clipboard.writeText(code);
+    await navigator.clipboard.writeText(
+      code.innerText
+    );
 
-    button.textContent = "Copied!";
+
+    button.textContent =
+      "Copied!";
+
 
     setTimeout(
-      ()=>{
-        button.textContent = "Copy";
+      function(){
+
+        button.textContent =
+          "Copy";
+
       },
       1500
     );
 
+
   }catch(error){
 
     console.error(
-      "Copy error:",
+      "Code copy error:",
       error
     );
 
@@ -845,37 +1097,60 @@ async function copyCode(button){
 }
 
 
-/* ==============================
-   COPY AI RESPONSE
-============================== */
+/* ==========================================
+   COPY RESPONSE
+========================================== */
 
 async function copyResponse(button){
 
-  const message =
-    button
-      .closest(".ai-container")
-      .querySelector(".ai-content");
+  const container =
+    button.closest(
+      ".ai-container"
+    );
+
+
+  if(!container) return;
+
+
+  const content =
+    container.querySelector(
+      ".ai-content"
+    );
+
+
+  if(!content) return;
+
 
   const text =
-    message.innerText;
+    content.innerText;
+
 
   try{
 
-    await navigator.clipboard.writeText(text);
+    await navigator.clipboard.writeText(
+      text
+    );
 
-    button.textContent = "✓";
+
+    button.textContent =
+      "✓";
+
 
     setTimeout(
-      ()=>{
-        button.textContent = "📋";
+      function(){
+
+        button.textContent =
+          "📋";
+
       },
       1500
     );
 
+
   }catch(error){
 
     console.error(
-      "Copy error:",
+      "Response copy error:",
       error
     );
 
@@ -884,9 +1159,81 @@ async function copyResponse(button){
 }
 
 
-/* ==============================
+/* ==========================================
+   SPEECH
+========================================== */
+
+function speakText(text){
+
+  if(!voiceEnabled){
+    return;
+  }
+
+
+  if(
+    !("speechSynthesis" in window)
+  ){
+    return;
+  }
+
+
+  window.speechSynthesis.cancel();
+
+
+  const speech =
+    new SpeechSynthesisUtterance(
+      text
+    );
+
+
+  speech.rate = 1;
+  speech.pitch = 1;
+  speech.volume = 1;
+
+
+  const voices =
+    window.speechSynthesis.getVoices();
+
+
+  const englishVoice =
+    voices.find(
+      voice =>
+        voice.lang &&
+        voice.lang
+          .toLowerCase()
+          .startsWith("en")
+    );
+
+
+  if(englishVoice){
+    speech.voice =
+      englishVoice;
+  }
+
+
+  window.speechSynthesis.speak(
+    speech
+  );
+
+}
+
+
+function stopSpeaking(){
+
+  if(
+    "speechSynthesis" in window
+  ){
+
+    window.speechSynthesis.cancel();
+
+  }
+
+}
+
+
+/* ==========================================
    ADD MESSAGE
-============================== */
+========================================== */
 
 function addMessage(
   role,
@@ -895,7 +1242,10 @@ function addMessage(
 ){
 
   const row =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
+
 
   row.className =
     "message-row " +
@@ -911,15 +1261,22 @@ function addMessage(
   if(role === "user"){
 
     const message =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
+
 
     message.className =
       "message user";
 
+
     message.textContent =
       content;
 
-    row.appendChild(message);
+
+    row.appendChild(
+      message
+    );
 
   }
 
@@ -929,87 +1286,145 @@ function addMessage(
   else{
 
     const container =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
+
 
     container.className =
       "ai-container";
 
 
     const message =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
+
 
     message.className =
       "message ai ai-content";
 
+
     message.innerHTML =
-      renderMarkdown(content);
+      renderMarkdown(
+        content
+      );
 
 
     const actions =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
+
 
     actions.className =
       "ai-actions";
 
 
+    /* speaker */
+
     const speaker =
-      document.createElement("button");
+      document.createElement(
+        "button"
+      );
+
 
     speaker.className =
       "action-btn";
 
+
     speaker.textContent =
       "🔊";
+
 
     speaker.title =
       "Read response";
 
+
     speaker.addEventListener(
       "click",
-      ()=>{
-        speakText(content);
+      function(){
+
+        speakText(
+          content
+        );
+
       }
     );
 
 
+    /* copy */
+
     const copy =
-      document.createElement("button");
+      document.createElement(
+        "button"
+      );
+
 
     copy.className =
       "action-btn";
 
+
     copy.textContent =
       "📋";
+
 
     copy.title =
       "Copy response";
 
+
     copy.addEventListener(
       "click",
-      ()=>{
-        copyResponse(copy);
+      function(){
+
+        copyResponse(
+          copy
+        );
+
       }
     );
 
 
-    actions.appendChild(speaker);
-    actions.appendChild(copy);
+    actions.appendChild(
+      speaker
+    );
 
 
-    container.appendChild(message);
-    container.appendChild(actions);
+    actions.appendChild(
+      copy
+    );
 
-    row.appendChild(container);
+
+    container.appendChild(
+      message
+    );
+
+
+    container.appendChild(
+      actions
+    );
+
+
+    row.appendChild(
+      container
+    );
 
 
     if(speak){
-      speakText(content);
+
+      speakText(
+        content
+      );
+
     }
 
   }
 
 
-  chat.appendChild(row);
+  chat.appendChild(
+    row
+  );
+
 
   chat.scrollTop =
     chat.scrollHeight;
@@ -1017,17 +1432,21 @@ function addMessage(
 }
 
 
-/* ==============================
-   THINKING ANIMATION
-============================== */
+/* ==========================================
+   THINKING
+========================================== */
 
 function showThinking(){
 
   const row =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
+
 
   row.className =
     "message-row ai-row";
+
 
   row.id =
     "thinkingMessage";
@@ -1042,7 +1461,9 @@ function showThinking(){
       <div class="dots">
 
         <span class="dot"></span>
+
         <span class="dot"></span>
+
         <span class="dot"></span>
 
       </div>
@@ -1052,7 +1473,10 @@ function showThinking(){
   `;
 
 
-  chat.appendChild(row);
+  chat.appendChild(
+    row
+  );
+
 
   chat.scrollTop =
     chat.scrollHeight;
@@ -1067,28 +1491,34 @@ function removeThinking(){
       "thinkingMessage"
     );
 
+
   if(thinking){
+
     thinking.remove();
+
   }
 
 }
 
 
-/* ==============================
-   LOAD MEMORY
-============================== */
+/* ==========================================
+   LOAD CONVERSATION
+========================================== */
 
 function loadConversation(){
 
   chat.innerHTML = "";
 
 
-  if(conversation.length === 0){
+  if(
+    conversation.length === 0
+  ){
 
     addMessage(
       "assistant",
       "Hello! 👋 I'm NEXORA AI. How can I help you today?"
     );
+
 
     return;
 
@@ -1096,7 +1526,7 @@ function loadConversation(){
 
 
   conversation.forEach(
-    message => {
+    function(message){
 
       addMessage(
         message.role,
@@ -1110,16 +1540,19 @@ function loadConversation(){
 }
 
 
-/* ==============================
+/* ==========================================
    SEND MESSAGE
-============================== */
+========================================== */
 
 async function sendMessage(){
 
   const message =
     input.value.trim();
 
-  if(!message) return;
+
+  if(!message){
+    return;
+  }
 
 
   stopSpeaking();
@@ -1130,7 +1563,7 @@ async function sendMessage(){
   micBtn.disabled = true;
 
 
-  /* SHOW USER MESSAGE */
+  /* Show user message */
 
   addMessage(
     "user",
@@ -1139,11 +1572,9 @@ async function sendMessage(){
 
 
   /*
-    IMPORTANT:
-    Save current message first,
-    but send only PREVIOUS messages
-    to the API so the current message
-    isn't duplicated.
+    Send previous history only.
+    The current user message is already
+    sent separately as "message".
   */
 
   const previousMessages =
@@ -1151,8 +1582,11 @@ async function sendMessage(){
 
 
   conversation.push({
+
     role:"user",
+
     content:message
+
   });
 
 
@@ -1171,6 +1605,7 @@ async function sendMessage(){
       await fetch(
         API_URL,
         {
+
           method:"POST",
 
           headers:{
@@ -1223,8 +1658,11 @@ async function sendMessage(){
 
 
     conversation.push({
+
       role:"assistant",
+
       content:reply
+
     });
 
 
@@ -1259,9 +1697,9 @@ async function sendMessage(){
 }
 
 
-/* ==============================
+/* ==========================================
    CLEAR CHAT
-============================== */
+========================================== */
 
 clearBtn.addEventListener(
   "click",
@@ -1273,7 +1711,9 @@ clearBtn.addEventListener(
       );
 
 
-    if(!confirmed) return;
+    if(!confirmed){
+      return;
+    }
 
 
     stopSpeaking();
@@ -1293,9 +1733,9 @@ clearBtn.addEventListener(
 );
 
 
-/* ==============================
+/* ==========================================
    VOICE TOGGLE
-============================== */
+========================================== */
 
 voiceToggle.addEventListener(
   "click",
@@ -1310,6 +1750,7 @@ voiceToggle.addEventListener(
       voiceToggle.textContent =
         "🔊 Voice ON";
 
+
       voiceToggle.classList.add(
         "active"
       );
@@ -1319,9 +1760,11 @@ voiceToggle.addEventListener(
       voiceToggle.textContent =
         "🔇 Voice OFF";
 
+
       voiceToggle.classList.remove(
         "active"
       );
+
 
       stopSpeaking();
 
@@ -1336,9 +1779,9 @@ voiceToggle.classList.add(
 );
 
 
-/* ==============================
-   SEND EVENTS
-============================== */
+/* ==========================================
+   SEND BUTTON
+========================================== */
 
 sendBtn.addEventListener(
   "click",
@@ -1346,21 +1789,29 @@ sendBtn.addEventListener(
 );
 
 
+/* ==========================================
+   ENTER KEY
+========================================== */
+
 input.addEventListener(
   "keydown",
   function(event){
 
     if(event.key === "Enter"){
+
+      event.preventDefault();
+
       sendMessage();
+
     }
 
   }
 );
 
 
-/* ==============================
-   SPEECH RECOGNITION
-============================== */
+/* ==========================================
+   VOICE INPUT
+========================================== */
 
 const SpeechRecognition =
   window.SpeechRecognition ||
@@ -1395,12 +1846,15 @@ if(SpeechRecognition){
 
       isListening = true;
 
+
       micBtn.classList.add(
         "listening"
       );
 
+
       micBtn.textContent =
         "⏹️";
+
 
       input.placeholder =
         "Listening...";
@@ -1438,12 +1892,15 @@ if(SpeechRecognition){
 
       isListening = false;
 
+
       micBtn.classList.remove(
         "listening"
       );
 
+
       micBtn.textContent =
         "🎤";
+
 
       input.placeholder =
         "Ask NEXORA anything...";
@@ -1462,12 +1919,15 @@ if(SpeechRecognition){
 
       isListening = false;
 
+
       micBtn.classList.remove(
         "listening"
       );
 
+
       micBtn.textContent =
         "🎤";
+
 
       input.placeholder =
         "Ask NEXORA anything...";
@@ -1509,15 +1969,16 @@ if(SpeechRecognition){
 
   micBtn.disabled = true;
 
+
   micBtn.title =
     "Voice input is not supported in this browser";
 
 }
 
 
-/* ==============================
-   START
-============================== */
+/* ==========================================
+   START NEXORA
+========================================== */
 
 loadConversation();
 
