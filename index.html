@@ -22,37 +22,26 @@
 }
 
 body {
-
   background: #0b1020;
-
   color: white;
-
   min-height: 100vh;
 
   display: flex;
-
   justify-content: center;
-
   align-items: center;
 }
 
-
 .app {
-
   width: 95%;
-
   max-width: 1100px;
-
   height: 92vh;
 
   background: #11182b;
 
   border: 1px solid #293451;
-
   border-radius: 20px;
 
   display: flex;
-
   flex-direction: column;
 
   overflow: hidden;
@@ -62,27 +51,24 @@ body {
 }
 
 
-/* HEADER */
+/* ==========================================
+   HEADER
+========================================== */
 
 .header {
-
   padding: 14px 20px;
 
   border-bottom:
     1px solid #293451;
 
   display: flex;
-
   align-items: center;
 
   gap: 12px;
 }
 
-
 .logo {
-
   width: 42px;
-
   height: 42px;
 
   border-radius: 12px;
@@ -95,50 +81,37 @@ body {
     );
 
   display: flex;
-
+  align-items: center;
   justify-content: center;
 
-  align-items: center;
-
   font-weight: bold;
-
   font-size: 18px;
 }
 
-
 .header h1 {
-
   font-size: 22px;
 }
 
-
 .header p {
-
   font-size: 12px;
-
   color: #94a3b8;
-
   margin-top: 3px;
 }
 
-
 .header-actions {
-
   margin-left: auto;
 
   display: flex;
-
   gap: 8px;
 }
 
-
 .top-btn {
-
   padding: 9px 13px;
 
   border-radius: 10px;
 
-  border: 1px solid #33415f;
+  border:
+    1px solid #33415f;
 
   background: #11182b;
 
@@ -147,25 +120,21 @@ body {
   cursor: pointer;
 }
 
-
 .top-btn:hover {
-
   border-color: #7c3aed;
 }
 
-
 #voiceToggle.active {
-
   border-color: #7c3aed;
-
   background: #191332;
 }
 
 
-/* CHAT */
+/* ==========================================
+   CHAT
+========================================== */
 
 .chat {
-
   flex: 1;
 
   padding: 25px;
@@ -175,9 +144,7 @@ body {
   scroll-behavior: smooth;
 }
 
-
 .message {
-
   max-width: 75%;
 
   padding: 14px 17px;
@@ -191,17 +158,13 @@ body {
   word-wrap: break-word;
 }
 
-
 .ai {
-
   background: #1b2540;
 
   border-top-left-radius: 4px;
 }
 
-
 .user {
-
   background:
     linear-gradient(
       135deg,
@@ -215,59 +178,45 @@ body {
 }
 
 
-/* MARKDOWN */
+/* ==========================================
+   MARKDOWN
+========================================== */
 
 .message h1,
 .message h2,
 .message h3 {
-
   margin:
     8px 0 10px;
 }
 
-
 .message strong {
-
   font-weight: 700;
 }
 
-
-.message ul {
-
-  margin:
-    8px 0 8px 20px;
-}
-
-
+.message ul,
 .message ol {
-
   margin:
     8px 0 8px 20px;
 }
-
 
 .message li {
-
   margin-bottom: 7px;
 }
 
-
 .message p {
-
   margin-bottom: 8px;
 }
 
-
 .message p:last-child {
-
   margin-bottom: 0;
 }
 
 
-/* CODE */
+/* ==========================================
+   CODE
+========================================== */
 
 .code-wrapper {
-
   margin-top: 10px;
 
   background: #0a0f1d;
@@ -280,9 +229,7 @@ body {
   overflow: hidden;
 }
 
-
 .code-header {
-
   padding: 7px 10px;
 
   background: #151d31;
@@ -290,7 +237,6 @@ body {
   display: flex;
 
   justify-content: space-between;
-
   align-items: center;
 
   font-size: 12px;
@@ -298,10 +244,9 @@ body {
   color: #94a3b8;
 }
 
-
 .copy-code {
-
-  border: 1px solid #33415f;
+  border:
+    1px solid #33415f;
 
   background: #0d1425;
 
@@ -316,9 +261,7 @@ body {
   font-size: 11px;
 }
 
-
 .code-wrapper pre {
-
   padding: 13px;
 
   overflow-x: auto;
@@ -331,10 +274,11 @@ body {
 }
 
 
-/* MESSAGE ACTIONS */
+/* ==========================================
+   ACTION BUTTONS
+========================================== */
 
 .actions {
-
   display: flex;
 
   gap: 7px;
@@ -344,11 +288,8 @@ body {
   margin-bottom: 15px;
 }
 
-
 .action-btn {
-
   width: 33px;
-
   height: 33px;
 
   border:
@@ -363,29 +304,23 @@ body {
   cursor: pointer;
 }
 
-
 .action-btn:hover {
-
   border-color: #7c3aed;
 }
 
 
-/* THINKING */
+/* ==========================================
+   THINKING
+========================================== */
 
 .thinking {
-
   display: flex;
-
   gap: 5px;
-
   padding: 4px 2px;
 }
 
-
 .thinking span {
-
   width: 7px;
-
   height: 7px;
 
   border-radius: 50%;
@@ -396,18 +331,13 @@ body {
     bounce 1.2s infinite ease-in-out;
 }
 
-
 .thinking span:nth-child(2) {
-
   animation-delay: .15s;
 }
 
-
 .thinking span:nth-child(3) {
-
   animation-delay: .3s;
 }
-
 
 @keyframes bounce {
 
@@ -418,13 +348,15 @@ body {
   30% {
     transform: translateY(-5px);
   }
+
 }
 
 
-/* INPUT */
+/* ==========================================
+   INPUT
+========================================== */
 
 .input-area {
-
   padding: 16px;
 
   border-top:
@@ -435,12 +367,11 @@ body {
   gap: 9px;
 }
 
-
 #micBtn {
-
   width: 50px;
 
-  border: 1px solid #33415f;
+  border:
+    1px solid #33415f;
 
   border-radius: 12px;
 
@@ -453,17 +384,13 @@ body {
   font-size: 18px;
 }
 
-
 #micBtn.listening {
-
   border-color: #7c3aed;
 
   background: #21163c;
 }
 
-
 #userInput {
-
   flex: 1;
 
   padding: 14px;
@@ -482,15 +409,11 @@ body {
   font-size: 15px;
 }
 
-
 #userInput:focus {
-
   border-color: #7c3aed;
 }
 
-
 #sendBtn {
-
   padding: 0 20px;
 
   border: none;
@@ -511,58 +434,60 @@ body {
   cursor: pointer;
 }
 
-
 #sendBtn:disabled,
 #micBtn:disabled {
-
   opacity: .5;
-
   cursor: not-allowed;
 }
 
 
-/* MOBILE */
+/* ==========================================
+   ERROR MESSAGE
+========================================== */
+
+.error-message {
+  white-space: pre-wrap;
+
+  color: #ffd6d6;
+
+  font-family: Consolas, monospace;
+
+  font-size: 13px;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
 
 @media (max-width: 600px) {
 
   .app {
-
     width: 100%;
-
     height: 100vh;
-
     border-radius: 0;
   }
 
-
   .message {
-
     max-width: 90%;
   }
 
-
   .header {
-
     padding: 12px;
   }
 
-
   .header-actions {
-
     gap: 5px;
   }
 
-
   .top-btn {
-
     padding: 8px;
   }
 
-
   .chat {
-
     padding: 15px;
   }
+
 }
 
 </style>
@@ -586,9 +511,7 @@ body {
 
     <div>
 
-      <h1>
-        NEXORA AI
-      </h1>
+      <h1>NEXORA AI</h1>
 
       <p>
         Your intelligent AI assistant
@@ -600,12 +523,11 @@ body {
     <div class="header-actions">
 
       <button
-        class="top-btn"
+        class="top-btn active"
         id="voiceToggle"
       >
         🔊 Voice ON
       </button>
-
 
       <button
         class="top-btn"
@@ -640,14 +562,12 @@ body {
 
   <div class="input-area">
 
-
     <button
       id="micBtn"
       title="Voice input"
     >
       🎙️
     </button>
-
 
     <input
       type="text"
@@ -656,15 +576,11 @@ body {
       autocomplete="off"
     >
 
-
-    <button
-      id="sendBtn"
-    >
+    <button id="sendBtn">
       Send
     </button>
 
   </div>
-
 
 </div>
 
@@ -677,8 +593,7 @@ body {
 // ==========================================
 
 const API_URL =
-  "https://nexora-ai-api.md-shadow777y-bit.workers.dev/";
-
+  "https://nexora-ai-api.md-shadow777y.workers.dev/";
 
 const STORAGE_KEY =
   "nexora_conversation_v1";
@@ -739,9 +654,15 @@ try {
       JSON.parse(saved);
 
     renderConversation();
+
   }
 
 } catch (error) {
+
+  console.error(
+    "Memory load error:",
+    error
+  );
 
   conversation = [];
 
@@ -760,6 +681,7 @@ function saveConversation() {
       conversation
     )
   );
+
 }
 
 
@@ -769,17 +691,33 @@ function saveConversation() {
 
 function escapeHTML(text) {
 
-  return text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+  return String(text)
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
 }
 
 
 // ==========================================
-// MARKDOWN RENDER
+// MARKDOWN
 // ==========================================
 
 function renderMarkdown(text) {
@@ -787,7 +725,7 @@ function renderMarkdown(text) {
   let codeBlocks = [];
 
   text =
-    text.replace(
+    String(text).replace(
       /```(\w*)\n?([\s\S]*?)```/g,
       function(_, language, code) {
 
@@ -797,11 +735,13 @@ function renderMarkdown(text) {
         codeBlocks.push({
           language:
             language || "code",
+
           code:
             code.trim()
         });
 
         return `___CODE_BLOCK_${id}___`;
+
       }
     );
 
@@ -917,59 +857,13 @@ function renderMarkdown(text) {
           `___CODE_BLOCK_${index}___`,
           codeHTML
         );
+
     }
   );
 
 
   return html;
-}
 
-
-// ==========================================
-// RENDER SAVED CONVERSATION
-// ==========================================
-
-function renderConversation() {
-
-  chat.innerHTML = "";
-
-
-  if (!conversation.length) {
-
-    addInitialMessage();
-
-    return;
-  }
-
-
-  conversation.forEach(
-    function(message) {
-
-      if (
-        message.role === "user"
-      ) {
-
-        addUserMessage(
-          message.content,
-          false
-        );
-
-      } else if (
-        message.role === "assistant"
-      ) {
-
-        addAIMessage(
-          message.content,
-          false
-        );
-
-      }
-
-    }
-  );
-
-
-  scrollToBottom();
 }
 
 
@@ -991,6 +885,58 @@ function addInitialMessage() {
     "Hello! 👋 I'm NEXORA AI. How can I help you today?";
 
   chat.appendChild(div);
+
+}
+
+
+// ==========================================
+// RENDER CONVERSATION
+// ==========================================
+
+function renderConversation() {
+
+  chat.innerHTML = "";
+
+  if (!conversation.length) {
+
+    addInitialMessage();
+
+    return;
+
+  }
+
+
+  conversation.forEach(
+    function(message) {
+
+      if (
+        message.role === "user"
+      ) {
+
+        addUserMessage(
+          message.content,
+          false
+        );
+
+      }
+
+      if (
+        message.role === "assistant"
+      ) {
+
+        addAIMessage(
+          message.content,
+          false
+        );
+
+      }
+
+    }
+  );
+
+
+  scrollToBottom();
+
 }
 
 
@@ -1020,6 +966,7 @@ function addUserMessage(
   if (scroll) {
     scrollToBottom();
   }
+
 }
 
 
@@ -1116,15 +1063,17 @@ function addAIMessage(
 
         setTimeout(
           function() {
+
             copyButton.textContent =
               "📋";
+
           },
           1000
         );
 
       } catch (error) {
 
-        console.log(error);
+        console.error(error);
 
       }
 
@@ -1144,7 +1093,6 @@ function addAIMessage(
     actions
   );
 
-
   chat.appendChild(
     wrapper
   );
@@ -1156,6 +1104,70 @@ function addAIMessage(
 
 
   return message;
+
+}
+
+
+// ==========================================
+// ERROR MESSAGE
+// ==========================================
+
+function addErrorMessage(
+  title,
+  details
+) {
+
+  const wrapper =
+    document.createElement(
+      "div"
+    );
+
+
+  const message =
+    document.createElement(
+      "div"
+    );
+
+  message.className =
+    "message ai";
+
+
+  const safeTitle =
+    escapeHTML(title);
+
+
+  const safeDetails =
+    escapeHTML(details);
+
+
+  message.innerHTML = `
+
+    <strong>
+      ⚠️ ${safeTitle}
+    </strong>
+
+    <div
+      class="error-message"
+      style="margin-top:10px;"
+    >
+      ${safeDetails}
+    </div>
+
+  `;
+
+
+  wrapper.appendChild(
+    message
+  );
+
+
+  chat.appendChild(
+    wrapper
+  );
+
+
+  scrollToBottom();
+
 }
 
 
@@ -1206,6 +1218,7 @@ function showThinking() {
 
 
   scrollToBottom();
+
 }
 
 
@@ -1221,10 +1234,9 @@ function removeThinking() {
     );
 
   if (thinking) {
-
     thinking.remove();
-
   }
+
 }
 
 
@@ -1236,6 +1248,7 @@ function scrollToBottom() {
 
   chat.scrollTop =
     chat.scrollHeight;
+
 }
 
 
@@ -1257,11 +1270,10 @@ async function sendMessage() {
   }
 
 
-  // Stop current speech
   stopVoice();
 
 
-  // Save previous history
+  // Previous history only
   const previousMessages =
     conversation
       .filter(
@@ -1272,12 +1284,13 @@ async function sendMessage() {
       .slice(-20);
 
 
-  // Add user message
+  // Save user message
   conversation.push({
 
     role: "user",
 
-    content: message
+    content:
+      message
 
   });
 
@@ -1305,11 +1318,14 @@ async function sendMessage() {
 
   try {
 
+    // ======================================
+    // REQUEST
+    // ======================================
+
     const response =
       await fetch(
         API_URL,
         {
-
           method: "POST",
 
           headers: {
@@ -1327,20 +1343,39 @@ async function sendMessage() {
                 previousMessages
 
             })
-
         }
       );
 
+
+    // ======================================
+    // RESPONSE ERROR
+    // ======================================
 
     if (!response.ok) {
 
       const errorText =
         await response.text();
 
-      throw new Error(
-        errorText ||
-        "Request failed"
+
+      console.error(
+        "NEXORA SERVER ERROR:",
+        errorText
       );
+
+
+      throw new Error(
+        `HTTP ${response.status}\n\n${errorText}`
+      );
+
+    }
+
+
+    if (!response.body) {
+
+      throw new Error(
+        "The server did not return a streaming response."
+      );
+
     }
 
 
@@ -1348,23 +1383,9 @@ async function sendMessage() {
 
 
     // ======================================
-    // STREAM RESPONSE
+    // CREATE STREAMING AI MESSAGE
     // ======================================
 
-    const reader =
-      response.body.getReader();
-
-
-    const decoder =
-      new TextDecoder();
-
-
-    let buffer = "";
-
-    let fullReply = "";
-
-
-    // Create empty AI message
     const wrapper =
       document.createElement(
         "div"
@@ -1379,13 +1400,19 @@ async function sendMessage() {
     aiMessage.className =
       "message ai";
 
+
     aiMessage.innerHTML =
       "";
+
 
     wrapper.appendChild(
       aiMessage
     );
 
+
+    // ======================================
+    // ACTIONS
+    // ======================================
 
     const actions =
       document.createElement(
@@ -1411,14 +1438,6 @@ async function sendMessage() {
       "Read aloud";
 
 
-    speakButton.onclick =
-      function() {
-
-        speak(fullReply);
-
-      };
-
-
     const copyButton =
       document.createElement(
         "button"
@@ -1432,6 +1451,180 @@ async function sendMessage() {
 
     copyButton.title =
       "Copy";
+
+
+    actions.appendChild(
+      speakButton
+    );
+
+    actions.appendChild(
+      copyButton
+    );
+
+
+    wrapper.appendChild(
+      actions
+    );
+
+
+    chat.appendChild(
+      wrapper
+    );
+
+
+    // ======================================
+    // STREAM
+    // ======================================
+
+    const reader =
+      response.body.getReader();
+
+
+    const decoder =
+      new TextDecoder("utf-8");
+
+
+    let buffer = "";
+
+    let fullReply = "";
+
+
+    while (true) {
+
+      const {
+        done,
+        value
+      } =
+        await reader.read();
+
+
+      if (done) {
+        break;
+      }
+
+
+      buffer +=
+        decoder.decode(
+          value,
+          {
+            stream: true
+          }
+        );
+
+
+      const events =
+        buffer.split("\n\n");
+
+
+      buffer =
+        events.pop() || "";
+
+
+      for (
+        const event
+        of events
+      ) {
+
+        const lines =
+          event.split("\n");
+
+
+        for (
+          const line
+          of lines
+        ) {
+
+          if (
+            !line.startsWith("data:")
+          ) {
+            continue;
+          }
+
+
+          const data =
+            line
+              .slice(5)
+              .trim();
+
+
+          if (
+            !data ||
+            data === "[DONE]"
+          ) {
+            continue;
+          }
+
+
+          try {
+
+            const parsed =
+              JSON.parse(data);
+
+
+            const token =
+              parsed
+                ?.choices?.[0]
+                ?.delta?.content;
+
+
+            if (token) {
+
+              fullReply +=
+                token;
+
+
+              // LIVE TEXT
+              aiMessage.innerHTML =
+                renderMarkdown(
+                  fullReply
+                );
+
+
+              scrollToBottom();
+
+            }
+
+          } catch (parseError) {
+
+            console.log(
+              "Stream parse:",
+              data
+            );
+
+          }
+
+        }
+
+      }
+
+    }
+
+
+    // ======================================
+    // CHECK RESPONSE
+    // ======================================
+
+    if (
+      !fullReply.trim()
+    ) {
+
+      throw new Error(
+        "NEXORA returned an empty response."
+      );
+
+    }
+
+
+    // ======================================
+    // BUTTONS
+    // ======================================
+
+    speakButton.onclick =
+      function() {
+
+        speak(fullReply);
+
+      };
 
 
     copyButton.onclick =
@@ -1456,133 +1649,17 @@ async function sendMessage() {
             1000
           );
 
-        } catch (error) {}
+        } catch (error) {
+
+          console.error(error);
+
+        }
 
       };
 
 
-    actions.appendChild(
-      speakButton
-    );
-
-    actions.appendChild(
-      copyButton
-    );
-
-
-    wrapper.appendChild(
-      actions
-    );
-
-
-    chat.appendChild(
-      wrapper
-    );
-
-
     // ======================================
-    // READ STREAM
-    // ======================================
-
-    while (true) {
-
-      const {
-        done,
-        value
-      } =
-        await reader.read();
-
-
-      if (done) {
-        break;
-      }
-
-
-      buffer +=
-        decoder.decode(
-          value,
-          { stream: true }
-        );
-
-
-      const events =
-        buffer.split("\n\n");
-
-
-      buffer =
-        events.pop() || "";
-
-
-      for (
-        const event
-        of events
-      ) {
-
-        const line =
-          event
-            .split("\n")
-            .find(
-              line =>
-                line.startsWith(
-                  "data:"
-                )
-            );
-
-
-        if (!line) {
-          continue;
-        }
-
-
-        const json =
-          line
-            .slice(5)
-            .trim();
-
-
-        if (!json) {
-          continue;
-        }
-
-
-        try {
-
-          const data =
-            JSON.parse(json);
-
-
-          if (data.token) {
-
-            fullReply +=
-              data.token;
-
-
-            aiMessage.innerHTML =
-              renderMarkdown(
-                fullReply
-              );
-
-
-            scrollToBottom();
-
-          }
-
-        } catch (error) {
-
-          console.log(
-            "Stream parse error:",
-            error
-          );
-
-        }
-
-      }
-
-    }
-
-
-    // ======================================
-    // SAVE COMPLETE RESPONSE
+    // SAVE AI RESPONSE
     // ======================================
 
     conversation.push({
@@ -1598,7 +1675,10 @@ async function sendMessage() {
     saveConversation();
 
 
-    // Voice after complete response
+    // ======================================
+    // VOICE
+    // ======================================
+
     if (
       voiceEnabled &&
       fullReply.trim()
@@ -1616,17 +1696,16 @@ async function sendMessage() {
     removeThinking();
 
 
-    const errorMessage =
-      "Sorry, something went wrong. Please try again.";
-
-
-    addAIMessage(
-      errorMessage
+    console.error(
+      "NEXORA ERROR:",
+      error
     );
 
 
-    console.error(
-      error
+    addErrorMessage(
+      "NEXORA request failed",
+      error.message ||
+      String(error)
     );
 
 
@@ -1644,11 +1723,12 @@ async function sendMessage() {
     input.focus();
 
   }
+
 }
 
 
 // ==========================================
-// ENTER SEND
+// ENTER KEY
 // ==========================================
 
 input.addEventListener(
@@ -1671,7 +1751,7 @@ input.addEventListener(
 
 
 // ==========================================
-// SEND BUTTON
+// SEND
 // ==========================================
 
 sendBtn.addEventListener(
@@ -1701,17 +1781,12 @@ function speak(text) {
   speechSynthesis.cancel();
 
 
-  // Remove code blocks
-  text =
-    text.replace(
-      /```[\s\S]*?```/g,
-      ""
-    );
-
-
-  // Remove markdown
-  text =
+  let cleanText =
     text
+      .replace(
+        /```[\s\S]*?```/g,
+        ""
+      )
       .replace(
         /[*_#>`]/g,
         ""
@@ -1724,7 +1799,7 @@ function speak(text) {
 
   const utterance =
     new SpeechSynthesisUtterance(
-      text
+      cleanText
     );
 
 
@@ -1762,6 +1837,7 @@ function speak(text) {
   speechSynthesis.speak(
     utterance
   );
+
 }
 
 
@@ -1778,6 +1854,7 @@ function stopVoice() {
     speechSynthesis.cancel();
 
   }
+
 }
 
 
@@ -1816,11 +1893,6 @@ voiceToggle.addEventListener(
     }
 
   }
-);
-
-
-voiceToggle.classList.add(
-  "active"
 );
 
 
@@ -1868,8 +1940,6 @@ if (SpeechRecognition) {
       micBtn.textContent =
         "⏹️";
 
-
-      // Stop AI voice
       stopVoice();
 
     };
@@ -1878,7 +1948,8 @@ if (SpeechRecognition) {
   recognition.onresult =
     function(event) {
 
-      let transcript = "";
+      let transcript =
+        "";
 
 
       for (
@@ -1913,7 +1984,6 @@ if (SpeechRecognition) {
         "🎙️";
 
 
-      // Automatically send
       if (
         input.value.trim() &&
         !isGenerating
@@ -1929,7 +1999,7 @@ if (SpeechRecognition) {
   recognition.onerror =
     function(event) {
 
-      console.log(
+      console.error(
         "Speech recognition error:",
         event.error
       );
@@ -1972,7 +2042,8 @@ if (SpeechRecognition) {
 
       } catch (error) {
 
-        console.log(
+        console.error(
+          "Mic error:",
           error
         );
 
@@ -2024,7 +2095,8 @@ clearBtn.addEventListener(
     );
 
 
-    chat.innerHTML = "";
+    chat.innerHTML =
+      "";
 
 
     addInitialMessage();
@@ -2034,7 +2106,7 @@ clearBtn.addEventListener(
 
 
 // ==========================================
-// COPY CODE BUTTONS
+// COPY CODE
 // ==========================================
 
 document.addEventListener(
@@ -2082,7 +2154,7 @@ document.addEventListener(
 
     } catch (error) {
 
-      console.log(
+      console.error(
         error
       );
 
@@ -2090,7 +2162,6 @@ document.addEventListener(
 
   }
 );
-
 
 </script>
 
