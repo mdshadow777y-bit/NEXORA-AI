@@ -22,7 +22,7 @@
 }
 
 body {
-  background: #0b1020;
+  background: #080d1a;
   color: white;
   min-height: 100vh;
 
@@ -32,9 +32,9 @@ body {
 }
 
 .app {
-  width: 95%;
+  width: 96%;
   max-width: 1100px;
-  height: 92vh;
+  height: 94vh;
 
   background: #11182b;
 
@@ -47,7 +47,7 @@ body {
   overflow: hidden;
 
   box-shadow:
-    0 20px 60px rgba(0,0,0,0.4);
+    0 20px 60px rgba(0,0,0,.45);
 }
 
 
@@ -56,7 +56,9 @@ body {
 ========================================== */
 
 .header {
-  padding: 14px 20px;
+  min-height: 70px;
+
+  padding: 12px 20px;
 
   border-bottom:
     1px solid #293451;
@@ -65,6 +67,8 @@ body {
   align-items: center;
 
   gap: 12px;
+
+  flex-shrink: 0;
 }
 
 .logo {
@@ -81,11 +85,11 @@ body {
     );
 
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 
-  font-weight: bold;
   font-size: 18px;
+  font-weight: bold;
 }
 
 .header h1 {
@@ -93,20 +97,24 @@ body {
 }
 
 .header p {
-  font-size: 12px;
-  color: #94a3b8;
   margin-top: 3px;
+
+  font-size: 12px;
+
+  color: #94a3b8;
 }
 
 .header-actions {
   margin-left: auto;
 
   display: flex;
-  gap: 8px;
+  align-items: center;
+
+  gap: 7px;
 }
 
 .top-btn {
-  padding: 9px 13px;
+  padding: 9px 12px;
 
   border-radius: 10px;
 
@@ -118,15 +126,46 @@ body {
   color: white;
 
   cursor: pointer;
+
+  font-size: 13px;
 }
 
 .top-btn:hover {
   border-color: #7c3aed;
 }
 
-#voiceToggle.active {
+.top-btn.active {
   border-color: #7c3aed;
-  background: #191332;
+
+  background: #1b1537;
+}
+
+
+/* ==========================================
+   VOICE LANGUAGE
+========================================== */
+
+#voiceLanguage {
+  padding: 8px 9px;
+
+  border:
+    1px solid #33415f;
+
+  border-radius: 9px;
+
+  background: #0c1325;
+
+  color: white;
+
+  outline: none;
+
+  cursor: pointer;
+
+  font-size: 12px;
+}
+
+#voiceLanguage:focus {
+  border-color: #7c3aed;
 }
 
 
@@ -142,6 +181,8 @@ body {
   overflow-y: auto;
 
   scroll-behavior: smooth;
+
+  min-height: 0;
 }
 
 .message {
@@ -149,7 +190,7 @@ body {
 
   padding: 14px 17px;
 
-  margin-bottom: 15px;
+  margin-bottom: 9px;
 
   border-radius: 15px;
 
@@ -193,6 +234,10 @@ body {
   font-weight: 700;
 }
 
+.message em {
+  font-style: italic;
+}
+
 .message ul,
 .message ol {
   margin:
@@ -219,7 +264,7 @@ body {
 .code-wrapper {
   margin-top: 10px;
 
-  background: #0a0f1d;
+  background: #080d18;
 
   border:
     1px solid #33415f;
@@ -239,22 +284,22 @@ body {
   justify-content: space-between;
   align-items: center;
 
-  font-size: 12px;
-
   color: #94a3b8;
+
+  font-size: 12px;
 }
 
 .copy-code {
+  padding: 4px 8px;
+
   border:
     1px solid #33415f;
+
+  border-radius: 6px;
 
   background: #0d1425;
 
   color: white;
-
-  padding: 4px 8px;
-
-  border-radius: 6px;
 
   cursor: pointer;
 
@@ -283,14 +328,12 @@ body {
 
   gap: 7px;
 
-  margin-top: -7px;
-
-  margin-bottom: 15px;
+  margin-bottom: 14px;
 }
 
 .action-btn {
-  width: 33px;
-  height: 33px;
+  width: 34px;
+  height: 34px;
 
   border:
     1px solid #33415f;
@@ -315,7 +358,9 @@ body {
 
 .thinking {
   display: flex;
+
   gap: 5px;
+
   padding: 4px 2px;
 }
 
@@ -328,7 +373,8 @@ body {
   background: #94a3b8;
 
   animation:
-    bounce 1.2s infinite ease-in-out;
+    thinkingBounce 1.2s infinite
+    ease-in-out;
 }
 
 .thinking span:nth-child(2) {
@@ -339,9 +385,11 @@ body {
   animation-delay: .3s;
 }
 
-@keyframes bounce {
+@keyframes thinkingBounce {
 
-  0%, 60%, 100% {
+  0%,
+  60%,
+  100% {
     transform: translateY(0);
   }
 
@@ -353,11 +401,37 @@ body {
 
 
 /* ==========================================
+   LISTENING STATUS
+========================================== */
+
+.listening-status {
+  display: none;
+
+  padding: 7px 14px;
+
+  border-top:
+    1px solid #293451;
+
+  background: #11182b;
+
+  color: #a78bfa;
+
+  font-size: 12px;
+
+  text-align: center;
+}
+
+.listening-status.show {
+  display: block;
+}
+
+
+/* ==========================================
    INPUT
 ========================================== */
 
 .input-area {
-  padding: 16px;
+  padding: 15px;
 
   border-top:
     1px solid #293451;
@@ -365,10 +439,16 @@ body {
   display: flex;
 
   gap: 9px;
+
+  flex-shrink: 0;
+
+  background: #11182b;
 }
 
 #micBtn {
   width: 50px;
+
+  flex-shrink: 0;
 
   border:
     1px solid #33415f;
@@ -384,14 +464,45 @@ body {
   font-size: 18px;
 }
 
+#micBtn:hover {
+  border-color: #7c3aed;
+}
+
 #micBtn.listening {
   border-color: #7c3aed;
 
-  background: #21163c;
+  background: #29174b;
+
+  animation:
+    micPulse 1.2s infinite;
+}
+
+@keyframes micPulse {
+
+  0% {
+    box-shadow:
+      0 0 0 0
+      rgba(124,58,237,.5);
+  }
+
+  70% {
+    box-shadow:
+      0 0 0 8px
+      rgba(124,58,237,0);
+  }
+
+  100% {
+    box-shadow:
+      0 0 0 0
+      rgba(124,58,237,0);
+  }
+
 }
 
 #userInput {
   flex: 1;
+
+  min-width: 0;
 
   padding: 14px;
 
@@ -434,15 +545,20 @@ body {
   cursor: pointer;
 }
 
+#sendBtn:hover {
+  opacity: .9;
+}
+
 #sendBtn:disabled,
 #micBtn:disabled {
   opacity: .5;
+
   cursor: not-allowed;
 }
 
 
 /* ==========================================
-   ERROR MESSAGE
+   ERROR
 ========================================== */
 
 .error-message {
@@ -460,32 +576,53 @@ body {
    MOBILE
 ========================================== */
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
 
   .app {
     width: 100%;
     height: 100vh;
+
     border-radius: 0;
   }
 
-  .message {
-    max-width: 90%;
+  .header {
+    padding: 10px 12px;
   }
 
-  .header {
-    padding: 12px;
+  .header h1 {
+    font-size: 19px;
+  }
+
+  .header p {
+    display: none;
   }
 
   .header-actions {
-    gap: 5px;
+    gap: 4px;
   }
 
   .top-btn {
     padding: 8px;
   }
 
+  #voiceLanguage {
+    display: none;
+  }
+
   .chat {
     padding: 15px;
+  }
+
+  .message {
+    max-width: 90%;
+  }
+
+  .input-area {
+    padding: 10px;
+  }
+
+  #sendBtn {
+    padding: 0 15px;
   }
 
 }
@@ -501,7 +638,9 @@ body {
 <div class="app">
 
 
-  <!-- HEADER -->
+  <!-- ======================================
+       HEADER
+  ======================================= -->
 
   <div class="header">
 
@@ -511,7 +650,9 @@ body {
 
     <div>
 
-      <h1>NEXORA AI</h1>
+      <h1>
+        NEXORA AI
+      </h1>
 
       <p>
         Your intelligent AI assistant
@@ -522,12 +663,42 @@ body {
 
     <div class="header-actions">
 
+      <select
+        id="voiceLanguage"
+        title="Voice language"
+      >
+
+        <option value="en-US">
+          English
+        </option>
+
+        <option value="bn-BD">
+          বাংলা
+        </option>
+
+        <option value="en-US">
+          Banglish
+        </option>
+
+      </select>
+
+
       <button
         class="top-btn active"
         id="voiceToggle"
       >
         🔊 Voice ON
       </button>
+
+
+      <button
+        class="top-btn"
+        id="stopVoiceBtn"
+        style="display:none;"
+      >
+        ⏹ Stop
+      </button>
+
 
       <button
         class="top-btn"
@@ -541,7 +712,9 @@ body {
   </div>
 
 
-  <!-- CHAT -->
+  <!-- ======================================
+       CHAT
+  ======================================= -->
 
   <div
     class="chat"
@@ -558,7 +731,21 @@ body {
   </div>
 
 
-  <!-- INPUT -->
+  <!-- ======================================
+       LISTENING STATUS
+  ======================================= -->
+
+  <div
+    class="listening-status"
+    id="listeningStatus"
+  >
+    🎙️ Listening... Speak now
+  </div>
+
+
+  <!-- ======================================
+       INPUT
+  ======================================= -->
 
   <div class="input-area">
 
@@ -569,6 +756,7 @@ body {
       🎙️
     </button>
 
+
     <input
       type="text"
       id="userInput"
@@ -576,11 +764,15 @@ body {
       autocomplete="off"
     >
 
-    <button id="sendBtn">
+
+    <button
+      id="sendBtn"
+    >
       Send
     </button>
 
   </div>
+
 
 </div>
 
@@ -588,43 +780,84 @@ body {
 <script>
 
 
-// ==========================================
+// =====================================================
 // CONFIG
-// ==========================================
+// =====================================================
+
+const API_URL =
+  "https://nexora-ai-api.md-shadow777y-bit.workers.dev/";
+
+
+/*
+ IMPORTANT:
+
+ If your current Worker URL is:
+
+ https://nexora-ai-api.md-shadow777y.workers.dev/
+
+then KEEP THIS URL instead:
 
 const API_URL =
   "https://nexora-ai-api.md-shadow777y.workers.dev/";
+*/
 
 const STORAGE_KEY =
   "nexora_conversation_v1";
 
 
-// ==========================================
+// =====================================================
 // ELEMENTS
-// ==========================================
+// =====================================================
 
 const chat =
-  document.getElementById("chat");
+  document.getElementById(
+    "chat"
+  );
 
 const input =
-  document.getElementById("userInput");
+  document.getElementById(
+    "userInput"
+  );
 
 const sendBtn =
-  document.getElementById("sendBtn");
+  document.getElementById(
+    "sendBtn"
+  );
 
 const micBtn =
-  document.getElementById("micBtn");
+  document.getElementById(
+    "micBtn"
+  );
 
 const voiceToggle =
-  document.getElementById("voiceToggle");
+  document.getElementById(
+    "voiceToggle"
+  );
+
+const stopVoiceBtn =
+  document.getElementById(
+    "stopVoiceBtn"
+  );
 
 const clearBtn =
-  document.getElementById("clearBtn");
+  document.getElementById(
+    "clearBtn"
+  );
+
+const voiceLanguage =
+  document.getElementById(
+    "voiceLanguage"
+  );
+
+const listeningStatus =
+  document.getElementById(
+    "listeningStatus"
+  );
 
 
-// ==========================================
+// =====================================================
 // STATE
-// ==========================================
+// =====================================================
 
 let conversation = [];
 
@@ -636,10 +869,12 @@ let recognition = null;
 
 let isListening = false;
 
+let currentSpeakingText = "";
 
-// ==========================================
+
+// =====================================================
 // LOAD MEMORY
-// ==========================================
+// =====================================================
 
 try {
 
@@ -669,45 +904,61 @@ try {
 }
 
 
-// ==========================================
+// =====================================================
 // SAVE MEMORY
-// ==========================================
+// =====================================================
 
 function saveConversation() {
 
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(
-      conversation
-    )
-  );
+  try {
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(
+        conversation
+      )
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Memory save error:",
+      error
+    );
+
+  }
 
 }
 
 
-// ==========================================
+// =====================================================
 // ESCAPE HTML
-// ==========================================
+// =====================================================
 
 function escapeHTML(text) {
 
   return String(text)
+
     .replace(
       /&/g,
       "&amp;"
     )
+
     .replace(
       /</g,
       "&lt;"
     )
+
     .replace(
       />/g,
       "&gt;"
     )
+
     .replace(
       /"/g,
       "&quot;"
     )
+
     .replace(
       /'/g,
       "&#039;"
@@ -716,31 +967,42 @@ function escapeHTML(text) {
 }
 
 
-// ==========================================
-// MARKDOWN
-// ==========================================
+// =====================================================
+// MARKDOWN RENDERER
+// =====================================================
 
 function renderMarkdown(text) {
 
   let codeBlocks = [];
 
+
   text =
     String(text).replace(
       /```(\w*)\n?([\s\S]*?)```/g,
-      function(_, language, code) {
+
+      function(
+        _,
+        language,
+        code
+      ) {
 
         const id =
           codeBlocks.length;
 
         codeBlocks.push({
+
           language:
-            language || "code",
+            language ||
+            "code",
 
           code:
             code.trim()
+
         });
 
-        return `___CODE_BLOCK_${id}___`;
+        return (
+          `___CODE_BLOCK_${id}___`
+        );
 
       }
     );
@@ -820,12 +1082,16 @@ function renderMarkdown(text) {
 
 
   codeBlocks.forEach(
-    function(block, index) {
+    function(
+      block,
+      index
+    ) {
 
       const safeCode =
         escapeHTML(
           block.code
         );
+
 
       const codeHTML = `
 
@@ -834,12 +1100,16 @@ function renderMarkdown(text) {
           <div class="code-header">
 
             <span>
-              ${escapeHTML(block.language)}
+              ${escapeHTML(
+                block.language
+              )}
             </span>
 
             <button
               class="copy-code"
-              data-code="${encodeURIComponent(block.code)}"
+              data-code="${encodeURIComponent(
+                block.code
+              )}"
             >
               Copy
             </button>
@@ -851,6 +1121,7 @@ function renderMarkdown(text) {
         </div>
 
       `;
+
 
       html =
         html.replace(
@@ -867,9 +1138,9 @@ function renderMarkdown(text) {
 }
 
 
-// ==========================================
+// =====================================================
 // INITIAL MESSAGE
-// ==========================================
+// =====================================================
 
 function addInitialMessage() {
 
@@ -884,20 +1155,25 @@ function addInitialMessage() {
   div.textContent =
     "Hello! 👋 I'm NEXORA AI. How can I help you today?";
 
-  chat.appendChild(div);
+  chat.appendChild(
+    div
+  );
 
 }
 
 
-// ==========================================
+// =====================================================
 // RENDER CONVERSATION
-// ==========================================
+// =====================================================
 
 function renderConversation() {
 
   chat.innerHTML = "";
 
-  if (!conversation.length) {
+
+  if (
+    !conversation.length
+  ) {
 
     addInitialMessage();
 
@@ -920,6 +1196,7 @@ function renderConversation() {
 
       }
 
+
       if (
         message.role === "assistant"
       ) {
@@ -940,9 +1217,9 @@ function renderConversation() {
 }
 
 
-// ==========================================
+// =====================================================
 // USER MESSAGE
-// ==========================================
+// =====================================================
 
 function addUserMessage(
   text,
@@ -960,19 +1237,23 @@ function addUserMessage(
   div.textContent =
     text;
 
-  chat.appendChild(div);
+  chat.appendChild(
+    div
+  );
 
 
   if (scroll) {
+
     scrollToBottom();
+
   }
 
 }
 
 
-// ==========================================
+// =====================================================
 // AI MESSAGE
-// ==========================================
+// =====================================================
 
 function addAIMessage(
   text,
@@ -994,7 +1275,9 @@ function addAIMessage(
     "message ai";
 
   message.innerHTML =
-    renderMarkdown(text);
+    renderMarkdown(
+      text
+    );
 
 
   wrapper.appendChild(
@@ -1061,6 +1344,7 @@ function addAIMessage(
         copyButton.textContent =
           "✓";
 
+
         setTimeout(
           function() {
 
@@ -1073,7 +1357,9 @@ function addAIMessage(
 
       } catch (error) {
 
-        console.error(error);
+        console.error(
+          error
+        );
 
       }
 
@@ -1093,13 +1379,16 @@ function addAIMessage(
     actions
   );
 
+
   chat.appendChild(
     wrapper
   );
 
 
   if (scroll) {
+
     scrollToBottom();
+
   }
 
 
@@ -1108,9 +1397,9 @@ function addAIMessage(
 }
 
 
-// ==========================================
-// ERROR MESSAGE
-// ==========================================
+// =====================================================
+// ERROR
+// =====================================================
 
 function addErrorMessage(
   title,
@@ -1132,25 +1421,17 @@ function addErrorMessage(
     "message ai";
 
 
-  const safeTitle =
-    escapeHTML(title);
-
-
-  const safeDetails =
-    escapeHTML(details);
-
-
   message.innerHTML = `
 
     <strong>
-      ⚠️ ${safeTitle}
+      ⚠️ ${escapeHTML(title)}
     </strong>
 
     <div
       class="error-message"
       style="margin-top:10px;"
     >
-      ${safeDetails}
+      ${escapeHTML(details)}
     </div>
 
   `;
@@ -1171,9 +1452,9 @@ function addErrorMessage(
 }
 
 
-// ==========================================
+// =====================================================
 // THINKING
-// ==========================================
+// =====================================================
 
 function showThinking() {
 
@@ -1212,6 +1493,7 @@ function showThinking() {
     message
   );
 
+
   chat.appendChild(
     wrapper
   );
@@ -1222,9 +1504,9 @@ function showThinking() {
 }
 
 
-// ==========================================
+// =====================================================
 // REMOVE THINKING
-// ==========================================
+// =====================================================
 
 function removeThinking() {
 
@@ -1233,16 +1515,19 @@ function removeThinking() {
       "thinkingWrapper"
     );
 
+
   if (thinking) {
+
     thinking.remove();
+
   }
 
 }
 
 
-// ==========================================
+// =====================================================
 // SCROLL
-// ==========================================
+// =====================================================
 
 function scrollToBottom() {
 
@@ -1252,9 +1537,649 @@ function scrollToBottom() {
 }
 
 
-// ==========================================
+// =====================================================
+// CLEAN TEXT FOR SPEECH
+// =====================================================
+
+function cleanTextForSpeech(
+  text
+) {
+
+  return String(text)
+
+    .replace(
+      /```[\s\S]*?```/g,
+      ""
+    )
+
+    .replace(
+      /#{1,6}\s*/g,
+      ""
+    )
+
+    .replace(
+      /\*\*(.*?)\*\*/g,
+      "$1"
+    )
+
+    .replace(
+      /\*(.*?)\*/g,
+      "$1"
+    )
+
+    .replace(
+      /`([^`]+)`/g,
+      "$1"
+    )
+
+    .replace(
+      /\[([^\]]+)\]\([^)]+\)/g,
+      "$1"
+    )
+
+    .replace(
+      /\n+/g,
+      " "
+    )
+
+    .replace(
+      /\s+/g,
+      " "
+    )
+
+    .trim();
+
+}
+
+
+// =====================================================
+// SELECT BEST VOICE
+// =====================================================
+
+function getBestVoice(
+  language
+) {
+
+  if (
+    !("speechSynthesis" in window)
+  ) {
+
+    return null;
+
+  }
+
+
+  const voices =
+    speechSynthesis.getVoices();
+
+
+  if (!voices.length) {
+
+    return null;
+
+  }
+
+
+  const wanted =
+    language.toLowerCase();
+
+
+  // Exact language
+  let voice =
+    voices.find(
+      v =>
+        v.lang &&
+        v.lang.toLowerCase() === wanted
+    );
+
+
+  if (voice) {
+
+    return voice;
+
+  }
+
+
+  // Language family
+  const family =
+    wanted.split("-")[0];
+
+
+  voice =
+    voices.find(
+      v =>
+        v.lang &&
+        v.lang
+          .toLowerCase()
+          .startsWith(
+            family
+          )
+    );
+
+
+  if (voice) {
+
+    return voice;
+
+  }
+
+
+  // English fallback
+  if (
+    family === "en"
+  ) {
+
+    voice =
+      voices.find(
+        v =>
+          v.lang &&
+          v.lang
+            .toLowerCase()
+            .startsWith("en")
+      );
+
+  }
+
+
+  // Bengali fallback
+  if (
+    family === "bn"
+  ) {
+
+    voice =
+      voices.find(
+        v =>
+          v.lang &&
+          v.lang
+            .toLowerCase()
+            .startsWith("bn")
+      );
+
+  }
+
+
+  return voice || voices[0];
+
+}
+
+
+// =====================================================
+// SPEAK
+// =====================================================
+
+function speak(
+  text
+) {
+
+  if (!voiceEnabled) {
+
+    return;
+
+  }
+
+
+  if (
+    !("speechSynthesis" in window)
+  ) {
+
+    return;
+
+  }
+
+
+  stopSpeaking();
+
+
+  const cleanText =
+    cleanTextForSpeech(
+      text
+    );
+
+
+  if (!cleanText) {
+
+    return;
+
+  }
+
+
+  currentSpeakingText =
+    cleanText;
+
+
+  const selectedLanguage =
+    voiceLanguage.value;
+
+
+  const utterance =
+    new SpeechSynthesisUtterance(
+      cleanText
+    );
+
+
+  utterance.lang =
+    selectedLanguage;
+
+
+  utterance.rate =
+    selectedLanguage === "bn-BD"
+      ? 0.95
+      : 1.0;
+
+
+  utterance.pitch =
+    1;
+
+
+  utterance.volume =
+    1;
+
+
+  const voice =
+    getBestVoice(
+      selectedLanguage
+    );
+
+
+  if (voice) {
+
+    utterance.voice =
+      voice;
+
+  }
+
+
+  utterance.onstart =
+    function() {
+
+      stopVoiceBtn.style.display =
+        "inline-block";
+
+    };
+
+
+  utterance.onend =
+    function() {
+
+      stopVoiceBtn.style.display =
+        "none";
+
+      currentSpeakingText =
+        "";
+
+    };
+
+
+  utterance.onerror =
+    function() {
+
+      stopVoiceBtn.style.display =
+        "none";
+
+      currentSpeakingText =
+        "";
+
+    };
+
+
+  speechSynthesis.speak(
+    utterance
+  );
+
+}
+
+
+// =====================================================
+// STOP SPEAKING
+// =====================================================
+
+function stopSpeaking() {
+
+  if (
+    "speechSynthesis" in window
+  ) {
+
+    speechSynthesis.cancel();
+
+  }
+
+
+  stopVoiceBtn.style.display =
+    "none";
+
+  currentSpeakingText =
+    "";
+
+}
+
+
+// =====================================================
+// VOICE STOP BUTTON
+// =====================================================
+
+stopVoiceBtn.addEventListener(
+  "click",
+  function() {
+
+    stopSpeaking();
+
+  }
+);
+
+
+// =====================================================
+// VOICE TOGGLE
+// =====================================================
+
+voiceToggle.addEventListener(
+  "click",
+  function() {
+
+    voiceEnabled =
+      !voiceEnabled;
+
+
+    if (!voiceEnabled) {
+
+      stopSpeaking();
+
+
+      voiceToggle.textContent =
+        "🔇 Voice OFF";
+
+
+      voiceToggle.classList.remove(
+        "active"
+      );
+
+    } else {
+
+      voiceToggle.textContent =
+        "🔊 Voice ON";
+
+
+      voiceToggle.classList.add(
+        "active"
+      );
+
+    }
+
+  }
+);
+
+
+// =====================================================
+// SPEECH RECOGNITION
+// =====================================================
+
+const SpeechRecognition =
+  window.SpeechRecognition ||
+  window.webkitSpeechRecognition;
+
+
+if (SpeechRecognition) {
+
+  recognition =
+    new SpeechRecognition();
+
+
+  recognition.continuous =
+    false;
+
+
+  recognition.interimResults =
+    true;
+
+
+  recognition.maxAlternatives =
+    1;
+
+
+  recognition.onstart =
+    function() {
+
+      isListening =
+        true;
+
+
+      // Stop AI voice immediately
+      stopSpeaking();
+
+
+      micBtn.classList.add(
+        "listening"
+      );
+
+
+      micBtn.textContent =
+        "⏹️";
+
+
+      listeningStatus.classList.add(
+        "show"
+      );
+
+
+      listeningStatus.textContent =
+        "🎙️ Listening... Speak now";
+
+    };
+
+
+  recognition.onresult =
+    function(event) {
+
+      let transcript =
+        "";
+
+
+      for (
+        let i =
+          event.resultIndex;
+
+        i <
+          event.results.length;
+
+        i++
+      ) {
+
+        transcript +=
+          event.results[i][0].transcript;
+
+      }
+
+
+      input.value =
+        transcript.trim();
+
+
+      scrollToBottom();
+
+    };
+
+
+  recognition.onend =
+    function() {
+
+      isListening =
+        false;
+
+
+      micBtn.classList.remove(
+        "listening"
+      );
+
+
+      micBtn.textContent =
+        "🎙️";
+
+
+      listeningStatus.classList.remove(
+        "show"
+      );
+
+
+      // Auto send
+      if (
+        input.value.trim() &&
+        !isGenerating
+      ) {
+
+        setTimeout(
+          function() {
+
+            sendMessage();
+
+          },
+          150
+        );
+
+      }
+
+    };
+
+
+  recognition.onerror =
+    function(event) {
+
+      console.error(
+        "Speech recognition error:",
+        event.error
+      );
+
+
+      isListening =
+        false;
+
+
+      micBtn.classList.remove(
+        "listening"
+      );
+
+
+      micBtn.textContent =
+        "🎙️";
+
+
+      listeningStatus.classList.remove(
+        "show"
+      );
+
+
+      if (
+        event.error ===
+        "not-allowed"
+      ) {
+
+        listeningStatus.textContent =
+          "⚠️ Microphone permission denied.";
+
+      }
+
+
+      if (
+        event.error ===
+        "no-speech"
+      ) {
+
+        listeningStatus.textContent =
+          "🎙️ No speech detected.";
+
+      }
+
+    };
+
+
+  micBtn.addEventListener(
+    "click",
+    function() {
+
+      // If AI is speaking:
+      // stop it and start microphone.
+      if (
+        "speechSynthesis" in window &&
+        speechSynthesis.speaking
+      ) {
+
+        stopSpeaking();
+
+      }
+
+
+      if (isListening) {
+
+        recognition.stop();
+
+        return;
+
+      }
+
+
+      if (isGenerating) {
+
+        return;
+
+      }
+
+
+      try {
+
+        // Current selected voice language
+        recognition.lang =
+          voiceLanguage.value;
+
+
+        recognition.start();
+
+      } catch (error) {
+
+        console.error(
+          "Recognition start error:",
+          error
+        );
+
+      }
+
+    }
+  );
+
+
+} else {
+
+  micBtn.disabled =
+    true;
+
+
+  micBtn.title =
+    "Speech recognition is not supported in this browser.";
+
+}
+
+
+// =====================================================
+// VOICE LANGUAGE CHANGE
+// =====================================================
+
+voiceLanguage.addEventListener(
+  "change",
+  function() {
+
+    if (isListening) {
+
+      recognition.stop();
+
+    }
+
+
+    stopSpeaking();
+
+  }
+);
+
+
+// =====================================================
 // SEND MESSAGE
-// ==========================================
+// =====================================================
 
 async function sendMessage() {
 
@@ -1266,14 +2191,32 @@ async function sendMessage() {
     !message ||
     isGenerating
   ) {
+
     return;
+
   }
 
 
-  stopVoice();
+  // Stop voice
+  stopSpeaking();
 
 
-  // Previous history only
+  // Stop recognition
+  if (
+    recognition &&
+    isListening
+  ) {
+
+    try {
+
+      recognition.stop();
+
+    } catch (error) {}
+
+  }
+
+
+  // Previous history
   const previousMessages =
     conversation
       .filter(
@@ -1303,14 +2246,20 @@ async function sendMessage() {
   );
 
 
-  input.value = "";
+  input.value =
+    "";
 
 
-  isGenerating = true;
+  isGenerating =
+    true;
 
-  sendBtn.disabled = true;
 
-  micBtn.disabled = true;
+  sendBtn.disabled =
+    true;
+
+
+  micBtn.disabled =
+    true;
 
 
   showThinking();
@@ -1318,19 +2267,23 @@ async function sendMessage() {
 
   try {
 
-    // ======================================
+    // ==========================================
     // REQUEST
-    // ======================================
+    // ==========================================
 
     const response =
       await fetch(
         API_URL,
         {
-          method: "POST",
+
+          method:
+            "POST",
 
           headers: {
+
             "Content-Type":
               "application/json"
+
           },
 
           body:
@@ -1343,24 +2296,19 @@ async function sendMessage() {
                 previousMessages
 
             })
+
         }
       );
 
 
-    // ======================================
-    // RESPONSE ERROR
-    // ======================================
+    // ==========================================
+    // ERROR
+    // ==========================================
 
     if (!response.ok) {
 
       const errorText =
         await response.text();
-
-
-      console.error(
-        "NEXORA SERVER ERROR:",
-        errorText
-      );
 
 
       throw new Error(
@@ -1382,9 +2330,9 @@ async function sendMessage() {
     removeThinking();
 
 
-    // ======================================
-    // CREATE STREAMING AI MESSAGE
-    // ======================================
+    // ==========================================
+    // CREATE AI MESSAGE
+    // ==========================================
 
     const wrapper =
       document.createElement(
@@ -1396,6 +2344,7 @@ async function sendMessage() {
       document.createElement(
         "div"
       );
+
 
     aiMessage.className =
       "message ai";
@@ -1410,14 +2359,15 @@ async function sendMessage() {
     );
 
 
-    // ======================================
-    // ACTIONS
-    // ======================================
+    // ==========================================
+    // ACTION BUTTONS
+    // ==========================================
 
     const actions =
       document.createElement(
         "div"
       );
+
 
     actions.className =
       "actions";
@@ -1428,11 +2378,14 @@ async function sendMessage() {
         "button"
       );
 
+
     speakButton.className =
       "action-btn";
 
+
     speakButton.textContent =
       "🔊";
+
 
     speakButton.title =
       "Read aloud";
@@ -1443,11 +2396,14 @@ async function sendMessage() {
         "button"
       );
 
+
     copyButton.className =
       "action-btn";
 
+
     copyButton.textContent =
       "📋";
+
 
     copyButton.title =
       "Copy";
@@ -1456,6 +2412,7 @@ async function sendMessage() {
     actions.appendChild(
       speakButton
     );
+
 
     actions.appendChild(
       copyButton
@@ -1472,21 +2429,26 @@ async function sendMessage() {
     );
 
 
-    // ======================================
+    // ==========================================
     // STREAM
-    // ======================================
+    // ==========================================
 
     const reader =
       response.body.getReader();
 
 
     const decoder =
-      new TextDecoder("utf-8");
+      new TextDecoder(
+        "utf-8"
+      );
 
 
-    let buffer = "";
+    let buffer =
+      "";
 
-    let fullReply = "";
+
+    let fullReply =
+      "";
 
 
     while (true) {
@@ -1499,7 +2461,9 @@ async function sendMessage() {
 
 
       if (done) {
+
         break;
+
       }
 
 
@@ -1507,17 +2471,21 @@ async function sendMessage() {
         decoder.decode(
           value,
           {
-            stream: true
+            stream:
+              true
           }
         );
 
 
       const events =
-        buffer.split("\n\n");
+        buffer.split(
+          "\n\n"
+        );
 
 
       buffer =
-        events.pop() || "";
+        events.pop() ||
+        "";
 
 
       for (
@@ -1526,7 +2494,9 @@ async function sendMessage() {
       ) {
 
         const lines =
-          event.split("\n");
+          event.split(
+            "\n"
+          );
 
 
         for (
@@ -1535,9 +2505,13 @@ async function sendMessage() {
         ) {
 
           if (
-            !line.startsWith("data:")
+            !line.startsWith(
+              "data:"
+            )
           ) {
+
             continue;
+
           }
 
 
@@ -1551,14 +2525,18 @@ async function sendMessage() {
             !data ||
             data === "[DONE]"
           ) {
+
             continue;
+
           }
 
 
           try {
 
             const parsed =
-              JSON.parse(data);
+              JSON.parse(
+                data
+              );
 
 
             const token =
@@ -1573,7 +2551,6 @@ async function sendMessage() {
                 token;
 
 
-              // LIVE TEXT
               aiMessage.innerHTML =
                 renderMarkdown(
                   fullReply
@@ -1587,7 +2564,7 @@ async function sendMessage() {
           } catch (parseError) {
 
             console.log(
-              "Stream parse:",
+              "Stream chunk:",
               data
             );
 
@@ -1600,9 +2577,9 @@ async function sendMessage() {
     }
 
 
-    // ======================================
-    // CHECK RESPONSE
-    // ======================================
+    // ==========================================
+    // EMPTY RESPONSE
+    // ==========================================
 
     if (
       !fullReply.trim()
@@ -1615,14 +2592,16 @@ async function sendMessage() {
     }
 
 
-    // ======================================
+    // ==========================================
     // BUTTONS
-    // ======================================
+    // ==========================================
 
     speakButton.onclick =
       function() {
 
-        speak(fullReply);
+        speak(
+          fullReply
+        );
 
       };
 
@@ -1636,8 +2615,10 @@ async function sendMessage() {
             fullReply
           );
 
+
           copyButton.textContent =
             "✓";
+
 
           setTimeout(
             function() {
@@ -1649,22 +2630,26 @@ async function sendMessage() {
             1000
           );
 
+
         } catch (error) {
 
-          console.error(error);
+          console.error(
+            error
+          );
 
         }
 
       };
 
 
-    // ======================================
-    // SAVE AI RESPONSE
-    // ======================================
+    // ==========================================
+    // SAVE
+    // ==========================================
 
     conversation.push({
 
-      role: "assistant",
+      role:
+        "assistant",
 
       content:
         fullReply
@@ -1675,17 +2660,25 @@ async function sendMessage() {
     saveConversation();
 
 
-    // ======================================
-    // VOICE
-    // ======================================
+    // ==========================================
+    // AUTO VOICE
+    // ==========================================
 
     if (
       voiceEnabled &&
       fullReply.trim()
     ) {
 
-      speak(
-        fullReply
+      // Small delay gives UI time to finish rendering
+      setTimeout(
+        function() {
+
+          speak(
+            fullReply
+          );
+
+        },
+        100
       );
 
     }
@@ -1708,17 +2701,19 @@ async function sendMessage() {
       String(error)
     );
 
-
   } finally {
 
     isGenerating =
       false;
 
+
     sendBtn.disabled =
       false;
 
+
     micBtn.disabled =
       false;
+
 
     input.focus();
 
@@ -1727,9 +2722,19 @@ async function sendMessage() {
 }
 
 
-// ==========================================
-// ENTER KEY
-// ==========================================
+// =====================================================
+// SEND BUTTON
+// =====================================================
+
+sendBtn.addEventListener(
+  "click",
+  sendMessage
+);
+
+
+// =====================================================
+// ENTER
+// =====================================================
 
 input.addEventListener(
   "keydown",
@@ -1750,323 +2755,9 @@ input.addEventListener(
 );
 
 
-// ==========================================
-// SEND
-// ==========================================
-
-sendBtn.addEventListener(
-  "click",
-  sendMessage
-);
-
-
-// ==========================================
-// VOICE OUTPUT
-// ==========================================
-
-function speak(text) {
-
-  if (!voiceEnabled) {
-    return;
-  }
-
-
-  if (
-    !("speechSynthesis" in window)
-  ) {
-    return;
-  }
-
-
-  speechSynthesis.cancel();
-
-
-  let cleanText =
-    text
-      .replace(
-        /```[\s\S]*?```/g,
-        ""
-      )
-      .replace(
-        /[*_#>`]/g,
-        ""
-      )
-      .replace(
-        /\[([^\]]+)\]\([^)]+\)/g,
-        "$1"
-      );
-
-
-  const utterance =
-    new SpeechSynthesisUtterance(
-      cleanText
-    );
-
-
-  utterance.rate =
-    1;
-
-  utterance.pitch =
-    1;
-
-  utterance.volume =
-    1;
-
-
-  const voices =
-    speechSynthesis.getVoices();
-
-
-  const englishVoice =
-    voices.find(
-      voice =>
-        voice.lang
-          .toLowerCase()
-          .startsWith("en")
-    );
-
-
-  if (englishVoice) {
-
-    utterance.voice =
-      englishVoice;
-
-  }
-
-
-  speechSynthesis.speak(
-    utterance
-  );
-
-}
-
-
-// ==========================================
-// STOP VOICE
-// ==========================================
-
-function stopVoice() {
-
-  if (
-    "speechSynthesis" in window
-  ) {
-
-    speechSynthesis.cancel();
-
-  }
-
-}
-
-
-// ==========================================
-// VOICE TOGGLE
-// ==========================================
-
-voiceToggle.addEventListener(
-  "click",
-  function() {
-
-    voiceEnabled =
-      !voiceEnabled;
-
-
-    if (!voiceEnabled) {
-
-      stopVoice();
-
-      voiceToggle.textContent =
-        "🔇 Voice OFF";
-
-      voiceToggle.classList.remove(
-        "active"
-      );
-
-    } else {
-
-      voiceToggle.textContent =
-        "🔊 Voice ON";
-
-      voiceToggle.classList.add(
-        "active"
-      );
-
-    }
-
-  }
-);
-
-
-// ==========================================
-// SPEECH RECOGNITION
-// ==========================================
-
-const SpeechRecognition =
-  window.SpeechRecognition ||
-  window.webkitSpeechRecognition;
-
-
-if (SpeechRecognition) {
-
-  recognition =
-    new SpeechRecognition();
-
-
-  recognition.lang =
-    "en-US";
-
-
-  recognition.continuous =
-    false;
-
-
-  recognition.interimResults =
-    true;
-
-
-  recognition.maxAlternatives =
-    1;
-
-
-  recognition.onstart =
-    function() {
-
-      isListening =
-        true;
-
-      micBtn.classList.add(
-        "listening"
-      );
-
-      micBtn.textContent =
-        "⏹️";
-
-      stopVoice();
-
-    };
-
-
-  recognition.onresult =
-    function(event) {
-
-      let transcript =
-        "";
-
-
-      for (
-        let i = event.resultIndex;
-        i < event.results.length;
-        i++
-      ) {
-
-        transcript +=
-          event.results[i][0].transcript;
-
-      }
-
-
-      input.value =
-        transcript;
-
-    };
-
-
-  recognition.onend =
-    function() {
-
-      isListening =
-        false;
-
-      micBtn.classList.remove(
-        "listening"
-      );
-
-      micBtn.textContent =
-        "🎙️";
-
-
-      if (
-        input.value.trim() &&
-        !isGenerating
-      ) {
-
-        sendMessage();
-
-      }
-
-    };
-
-
-  recognition.onerror =
-    function(event) {
-
-      console.error(
-        "Speech recognition error:",
-        event.error
-      );
-
-
-      isListening =
-        false;
-
-      micBtn.classList.remove(
-        "listening"
-      );
-
-      micBtn.textContent =
-        "🎙️";
-
-    };
-
-
-  micBtn.addEventListener(
-    "click",
-    function() {
-
-      if (isGenerating) {
-        return;
-      }
-
-
-      if (isListening) {
-
-        recognition.stop();
-
-        return;
-
-      }
-
-
-      try {
-
-        recognition.start();
-
-      } catch (error) {
-
-        console.error(
-          "Mic error:",
-          error
-        );
-
-      }
-
-    }
-  );
-
-
-} else {
-
-  micBtn.disabled =
-    true;
-
-  micBtn.title =
-    "Speech recognition is not supported in this browser.";
-
-}
-
-
-// ==========================================
+// =====================================================
 // CLEAR CHAT
-// ==========================================
+// =====================================================
 
 clearBtn.addEventListener(
   "click",
@@ -2079,11 +2770,27 @@ clearBtn.addEventListener(
 
 
     if (!confirmed) {
+
       return;
+
     }
 
 
-    stopVoice();
+    stopSpeaking();
+
+
+    if (
+      recognition &&
+      isListening
+    ) {
+
+      try {
+
+        recognition.stop();
+
+      } catch (error) {}
+
+    }
 
 
     conversation =
@@ -2105,9 +2812,9 @@ clearBtn.addEventListener(
 );
 
 
-// ==========================================
+// =====================================================
 // COPY CODE
-// ==========================================
+// =====================================================
 
 document.addEventListener(
   "click",
@@ -2120,7 +2827,9 @@ document.addEventListener(
 
 
     if (!button) {
+
       return;
+
     }
 
 
@@ -2162,6 +2871,25 @@ document.addEventListener(
 
   }
 );
+
+
+// =====================================================
+// LOAD AVAILABLE VOICES
+// =====================================================
+
+if (
+  "speechSynthesis" in window
+) {
+
+  speechSynthesis.onvoiceschanged =
+    function() {
+
+      speechSynthesis.getVoices();
+
+    };
+
+}
+
 
 </script>
 
